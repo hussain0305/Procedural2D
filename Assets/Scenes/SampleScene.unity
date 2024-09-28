@@ -431,7 +431,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridSize: 0
-  wallPrefab: {fileID: 75916327972605727, guid: fff67f2110f7ba442acd4ec98f5cf5e2, type: 3}
+  inLevelWallPrefab: {fileID: 75916327972605727, guid: fff67f2110f7ba442acd4ec98f5cf5e2, type: 3}
+  gridBorderPrefab: {fileID: 75916327972605727, guid: d950ced0f8219224aa7bc144939c1138, type: 3}
   floorPrefab: {fileID: 75916327972605727, guid: f51e94a696d306b419a8a72f5a3bd429, type: 3}
   startPrefab: {fileID: 75916327972605727, guid: a1d4b81ca7bd6e74488c915031dcd3e7, type: 3}
   destinationPrefab: {fileID: 75916327972605727, guid: 1db17d6453f2eac4faba01b5228b3e1d, type: 3}

@@ -7,7 +7,8 @@ public class MazeGenerator : MonoBehaviour
 {
     [HideInInspector]
     public int gridSize;
-    public GameObject wallPrefab;
+    public GameObject inLevelWallPrefab;
+    public GameObject gridBorderPrefab;
     public GameObject floorPrefab;
     public GameObject startPrefab;
     public GameObject destinationPrefab;
@@ -148,13 +149,26 @@ public class MazeGenerator : MonoBehaviour
                 }
                 else if (grid[x, y] == 1)
                 {
-                    currentNodePrefab = wallPrefab;
+                    currentNodePrefab = inLevelWallPrefab;
                 }
                 else
                 {
                     currentNodePrefab = floorPrefab;
                 }
                 Instantiate(currentNodePrefab, position, Quaternion.identity);
+            }
+        }
+        
+        //Draw walls arounf the grid
+        for (int x = -1; x <= gridSize; x++)
+        {
+            for (int y = -1; y <= gridSize; y++)
+            {
+                if (x == -1 || x == gridSize || y == -1 || y == gridSize)
+                {
+                    Vector3 wallPosition = new Vector3(x, y, 0);
+                    Instantiate(gridBorderPrefab, wallPosition, Quaternion.identity);
+                }
             }
         }
     }
