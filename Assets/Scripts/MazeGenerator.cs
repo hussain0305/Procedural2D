@@ -9,9 +9,9 @@ public class MazeGenerator : MonoBehaviour
     public int gridSize;
     public GameObject wallPrefab;
     public GameObject floorPrefab;
-    public GameObject startPrefab; // Assign a different prefab or object to indicate start
-    public GameObject destinationPrefab;   // Assign a different prefab or object to indicate end
-    public GameObject mainPathPrefab; // Assign a prefab to represent the main path
+    public GameObject startPrefab;
+    public GameObject destinationPrefab;
+    public GameObject mainPathPrefab;
 
     private Vector2Int[] directions = new Vector2Int[]
     {
@@ -26,7 +26,7 @@ public class MazeGenerator : MonoBehaviour
 
     [HideInInspector]
     public Vector2Int startNode;
-    [FormerlySerializedAs("endNode")] [HideInInspector]
+    [HideInInspector]
     public Vector2Int destinationNode;
 
     private List<Vector2Int> longestPath = new List<Vector2Int>();
@@ -36,11 +36,9 @@ public class MazeGenerator : MonoBehaviour
         gridSize = Global.GRID_SIZE;
         GenerateMaze();
 
-        // Find the longest path in the maze and set the start and destination nodes
         (startNode, destinationNode, longestPath) = GetLongestPathInMaze();
 
         DrawMaze();
-        Debug.Log($"Start Node: {startNode}, Destination Node: {destinationNode}");
     }
 
     void GenerateMaze()
@@ -163,18 +161,14 @@ public class MazeGenerator : MonoBehaviour
 
     (Vector2Int, Vector2Int, List<Vector2Int>) GetLongestPathInMaze()
     {
-        // First BFS to find the farthest point from a random open node
         Vector2Int initial = GetRandomOpenCell();
         Vector2Int farthestFromInitial = BFSFindFarthestNode(initial, out _);
 
-        // Second BFS from the farthest point found in the first BFS
         Vector2Int farthestFromFarthest = BFSFindFarthestNode(farthestFromInitial, out Dictionary<Vector2Int, Vector2Int> parents);
 
-        // Backtrack to find the path between farthestFromInitial and farthestFromFarthest
         longestPath.Clear();
         BacktrackLongestPath(parents, farthestFromInitial, farthestFromFarthest);
 
-        Debug.Log("Longest path is " + longestPath.Count);
         return (farthestFromInitial, farthestFromFarthest, longestPath);
     }
 
@@ -187,14 +181,14 @@ public class MazeGenerator : MonoBehaviour
             int y = Random.Range(0, gridSize);
             randomCell = new Vector2Int(x, y);
         }
-        while (grid[randomCell.x, randomCell.y] != 0); // Ensure it's an open path
+        while (grid[randomCell.x, randomCell.y] != 0);
         return randomCell;
     }
 
     Vector2Int BFSFindFarthestNode(Vector2Int start, out Dictionary<Vector2Int, Vector2Int> parents)
     {
         Queue<Vector2Int> queue = new Queue<Vector2Int>();
-        parents = new Dictionary<Vector2Int, Vector2Int>(); // For backtracking
+        parents = new Dictionary<Vector2Int, Vector2Int>();
         bool[,] visited = new bool[gridSize, gridSize];
         queue.Enqueue(start);
         visited[start.x, start.y] = true;
@@ -212,12 +206,11 @@ public class MazeGenerator : MonoBehaviour
                 if (IsInBounds(neighbor.x, neighbor.y) && grid[neighbor.x, neighbor.y] == 0 && !visited[neighbor.x, neighbor.y])
                 {
                     visited[neighbor.x, neighbor.y] = true;
-                    parents[neighbor] = current; // Track parent for backtracking
+                    parents[neighbor] = current;
                     queue.Enqueue(neighbor);
                 }
             }
         }
-
         return farthestNode;
     }
 
@@ -231,12 +224,10 @@ public class MazeGenerator : MonoBehaviour
             longestPath.Add(current);
             if (!parents.TryGetValue(current, out current))
             {
-                break; // Exit if there is no parent
+                break;
             }
         }
-        longestPath.Add(start); // Add the start node
-
-        // Reverse to get the path from start to end
+        longestPath.Add(start);
         longestPath.Reverse();
     }
 }
