@@ -1,18 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class MazeGenerator : MonoBehaviour
 {
     [HideInInspector]
     public int gridSize;
+    [HideInInspector]
+    public int cellSize;
+    
+    [Header("Prefabs")]
     public GameObject inLevelWallPrefab;
     public GameObject gridBorderPrefab;
-    public GameObject floorPrefab;
+    public GameObject optionalRoomPrefab;
     public GameObject startPrefab;
     public GameObject destinationPrefab;
     public GameObject mainPathPrefab;
+
+    [Header("Map")]
+    public Transform mainPath;
+    public Transform optionalRooms;
+    public Transform levelWalls;
+    public Transform borderWalls;
 
     private Vector2Int[] directions = new Vector2Int[]
     {
@@ -29,20 +41,30 @@ public class MazeGenerator : MonoBehaviour
     public Vector2Int startNode;
     [HideInInspector]
     public Vector2Int destinationNode;
+    [HideInInspector]
+    public Dictionary<Vector2Int, Room> allRooms;
 
     private List<Vector2Int> longestPath = new List<Vector2Int>();
-
-    void Start()
+    
+    public static event Action OnMazeGenerationComplete;
+    public void Start()
     {
         gridSize = Global.GRID_SIZE;
-        GenerateMaze();
-
-        (startNode, destinationNode, longestPath) = GetLongestPathInMaze();
-
-        DrawMaze();
+        cellSize = Global.CELL_SIZE;
+        allRooms = new Dictionary<Vector2Int, Room>();
+        
+        SetupMaze();
     }
 
-    void GenerateMaze()
+    public void SetupMaze()
+    {
+        GenerateMaze();
+        GetLongestPathInMaze();
+        DrawMaze();
+        MazeGenerated();
+    }
+
+    private void GenerateMaze()
     {
         grid = new int[gridSize, gridSize];
 
@@ -105,57 +127,74 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
-    bool IsInBounds(int x, int y)
+    private bool IsInBounds(int x, int y)
     {
         return x >= 0 && x < gridSize && y >= 0 && y < gridSize;
     }
 
-    bool IsStartingNode(Vector2Int position)
+    private bool IsStartingNode(Vector2Int position)
     {
         return position == startNode;
     }
 
-    bool IsDestinationNode(Vector2Int position)
+    private bool IsDestinationNode(Vector2Int position)
     {
         return position == destinationNode;
     }
 
-    bool IsMainPathNode(Vector2Int position)
+    private bool IsMainPathNode(Vector2Int position)
     {
         return longestPath.Contains(position);
     }
 
-    void DrawMaze()
+    private void DrawMaze()
     {
         for (int x = 0; x < gridSize; x++)
         {
             for (int y = 0; y < gridSize; y++)
             {
                 Vector2Int currentPosition = new Vector2Int(x, y);
-                Vector3 position = new Vector3(x, y, 0);
+                Vector3 position = new Vector3(cellSize * x,cellSize * y, 0);
 
                 GameObject currentNodePrefab;
+                Transform parentTransform;
+                RoomType nodeType;
+                
                 if (IsStartingNode(currentPosition))
                 {
                     currentNodePrefab = startPrefab;
+                    parentTransform = mainPath;
+                    nodeType = RoomType.StartingRoom;
                 }
                 else if (IsDestinationNode(currentPosition))
                 {
                     currentNodePrefab = destinationPrefab;
+                    parentTransform = mainPath;
+                    nodeType = RoomType.DestinationRoom;
                 }
                 else if (IsMainPathNode(currentPosition))
                 {
                     currentNodePrefab = mainPathPrefab;
+                    parentTransform = mainPath;
+                    nodeType = RoomType.MainPath;
                 }
                 else if (grid[x, y] == 1)
                 {
                     currentNodePrefab = inLevelWallPrefab;
+                    parentTransform = levelWalls;
+                    nodeType = RoomType.Wall;
                 }
                 else
                 {
-                    currentNodePrefab = floorPrefab;
+                    currentNodePrefab = optionalRoomPrefab;
+                    parentTransform = optionalRooms;
+                    nodeType = RoomType.Optional;
                 }
-                Instantiate(currentNodePrefab, position, Quaternion.identity);
+                GameObject spawnedNode = Instantiate(currentNodePrefab, position, Quaternion.identity, parentTransform);
+                Room spawnedRoom = spawnedNode.GetComponent<Room>();
+                spawnedRoom.roomType = nodeType;
+                spawnedRoom.gridIndex = currentPosition;
+                allRooms.Add(currentPosition, spawnedRoom);
             }
         }
         
@@ -166,14 +205,19 @@ public class MazeGenerator : MonoBehaviour
             {
                 if (x == -1 || x == gridSize || y == -1 || y == gridSize)
                 {
-                    Vector3 wallPosition = new Vector3(x, y, 0);
-                    Instantiate(gridBorderPrefab, wallPosition, Quaternion.identity);
+                    Vector3 wallPosition = new Vector3(cellSize * x, cellSize * y, 0);
+                    GameObject spawnedNode = Instantiate(gridBorderPrefab, wallPosition, Quaternion.identity, borderWalls);
+                    Room spawnedRoom = spawnedNode.GetComponent<Room>();
+                    spawnedRoom.roomType = RoomType.GridBorder;
+                    Vector2Int currentPosition = new Vector2Int(x, y);
+                    spawnedRoom.gridIndex = currentPosition;
+                    allRooms.Add(currentPosition, spawnedRoom);
                 }
             }
         }
     }
 
-    (Vector2Int, Vector2Int, List<Vector2Int>) GetLongestPathInMaze()
+    private void GetLongestPathInMaze()
     {
         Vector2Int initial = GetRandomOpenCell();
         Vector2Int farthestFromInitial = BFSFindFarthestNode(initial, out _);
@@ -183,10 +227,11 @@ public class MazeGenerator : MonoBehaviour
         longestPath.Clear();
         BacktrackLongestPath(parents, farthestFromInitial, farthestFromFarthest);
 
-        return (farthestFromInitial, farthestFromFarthest, longestPath);
+        startNode = farthestFromInitial;
+        destinationNode = farthestFromFarthest;
     }
 
-    Vector2Int GetRandomOpenCell()
+    private Vector2Int GetRandomOpenCell()
     {
         Vector2Int randomCell;
         do
@@ -199,7 +244,7 @@ public class MazeGenerator : MonoBehaviour
         return randomCell;
     }
 
-    Vector2Int BFSFindFarthestNode(Vector2Int start, out Dictionary<Vector2Int, Vector2Int> parents)
+    private Vector2Int BFSFindFarthestNode(Vector2Int start, out Dictionary<Vector2Int, Vector2Int> parents)
     {
         Queue<Vector2Int> queue = new Queue<Vector2Int>();
         parents = new Dictionary<Vector2Int, Vector2Int>();
@@ -228,7 +273,7 @@ public class MazeGenerator : MonoBehaviour
         return farthestNode;
     }
 
-    void BacktrackLongestPath(Dictionary<Vector2Int, Vector2Int> parents, Vector2Int start, Vector2Int end)
+    private void BacktrackLongestPath(Dictionary<Vector2Int, Vector2Int> parents, Vector2Int start, Vector2Int end)
     {
         longestPath.Clear();
         Vector2Int current = end;
@@ -243,5 +288,10 @@ public class MazeGenerator : MonoBehaviour
         }
         longestPath.Add(start);
         longestPath.Reverse();
+    }
+
+    private void MazeGenerated()
+    {
+        OnMazeGenerationComplete?.Invoke();
     }
 }

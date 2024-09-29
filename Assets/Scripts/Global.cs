@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum RoomType {MainPath, Optional}
+public enum RoomType {MainPath, Optional, StartingRoom, DestinationRoom, Wall, GridBorder}
 
 public struct RoomProperties
 {
@@ -35,6 +35,7 @@ public enum Sector {
 public class Global : MonoBehaviour
 {
     public const int GRID_SIZE = 6;
+    public const int CELL_SIZE = 9;
     public const int MIN_ROOMS_IN_MAIN_PATH = 14;
     public const int MAX_ROOMS_IN_MAIN_PATH = 20;
 }

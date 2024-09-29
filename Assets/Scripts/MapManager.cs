@@ -59,7 +59,7 @@ public class MapManager : MonoBehaviour
 
     public Sector GetRoomSector(Room room)
     {
-        return GetRoomSector(room.position);
+        return GetRoomSector(room.gridIndex);
     }
     
     public Sector GetRoomSector(Vector2Int room)
@@ -181,7 +181,7 @@ public class MapManager : MonoBehaviour
     {
         GameObject spawnedGO = Instantiate(roomPrefab, new Vector2(RoomLocation.x, RoomLocation.y), Quaternion.identity, levelMap);
         Room spawnedRoom = spawnedGO.GetComponent<Room>();
-        spawnedRoom.position = RoomLocation;
+        spawnedRoom.gridIndex = RoomLocation;
         return spawnedRoom;
     }
     
