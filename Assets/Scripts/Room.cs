@@ -17,6 +17,16 @@ public class Room : MonoBehaviour
     [HideInInspector]
     public int roomNumber;
 
+    private void Awake()
+    {
+        SetScale();
+    }
+
+    private void SetScale()
+    {
+        transform.localScale = new Vector3(Global.CELL_SIZE, Global.CELL_SIZE, 1);
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other && other.gameObject && other.gameObject.GetComponent<PlayerController>())

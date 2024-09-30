@@ -35,7 +35,7 @@ public enum Sector {
 public class Global : MonoBehaviour
 {
     public const int GRID_SIZE = 6;
-    public const int CELL_SIZE = 9;
+    public const int CELL_SIZE = 10;
     public const int MIN_ROOMS_IN_MAIN_PATH = 14;
     public const int MAX_ROOMS_IN_MAIN_PATH = 20;
 }
