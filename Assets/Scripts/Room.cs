@@ -34,4 +34,11 @@ public class Room : MonoBehaviour
             EventManager.OnRoomEntered?.Invoke(gridIndex);
         }
     }
+
+    public void SetRoomProperties(RoomType _roomType, Vector2Int _gridIndex, Color _color)
+    {
+        roomType = _roomType;
+        gridIndex = _gridIndex;
+        roomSprite.color = _color;
+    }
 }

@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public MazeGenerator mazeGenerator;
     public PlayerController player;
-
+    
     private Coroutine cameraLerp;
     
     private void OnEnable()

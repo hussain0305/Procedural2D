@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4552584029449096168}
   - component: {fileID: 3541231696009791291}
-  - component: {fileID: 8035842782116123395}
+  - component: {fileID: 8146116239148869706}
   m_Layer: 0
-  m_Name: GridBorder
-  m_TagString: Ground
+  m_Name: Rooms
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   gridIndex: {x: 0, y: 0}
   roomType: 0
   roomNumber: 0
---- !u!61 &8035842782116123395
+--- !u!61 &8146116239148869706
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -79,7 +79,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -93,7 +93,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.95, y: 0.95}
   m_EdgeRadius: 0
 --- !u!1 &6043265385569033473
 GameObject:
@@ -169,7 +169,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.30588233, g: 0.65675837, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

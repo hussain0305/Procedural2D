@@ -4,6 +4,13 @@ using UnityEngine;
 
 public enum RoomType {MainPath, Optional, StartingRoom, DestinationRoom, Wall, GridBorder}
 
+[System.Serializable]
+public struct RoomColors
+{
+    public RoomType roomtype;
+    public Color color;
+}
+
 public struct RoomProperties
 {
     private Vector2Int roomPosition;

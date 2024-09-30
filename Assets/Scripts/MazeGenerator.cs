@@ -13,12 +13,8 @@ public class MazeGenerator : MonoBehaviour
     public int cellSize;
     
     [Header("Prefabs")]
-    public GameObject inLevelWallPrefab;
-    public GameObject gridBorderPrefab;
-    public GameObject optionalRoomPrefab;
-    public GameObject startPrefab;
-    public GameObject destinationPrefab;
-    public GameObject mainPathPrefab;
+    public GameObject roomPrefab;
+    public GameObject wallPrefab;
 
     [Header("Map")]
     public Transform mainPath;
@@ -62,6 +58,7 @@ public class MazeGenerator : MonoBehaviour
         GetLongestPathInMaze();
         DrawMaze();
         MazeGenerated();
+        AddRoomNumbers();
     }
 
     private void GenerateMaze()
@@ -162,38 +159,37 @@ public class MazeGenerator : MonoBehaviour
                 
                 if (IsStartingNode(currentPosition))
                 {
-                    currentNodePrefab = startPrefab;
+                    currentNodePrefab = roomPrefab;
                     parentTransform = mainPath;
                     nodeType = RoomType.StartingRoom;
                 }
                 else if (IsDestinationNode(currentPosition))
                 {
-                    currentNodePrefab = destinationPrefab;
+                    currentNodePrefab = roomPrefab;
                     parentTransform = mainPath;
                     nodeType = RoomType.DestinationRoom;
                 }
                 else if (IsMainPathNode(currentPosition))
                 {
-                    currentNodePrefab = mainPathPrefab;
+                    currentNodePrefab = roomPrefab;
                     parentTransform = mainPath;
                     nodeType = RoomType.MainPath;
                 }
                 else if (grid[x, y] == 1)
                 {
-                    currentNodePrefab = inLevelWallPrefab;
+                    currentNodePrefab = wallPrefab;
                     parentTransform = levelWalls;
                     nodeType = RoomType.Wall;
                 }
                 else
                 {
-                    currentNodePrefab = optionalRoomPrefab;
+                    currentNodePrefab = roomPrefab;
                     parentTransform = optionalRooms;
                     nodeType = RoomType.Optional;
                 }
                 GameObject spawnedNode = Instantiate(currentNodePrefab, position, Quaternion.identity, parentTransform);
                 Room spawnedRoom = spawnedNode.GetComponent<Room>();
-                spawnedRoom.roomType = nodeType;
-                spawnedRoom.gridIndex = currentPosition;
+                spawnedRoom.SetRoomProperties(nodeType, currentPosition, GlobalData.Instance.GetRoomColor(nodeType));
                 allRooms.Add(currentPosition, spawnedRoom);
             }
         }
@@ -206,11 +202,10 @@ public class MazeGenerator : MonoBehaviour
                 if (x == -1 || x == gridSize || y == -1 || y == gridSize)
                 {
                     Vector3 wallPosition = new Vector3(cellSize * x, cellSize * y, 0);
-                    GameObject spawnedNode = Instantiate(gridBorderPrefab, wallPosition, Quaternion.identity, borderWalls);
+                    GameObject spawnedNode = Instantiate(wallPrefab, wallPosition, Quaternion.identity, borderWalls);
                     Room spawnedRoom = spawnedNode.GetComponent<Room>();
-                    spawnedRoom.roomType = RoomType.GridBorder;
                     Vector2Int currentPosition = new Vector2Int(x, y);
-                    spawnedRoom.gridIndex = currentPosition;
+                    spawnedRoom.SetRoomProperties(RoomType.GridBorder, currentPosition, GlobalData.Instance.GetRoomColor(RoomType.GridBorder));
                     allRooms.Add(currentPosition, spawnedRoom);
                 }
             }
@@ -293,5 +288,16 @@ public class MazeGenerator : MonoBehaviour
     private void MazeGenerated()
     {
         OnMazeGenerationComplete?.Invoke();
+    }
+
+    private void AddRoomNumbers()
+    {
+        int roomNumber = 0;
+        foreach (Vector2Int gridIndex in longestPath)
+        {
+            roomNumber++;
+            Room room = allRooms[gridIndex];
+            room.gameObject.name = "MainPathRoom - " + roomNumber;
+        }
     }
 }

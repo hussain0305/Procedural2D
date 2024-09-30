@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4552584029449096168}
   - component: {fileID: 3541231696009791291}
-  - component: {fileID: 6360790313724244497}
+  - component: {fileID: 8035842782116123395}
   m_Layer: 0
-  m_Name: InLevelWalls
+  m_Name: Walls
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   gridIndex: {x: 0, y: 0}
   roomType: 0
   roomNumber: 0
---- !u!61 &6360790313724244497
+--- !u!61 &8035842782116123395
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
