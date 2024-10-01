@@ -530,9 +530,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridSize: 0
-  cellSize: 0
+  cellSizeInterior: 0
+  cellSizeExterior: 0
   roomPrefab: {fileID: 75916327972605727, guid: 73c9273eceaee2c4cbb5ee03eb568ac9, type: 3}
-  wallPrefab: {fileID: 75916327972605727, guid: d950ced0f8219224aa7bc144939c1138, type: 3}
+  wallPrefab: {fileID: 75916327972605727, guid: 79b834fd83101c047943cba3a486b2e7, type: 3}
   mainPath: {fileID: 1054518721}
   optionalRooms: {fileID: 2135372224}
   levelWalls: {fileID: 1281369474}

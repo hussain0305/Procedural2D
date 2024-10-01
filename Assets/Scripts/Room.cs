@@ -6,7 +6,18 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
+    public Transform roomInterior;
+    public Transform leftWall;
+    public Transform rightWall;
+    public Transform ceiling;
+    public Transform floor;
+    public Transform topLeftCorner;
+    public Transform topRightCorner;
+    public Transform bottomLeftCorner;
+    public Transform bottomRightCorner;
+
     public SpriteRenderer roomSprite;
+    public SpriteRenderer[] borderSprites;
     
     [HideInInspector]
     public Vector2Int gridIndex;
@@ -17,28 +28,77 @@ public class Room : MonoBehaviour
     [HideInInspector]
     public int roomNumber;
 
+    [HideInInspector]
+    public RoomInterior roomVolume;
+
     private void Awake()
     {
-        SetScale();
+        SetScaleAndBorders();
     }
 
-    private void SetScale()
+    private void SetScaleAndBorders()
     {
-        transform.localScale = new Vector3(Global.CELL_SIZE, Global.CELL_SIZE, 1);
-    }
+        roomInterior.localScale = new Vector3(Global.CELL_SIZE_INTERIOR, Global.CELL_SIZE_INTERIOR, 1);
+        float wallDistanceFromCenter = 0.5f * (Global.CELL_SIZE_INTERIOR + leftWall.localScale.x);
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other && other.gameObject && other.gameObject.GetComponent<PlayerController>())
-        {
-            EventManager.OnRoomEntered?.Invoke(gridIndex);
-        }
-    }
+        Vector2Int leftDirection = Global.GetDirection(RoomEdge.Left);
+        leftWall.transform.localPosition = new Vector3(wallDistanceFromCenter * leftDirection.x, wallDistanceFromCenter * leftDirection.y);
+        leftWall.localScale = new Vector3(1, Global.CELL_SIZE_INTERIOR, 1);
+        
+        Vector2Int rightDirection = Global.GetDirection(RoomEdge.Right);
+        rightWall.transform.localPosition = new Vector3(wallDistanceFromCenter * rightDirection.x, wallDistanceFromCenter * rightDirection.y);
+        rightWall.localScale = new Vector3(1, Global.CELL_SIZE_INTERIOR, 1);
 
+        Vector2Int ceilingDirection = Global.GetDirection(RoomEdge.Ceiling);
+        ceiling.transform.localPosition = new Vector3(wallDistanceFromCenter * ceilingDirection.x, wallDistanceFromCenter * ceilingDirection.y);
+        ceiling.localScale = new Vector3(1, Global.CELL_SIZE_INTERIOR, 1);
+
+        Vector2Int floorDirection = Global.GetDirection(RoomEdge.Floor);
+        floor.transform.localPosition = new Vector3(wallDistanceFromCenter * floorDirection.x, wallDistanceFromCenter * floorDirection.y);
+        floor.localScale = new Vector3(1, Global.CELL_SIZE_INTERIOR, 1);
+        
+        topLeftCorner.transform.localPosition = new Vector3(-1 * wallDistanceFromCenter, wallDistanceFromCenter);
+        topRightCorner.transform.localPosition = new Vector3(wallDistanceFromCenter, wallDistanceFromCenter);
+        bottomLeftCorner.transform.localPosition = new Vector3(-1 * wallDistanceFromCenter, -1 * wallDistanceFromCenter);
+        bottomRightCorner.transform.localPosition = new Vector3(wallDistanceFromCenter, -1 * wallDistanceFromCenter);
+    }
+    
     public void SetRoomProperties(RoomType _roomType, Vector2Int _gridIndex, Color _color)
     {
         roomType = _roomType;
         gridIndex = _gridIndex;
         roomSprite.color = _color;
+
+        foreach (SpriteRenderer spr in borderSprites)
+        {
+            spr.color = _color;
+        }
+
+        roomVolume = GetComponentInChildren<RoomInterior>();
+        roomVolume.gridIndex = gridIndex;
     }
+
+    public void CreateOpening(RoomEdge _edge, RoomBorderHorizontal _panel)
+    {
+        foreach (RoomBorderPanel panel in GetComponentsInChildren<RoomBorderPanel>())
+        {
+            if (panel.edge == _edge && panel.horizontalPanel == _panel)
+            {
+                Destroy(panel.gameObject);
+                break;
+            }
+        }
+    }
+    public void CreateOpening(RoomEdge _edge, RoomBorderVertical _panel)
+    {
+        foreach (RoomBorderPanel panel in GetComponentsInChildren<RoomBorderPanel>())
+        {
+            if (panel.edge == _edge && panel.verticalPanel == _panel)
+            {
+                Destroy(panel.gameObject);
+                break;
+            }
+        }
+    }
+
 }

@@ -39,10 +39,71 @@ public enum Sector {
     RightBottom
 }
 
+[System.Serializable]
+public enum RoomEdge {
+    Left,
+    Right,
+    Ceiling,
+    Floor
+}
+
+[System.Serializable]
+public enum RoomBorderVertical {
+    Top,
+    MidTop,
+    MidBottom,
+    Bottom
+}
+
+[System.Serializable]
+public enum RoomBorderHorizontal {
+    Left,
+    MidLeft,
+    MidRight,
+    Right
+}
+
+public struct RoomPaths
+{
+    public Vector2Int room1;
+    public Vector2Int room2;
+
+    public RoomPaths(Vector2Int _room1, Vector2Int _room2)
+    {
+        room1 = _room1;
+        room2 = _room2;
+    }
+}
+
 public class Global : MonoBehaviour
 {
-    public const int GRID_SIZE = 6;
+    public static Dictionary<RoomEdge, Vector2Int> Directions
+    {
+        get
+        {
+            if (directions == null)
+            {
+                directions = new Dictionary<RoomEdge, Vector2Int>();
+                directions.Add(RoomEdge.Ceiling, new Vector2Int(0, 1));
+                directions.Add(RoomEdge.Right, new Vector2Int(1, 0));
+                directions.Add(RoomEdge.Floor, new Vector2Int(0, -1));
+                directions.Add(RoomEdge.Left, new Vector2Int(-1, 0));
+            }
+
+            return directions;
+        }
+    }
+    
+    private static Dictionary<RoomEdge, Vector2Int> directions;
+    
+    public const int GRID_SIZE = 8;
+    public const int CELL_SIZE_INTERIOR = 8;
     public const int CELL_SIZE = 10;
     public const int MIN_ROOMS_IN_MAIN_PATH = 14;
     public const int MAX_ROOMS_IN_MAIN_PATH = 20;
+
+    public static Vector2Int GetDirection(RoomEdge edge)
+    {
+        return Directions[edge];
+    }
 }

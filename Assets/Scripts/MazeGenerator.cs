@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -10,7 +11,9 @@ public class MazeGenerator : MonoBehaviour
     [HideInInspector]
     public int gridSize;
     [HideInInspector]
-    public int cellSize;
+    public int cellSizeInterior;
+    [HideInInspector]
+    public int cellSizeExterior;
     
     [Header("Prefabs")]
     public GameObject roomPrefab;
@@ -41,12 +44,14 @@ public class MazeGenerator : MonoBehaviour
     public Dictionary<Vector2Int, Room> allRooms;
 
     private List<Vector2Int> longestPath = new List<Vector2Int>();
+    private HashSet<RoomPaths> allPaths;
     
     public static event Action OnMazeGenerationComplete;
     public void Start()
     {
         gridSize = Global.GRID_SIZE;
-        cellSize = Global.CELL_SIZE;
+        cellSizeInterior = Global.CELL_SIZE_INTERIOR;
+        cellSizeExterior = Global.CELL_SIZE;
         allRooms = new Dictionary<Vector2Int, Room>();
         
         SetupMaze();
@@ -58,7 +63,7 @@ public class MazeGenerator : MonoBehaviour
         GetLongestPathInMaze();
         DrawMaze();
         MazeGenerated();
-        AddRoomNumbers();
+        GeneratePaths();
     }
 
     private void GenerateMaze()
@@ -151,7 +156,7 @@ public class MazeGenerator : MonoBehaviour
             for (int y = 0; y < gridSize; y++)
             {
                 Vector2Int currentPosition = new Vector2Int(x, y);
-                Vector3 position = new Vector3(cellSize * x,cellSize * y, 0);
+                Vector3 position = new Vector3(cellSizeExterior * x,cellSizeExterior * y, 0);
 
                 GameObject currentNodePrefab;
                 Transform parentTransform;
@@ -201,7 +206,7 @@ public class MazeGenerator : MonoBehaviour
             {
                 if (x == -1 || x == gridSize || y == -1 || y == gridSize)
                 {
-                    Vector3 wallPosition = new Vector3(cellSize * x, cellSize * y, 0);
+                    Vector3 wallPosition = new Vector3(cellSizeExterior * x, cellSizeExterior * y, 0);
                     GameObject spawnedNode = Instantiate(wallPrefab, wallPosition, Quaternion.identity, borderWalls);
                     Room spawnedRoom = spawnedNode.GetComponent<Room>();
                     Vector2Int currentPosition = new Vector2Int(x, y);
@@ -290,8 +295,60 @@ public class MazeGenerator : MonoBehaviour
         OnMazeGenerationComplete?.Invoke();
     }
 
-    private void AddRoomNumbers()
+    private void GeneratePaths()
     {
+        allPaths = new HashSet<RoomPaths>();
+        foreach (Vector2Int gridIndex in allRooms.Keys)
+        {
+            Room thisRoom = allRooms[gridIndex];
+            if (!IsVisitableRoom(thisRoom))
+            {
+                continue;
+            }
+            foreach (RoomEdge edge in Global.Directions.Keys)
+            {
+                Vector2Int neighbor = gridIndex + Global.Directions[edge];
+                RoomPaths pathA = new RoomPaths(gridIndex, neighbor);
+                RoomPaths pathB = new RoomPaths(neighbor, gridIndex);
+                if (allPaths.Contains(pathA) || allPaths.Contains(pathB))
+                {
+                    //this path has already been created
+                    continue;
+                }
+
+                if (allRooms.TryGetValue(neighbor, out var neighborRoom))
+                {
+                    RoomBorderHorizontal openHorizontalBorder = (RoomBorderHorizontal)Enum.GetValues(typeof(RoomBorderHorizontal)).GetValue(UnityEngine.Random.Range(0, Enum.GetValues(typeof(RoomBorderHorizontal)).Length));
+                    RoomBorderVertical openVerticalBorder = (RoomBorderVertical)Enum.GetValues(typeof(RoomBorderVertical)).GetValue(UnityEngine.Random.Range(0, Enum.GetValues(typeof(RoomBorderVertical)).Length));
+                    if (IsVisitableRoom(neighborRoom))
+                    {
+                        allPaths.Add(pathA);
+
+                        switch (edge)
+                        {
+                            case RoomEdge.Ceiling:
+                                //found a neighbor above this cell, so choose a horizontal border and open the corresponding one in both rooms
+                                thisRoom.CreateOpening(RoomEdge.Ceiling, openHorizontalBorder);
+                                neighborRoom.CreateOpening(RoomEdge.Floor, openHorizontalBorder);
+                                break;
+                            
+                            case RoomEdge.Floor:
+                                thisRoom.CreateOpening(RoomEdge.Floor, openHorizontalBorder);
+                                neighborRoom.CreateOpening(RoomEdge.Ceiling, openHorizontalBorder);
+                                break;
+                            case RoomEdge.Left:
+                                thisRoom.CreateOpening(RoomEdge.Left, openVerticalBorder);
+                                neighborRoom.CreateOpening(RoomEdge.Right, openVerticalBorder);
+                                break;
+                            case RoomEdge.Right:
+                                thisRoom.CreateOpening(RoomEdge.Right, openVerticalBorder);
+                                neighborRoom.CreateOpening(RoomEdge.Left, openVerticalBorder);
+                                break;
+                        }
+                    }
+                }
+            }
+        }
         int roomNumber = 0;
         foreach (Vector2Int gridIndex in longestPath)
         {
@@ -299,5 +356,10 @@ public class MazeGenerator : MonoBehaviour
             Room room = allRooms[gridIndex];
             room.gameObject.name = "MainPathRoom - " + roomNumber;
         }
+    }
+
+    public bool IsVisitableRoom(Room room)
+    {
+        return room.roomType != RoomType.Wall && room.roomType != RoomType.GridBorder;
     }
 }

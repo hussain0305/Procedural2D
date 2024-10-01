@@ -33,23 +33,19 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
         }
-        if (Input.GetButtonDown("Jump"))
-        {
-            Debug.Log(" JUMP PRESSED " + jumpsRemaining);
-        }
     }
 
     void Jump()
     {
-        Debug.Log(" JUMPING");
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         jumpsRemaining--;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.GetComponent<RoomBorderPanel>())
         {
+            Debug.Log("GROUNDED");
             isGrounded = true;
             jumpsRemaining = numJumps;
         }
