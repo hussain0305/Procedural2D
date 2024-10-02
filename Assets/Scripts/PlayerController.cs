@@ -7,55 +7,84 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
     public float gravityScale = 2f;
+    public float wallSlideSpeed = 2f;
 
-    private Rigidbody2D rb;
+    [HideInInspector]
+    public Rigidbody2D rb;
+    
+    private int additionalJumps = 0;
     private bool isGrounded = false;
+    private bool isTouchingWall = false;
     private int jumpsRemaining;
-    private Vector2 velocity;
-    private int numJumps = 3;
+    private float groundCheckRadius = 0.5f;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = gravityScale;
-        jumpsRemaining = numJumps;
+        jumpsRemaining = additionalJumps;
+        groundCheckRadius = (transform.localScale.x / 2) * 5 / 4;
     }
 
     void Update()
     {
-        // Horizontal movement
+        MovePlayer();
+        CheckIfGrounded();
+        CheckIfTouchingWall();
+        HandleJump();
+        HandleWallSlide();
+    }
+
+    void MovePlayer()
+    {
         float moveInput = Input.GetAxis("Horizontal");
-        velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-        rb.velocity = velocity;
+        rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+    }
 
-        // Jumping logic
-        if (Input.GetButtonDown("Jump") && jumpsRemaining > 0)
+    void HandleJump()
+    {
+        if (Input.GetButtonDown("Jump") && (isGrounded || jumpsRemaining > 0))
         {
-            Jump();
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            jumpsRemaining--;
         }
     }
 
-    void Jump()
+    void HandleWallSlide()
     {
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-        jumpsRemaining--;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.GetComponent<RoomBorderPanel>())
+        if (isTouchingWall && !isGrounded && rb.velocity.y < 0)
         {
-            Debug.Log("GROUNDED");
-            isGrounded = true;
-            jumpsRemaining = numJumps;
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -wallSlideSpeed));
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    void CheckIfGrounded()
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        isGrounded = Physics2D.OverlapCircle(transform.position, groundCheckRadius, GlobalData.Instance.groundLayer);
+
+        if (isGrounded)
         {
-            isGrounded = false;
+            jumpsRemaining = additionalJumps;
         }
     }
+
+    void CheckIfTouchingWall()
+    {
+        isTouchingWall = Physics2D.OverlapCircle(transform.position, groundCheckRadius, GlobalData.Instance.wallLayer);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        // Visualize ground check and wall check in the editor
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, groundCheckRadius);
+    }
+    
+    
+    #region Ability
+    public void IncrementNumJumps()
+    {
+        additionalJumps++;
+    }
+    #endregion
 }

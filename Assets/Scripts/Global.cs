@@ -5,6 +5,19 @@ using UnityEngine;
 public enum RoomType {MainPath, Optional, StartingRoom, DestinationRoom, Wall, GridBorder}
 
 [System.Serializable]
+public enum Ability { MultiJump, WallGrab}
+
+[System.Serializable]
+public enum PickupType { MultiJump, WallGrab}
+
+[System.Serializable]
+public struct PickupPrefabs
+{
+    public PickupType pickupType;
+    public GameObject prefab;
+}
+
+[System.Serializable]
 public struct RoomColors
 {
     public RoomType roomtype;

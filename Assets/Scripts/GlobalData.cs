@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewGlobalData", menuName = "ScriptableObjects/GlobalData", order = 1)]
@@ -23,6 +24,18 @@ public class GlobalData : ScriptableObject
     
     public RoomColors[] roomColors;
 
+    [Header("Collision Layers")] 
+    public LayerMask groundLayer;
+    public LayerMask wallLayer;
+    public LayerMask playerLayer;
+
+    [Header("Materials")]
+    public PhysicsMaterial2D wallSlideMaterial;
+    public PhysicsMaterial2D wallGrabMaterial;
+    
+    [Header("Pickups")]
+    public PickupPrefabs[] pickupPrefabs;
+
     public Color GetRoomColor(RoomType roomType)
     {
         foreach (RoomColors roomColor in roomColors)
@@ -33,5 +46,24 @@ public class GlobalData : ScriptableObject
             }
         }
         return Color.black;
+    }
+
+    private Dictionary<PickupType, GameObject> pickupPrefabDictionary;
+    public GameObject GetPickupPrefab(PickupType pickupType)
+    {
+        if (pickupPrefabDictionary == null)
+        {
+            pickupPrefabDictionary = new Dictionary<PickupType, GameObject>();
+            foreach (PickupPrefabs pickupPrefab in pickupPrefabs)
+            {
+                pickupPrefabDictionary.Add(pickupPrefab.pickupType, pickupPrefab.prefab);
+            }
+        }
+
+        if (pickupPrefabDictionary.ContainsKey(pickupType))
+        {
+            return pickupPrefabDictionary[pickupType];
+        }
+        return null;
     }
 }

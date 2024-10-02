@@ -12,10 +12,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Ceiling
+  - Wall
+  - Player
   - 
   - 
   - 
@@ -44,6 +44,9 @@ TagManager:
     locked: 0
   - name: RoomBackground
     uniqueID: 600384171
+    locked: 0
+  - name: Pickup
+    uniqueID: 1734304501
     locked: 0
   - name: Player
     uniqueID: 48312479

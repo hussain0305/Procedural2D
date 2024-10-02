@@ -25,3 +25,19 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 1}
   - roomtype: 5
     color: {r: 0, g: 0, b: 0, a: 1}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  wallSlideMaterial: {fileID: 6200000, guid: c23868650f46cdb47acb098fe7e1b50e, type: 2}
+  wallGrabMaterial: {fileID: 6200000, guid: 95dbec44a6428d049ad82b40d0b030e9, type: 2}
+  pickupPrefabs:
+  - pickupType: 0
+    prefab: {fileID: 2753899333968211182, guid: aacf8cc348f83fb4fb17296e7e5ac82e, type: 3}
+  - pickupType: 1
+    prefab: {fileID: 7998897779178623796, guid: 26232a2e25424864a8fcba770664b161, type: 3}

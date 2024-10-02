@@ -62,10 +62,12 @@ public class MazeGenerator : MonoBehaviour
         GenerateMaze();
         GetLongestPathInMaze();
         DrawMaze();
-        MazeGenerated();
         GeneratePaths();
+        PlacePickups();
+        
+        MazeGenerated();
     }
-
+    
     private void GenerateMaze()
     {
         grid = new int[gridSize, gridSize];
@@ -361,5 +363,11 @@ public class MazeGenerator : MonoBehaviour
     public bool IsVisitableRoom(Room room)
     {
         return room.roomType != RoomType.Wall && room.roomType != RoomType.GridBorder;
+    }
+    
+    private void PlacePickups()
+    {
+        allRooms[startNode].SpawnPickupInSector(PickupType.MultiJump);
+        allRooms[startNode].SpawnPickupInSector(PickupType.WallGrab);
     }
 }

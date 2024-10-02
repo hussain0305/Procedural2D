@@ -101,4 +101,13 @@ public class Room : MonoBehaviour
         }
     }
 
+    public void SpawnPickupInSector(PickupType pickup)
+    {
+        GameObject pickupPrefab = GlobalData.Instance.GetPickupPrefab(pickup);
+        if (pickupPrefab)
+        {
+            Instantiate(pickupPrefab, transform.position - new Vector3(4, 4, 0), Quaternion.identity, transform);
+        }
+    }
+
 }
