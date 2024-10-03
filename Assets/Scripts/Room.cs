@@ -38,29 +38,30 @@ public class Room : MonoBehaviour
 
     private void SetScaleAndBorders()
     {
-        roomInterior.localScale = new Vector3(Global.CELL_SIZE_INTERIOR, Global.CELL_SIZE_INTERIOR, 1);
-        float wallDistanceFromCenter = 0.5f * (Global.CELL_SIZE_INTERIOR + leftWall.localScale.x);
+        roomInterior.localScale = new Vector3(Global.CELL_SIZE_INTERIOR_X, Global.CELL_SIZE_INTERIOR_Y, 1);
+        float edgeDistanceFromCenter_x = 0.5f * (Global.CELL_SIZE_INTERIOR_X + leftWall.localScale.x);
+        float edgeDistanceFromCenter_y = 0.5f * (Global.CELL_SIZE_INTERIOR_Y + leftWall.localScale.x);
 
         Vector2Int leftDirection = Global.GetDirection(RoomEdge.Left);
-        leftWall.transform.localPosition = new Vector3(wallDistanceFromCenter * leftDirection.x, wallDistanceFromCenter * leftDirection.y);
-        leftWall.localScale = new Vector3(1, Global.CELL_SIZE_INTERIOR, 1);
+        leftWall.transform.localPosition = new Vector3(edgeDistanceFromCenter_x * leftDirection.x, edgeDistanceFromCenter_y * leftDirection.y);
+        leftWall.localScale = new Vector3(1, Global.CELL_SIZE_INTERIOR_Y, 1);
         
         Vector2Int rightDirection = Global.GetDirection(RoomEdge.Right);
-        rightWall.transform.localPosition = new Vector3(wallDistanceFromCenter * rightDirection.x, wallDistanceFromCenter * rightDirection.y);
-        rightWall.localScale = new Vector3(1, Global.CELL_SIZE_INTERIOR, 1);
+        rightWall.transform.localPosition = new Vector3(edgeDistanceFromCenter_x * rightDirection.x, edgeDistanceFromCenter_y * rightDirection.y);
+        rightWall.localScale = new Vector3(1, Global.CELL_SIZE_INTERIOR_Y, 1);
 
         Vector2Int ceilingDirection = Global.GetDirection(RoomEdge.Ceiling);
-        ceiling.transform.localPosition = new Vector3(wallDistanceFromCenter * ceilingDirection.x, wallDistanceFromCenter * ceilingDirection.y);
-        ceiling.localScale = new Vector3(1, Global.CELL_SIZE_INTERIOR, 1);
+        ceiling.transform.localPosition = new Vector3(edgeDistanceFromCenter_x * ceilingDirection.x, edgeDistanceFromCenter_y * ceilingDirection.y);
+        ceiling.localScale = new Vector3(1, Global.CELL_SIZE_INTERIOR_X, 1);
 
         Vector2Int floorDirection = Global.GetDirection(RoomEdge.Floor);
-        floor.transform.localPosition = new Vector3(wallDistanceFromCenter * floorDirection.x, wallDistanceFromCenter * floorDirection.y);
-        floor.localScale = new Vector3(1, Global.CELL_SIZE_INTERIOR, 1);
+        floor.transform.localPosition = new Vector3(edgeDistanceFromCenter_x * floorDirection.x, edgeDistanceFromCenter_y * floorDirection.y);
+        floor.localScale = new Vector3(1, Global.CELL_SIZE_INTERIOR_X, 1);
         
-        topLeftCorner.transform.localPosition = new Vector3(-1 * wallDistanceFromCenter, wallDistanceFromCenter);
-        topRightCorner.transform.localPosition = new Vector3(wallDistanceFromCenter, wallDistanceFromCenter);
-        bottomLeftCorner.transform.localPosition = new Vector3(-1 * wallDistanceFromCenter, -1 * wallDistanceFromCenter);
-        bottomRightCorner.transform.localPosition = new Vector3(wallDistanceFromCenter, -1 * wallDistanceFromCenter);
+        topLeftCorner.transform.localPosition = new Vector3(-1 * edgeDistanceFromCenter_x, edgeDistanceFromCenter_y);
+        topRightCorner.transform.localPosition = new Vector3(edgeDistanceFromCenter_x, edgeDistanceFromCenter_y);
+        bottomLeftCorner.transform.localPosition = new Vector3(-1 * edgeDistanceFromCenter_x, -1 * edgeDistanceFromCenter_y);
+        bottomRightCorner.transform.localPosition = new Vector3(edgeDistanceFromCenter_x, -1 * edgeDistanceFromCenter_y);
     }
     
     public void SetRoomProperties(RoomType _roomType, Vector2Int _gridIndex, Color _color)

@@ -11,9 +11,13 @@ public class MazeGenerator : MonoBehaviour
     [HideInInspector]
     public int gridSize;
     [HideInInspector]
-    public int cellSizeInterior;
+    public int cellSizeInterior_x;
     [HideInInspector]
-    public int cellSizeExterior;
+    public int cellSizeInterior_y;
+    [HideInInspector]
+    public int cellSizeExterior_x;
+    [HideInInspector]
+    public int cellSizeExterior_y;
     
     [Header("Prefabs")]
     public GameObject roomPrefab;
@@ -50,8 +54,10 @@ public class MazeGenerator : MonoBehaviour
     public void Start()
     {
         gridSize = Global.GRID_SIZE;
-        cellSizeInterior = Global.CELL_SIZE_INTERIOR;
-        cellSizeExterior = Global.CELL_SIZE;
+        cellSizeInterior_x = Global.CELL_SIZE_INTERIOR_X;
+        cellSizeInterior_y = Global.CELL_SIZE_INTERIOR_Y;
+        cellSizeExterior_x = Global.CELL_WALL_SIZE + Global.CELL_SIZE_INTERIOR_X;
+        cellSizeExterior_y = Global.CELL_WALL_SIZE + Global.CELL_SIZE_INTERIOR_Y;
         allRooms = new Dictionary<Vector2Int, Room>();
         
         SetupMaze();
@@ -158,7 +164,7 @@ public class MazeGenerator : MonoBehaviour
             for (int y = 0; y < gridSize; y++)
             {
                 Vector2Int currentPosition = new Vector2Int(x, y);
-                Vector3 position = new Vector3(cellSizeExterior * x,cellSizeExterior * y, 0);
+                Vector3 position = new Vector3(cellSizeExterior_x * x,cellSizeExterior_y * y, 0);
 
                 GameObject currentNodePrefab;
                 Transform parentTransform;
@@ -208,7 +214,7 @@ public class MazeGenerator : MonoBehaviour
             {
                 if (x == -1 || x == gridSize || y == -1 || y == gridSize)
                 {
-                    Vector3 wallPosition = new Vector3(cellSizeExterior * x, cellSizeExterior * y, 0);
+                    Vector3 wallPosition = new Vector3(cellSizeExterior_x * x, cellSizeExterior_y * y, 0);
                     GameObject spawnedNode = Instantiate(wallPrefab, wallPosition, Quaternion.identity, borderWalls);
                     Room spawnedRoom = spawnedNode.GetComponent<Room>();
                     Vector2Int currentPosition = new Vector2Int(x, y);
