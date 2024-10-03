@@ -110,7 +110,7 @@ public class Global : MonoBehaviour
     private static Dictionary<RoomEdge, Vector2Int> directions;
     
     public const int GRID_SIZE = 8;
-    public const int CELL_SIZE_INTERIOR_X = 12;
+    public const int CELL_SIZE_INTERIOR_X = 14;
     public const int CELL_SIZE_INTERIOR_Y = 8;
     public const int CELL_WALL_SIZE = 2;
     public const int MIN_ROOMS_IN_MAIN_PATH = 14;
