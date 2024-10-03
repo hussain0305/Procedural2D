@@ -206,6 +206,7 @@ GameObject:
   - component: {fileID: 7430876074270391666}
   - component: {fileID: 8543667029630305037}
   - component: {fileID: 4122939252079723146}
+  - component: {fileID: 1554457529071508484}
   m_Layer: 0
   m_Name: RoomInterior
   m_TagString: Untagged
@@ -287,6 +288,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridIndex: {x: 0, y: 0}
+--- !u!114 &1554457529071508484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883946497474253662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74330395fb3a3764184ed7d8be9f8c5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platformPrefab: {fileID: 7056408427868486686, guid: 13b003ba545b71e47a83f133859f141c, type: 3}
+  roomWidth: 14
+  roomHeight: 8
+  platformChance: 0.4
+  minPlatformHeight: 1
+  maxPlatformHeight: 3
+  minHorizontalGap: 1
+  minVerticalGap: 2
 --- !u!1 &1246158970201534213
 GameObject:
   m_ObjectHideFlags: 0
