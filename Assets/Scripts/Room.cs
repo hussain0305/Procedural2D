@@ -38,7 +38,7 @@ public class Room : MonoBehaviour
 
     private void SetScaleAndBorders()
     {
-        roomInterior.localScale = new Vector3(Global.CELL_SIZE_INTERIOR_X, Global.CELL_SIZE_INTERIOR_Y, 1);
+        roomSprite.transform.localScale = new Vector3(Global.CELL_SIZE_INTERIOR_X, Global.CELL_SIZE_INTERIOR_Y, 1);
         float edgeDistanceFromCenter_x = 0.5f * (Global.CELL_SIZE_INTERIOR_X + leftWall.localScale.x);
         float edgeDistanceFromCenter_y = 0.5f * (Global.CELL_SIZE_INTERIOR_Y + leftWall.localScale.x);
 

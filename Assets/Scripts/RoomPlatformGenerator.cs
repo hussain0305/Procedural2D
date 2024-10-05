@@ -127,8 +127,8 @@ public class RoomPlatformGenerator : MonoBehaviour
                 float localX = (x + i) + 0.5f;
                 float localY = (y - j) + 0.5f;
 
-                block.transform.localPosition = new Vector3(localX / roomWidth, localY / roomHeight, 0);
-                block.transform.localScale = new Vector3(1.0f / roomWidth, 1.0f / roomHeight, 1);
+                block.transform.localPosition = new Vector3(localX, localY, 0);
+                // block.transform.localScale = new Vector3(1.0f / roomWidth, 1.0f / roomHeight, 1);
             }
         }
     }
