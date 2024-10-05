@@ -88,6 +88,7 @@ public class RoomPlatformGenerator : MonoBehaviour
 
     void PlacePlatform(int x, int y, int length, int height)
     {
+        // Mark the grid tiles as occupied
         for (int i = 0; i < length; i++)
         {
             for (int j = 0; j < height; j++)
@@ -98,11 +99,19 @@ public class RoomPlatformGenerator : MonoBehaviour
             }
         }
 
-        GameObject platform = Instantiate(platformPrefab, transform);
+        for (int i = 0; i < length; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                GameObject block = Instantiate(platformPrefab, transform);
 
-        float localX = x + (length / 2.0f);
-        float localY = y - (height / 2.0f);
-        platform.transform.localPosition = new Vector3(localX / roomWidth, localY / roomHeight, 0);
-        platform.transform.localScale = new Vector3((float)length / roomWidth, (float)height / roomHeight, 1);
+                //0.5f needs to be added because the blocks are 1x1 and the anchor(placement position) is at the center of them
+                float localX = (x + i) + 0.5f;
+                float localY = (y - j) + 0.5f;
+            
+                block.transform.localPosition = new Vector3(localX / roomWidth, localY / roomHeight, 0);
+                block.transform.localScale = new Vector3(1.0f / roomWidth, 1.0f / roomHeight, 1);
+            }
+        }
     }
 }
