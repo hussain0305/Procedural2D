@@ -61,6 +61,7 @@ MonoBehaviour:
   - {fileID: 6551315169026441175}
   - {fileID: 3328375262795202981}
   - {fileID: 5724050953471080574}
+  wallTile: {fileID: 11400000, guid: ae7571a188b4ba54f8cfc50379bb71a9, type: 2}
   gridIndex: {x: 0, y: 0}
   roomType: 0
   roomNumber: 0

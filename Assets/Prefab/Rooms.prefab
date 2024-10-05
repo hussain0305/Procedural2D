@@ -61,6 +61,7 @@ MonoBehaviour:
   - {fileID: 6551315169026441175}
   - {fileID: 3328375262795202981}
   - {fileID: 5724050953471080574}
+  wallTile: {fileID: 11400000, guid: ae7571a188b4ba54f8cfc50379bb71a9, type: 2}
   gridIndex: {x: 0, y: 0}
   roomType: 0
   roomNumber: 0
@@ -204,8 +205,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7430876074270391666}
-  - component: {fileID: 8543667029630305037}
-  - component: {fileID: 4122939252079723146}
   - component: {fileID: 1554457529071508484}
   m_Layer: 0
   m_Name: RoomInterior
@@ -230,64 +229,6 @@ Transform:
   - {fileID: 7541329241547030924}
   m_Father: {fileID: 4552584029449096168}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &8543667029630305037
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 883946497474253662}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.95, y: 0.95}
-  m_EdgeRadius: 0
---- !u!114 &4122939252079723146
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 883946497474253662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb5f582b7918ee84cb29ac3f97de5b26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridIndex: {x: 0, y: 0}
 --- !u!114 &1554457529071508484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,7 +242,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platformPrefab: {fileID: 7056408427868486686, guid: 13b003ba545b71e47a83f133859f141c, type: 3}
-  platformTilemap: {fileID: 0}
   platformTile: {fileID: 11400000, guid: 91b7f30aa11ecd74abffc97f5cb26f41, type: 2}
   room: {fileID: 3541231696009791291}
   roomWidth: 14
@@ -1711,8 +1651,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7541329241547030924}
   - component: {fileID: 7827904267741133941}
+  - component: {fileID: 7505521418182384296}
+  - component: {fileID: 7619949706190443500}
   m_Layer: 0
-  m_Name: RoomColor
+  m_Name: RoomVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1785,6 +1727,64 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &7505521418182384296
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6043265385569033473}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &7619949706190443500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6043265385569033473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb5f582b7918ee84cb29ac3f97de5b26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridIndex: {x: 0, y: 0}
 --- !u!1 &6104530948662575816
 GameObject:
   m_ObjectHideFlags: 0

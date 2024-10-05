@@ -587,6 +587,7 @@ MonoBehaviour:
   levelWalls: {fileID: 1281369474}
   borderWalls: {fileID: 1377521526}
   platformTilemap: {fileID: 1588524055}
+  wallTilemap: {fileID: 1906300621}
   startNode: {x: 0, y: 0}
   destinationNode: {x: 0, y: 0}
 --- !u!1 &1588524052
@@ -812,7 +813,7 @@ Transform:
   m_GameObject: {fileID: 1906300618}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.62, y: 0.07, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

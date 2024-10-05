@@ -32,6 +32,7 @@ public class MazeGenerator : MonoBehaviour
 
     [Header("Maze Tilemaps")]
     public Tilemap platformTilemap;
+    public Tilemap wallTilemap;
     
     private Vector2Int[] directions = new Vector2Int[]
     {
@@ -208,11 +209,8 @@ public class MazeGenerator : MonoBehaviour
                 }
                 GameObject spawnedNode = Instantiate(currentNodePrefab, position, Quaternion.identity, parentTransform);
                 Room spawnedRoom = spawnedNode.GetComponent<Room>();
-                spawnedRoom.SetRoomProperties(nodeType, currentPosition, GlobalData.Instance.GetRoomColor(nodeType));
-                if (spawnedRoom.GetComponentInChildren<RoomPlatformGenerator>())
-                {
-                    spawnedRoom.GetComponentInChildren<RoomPlatformGenerator>().Init(platformTilemap);
-                }
+                spawnedRoom.SetRoomProperties(nodeType, currentPosition, GlobalData.Instance.GetRoomColor(nodeType), wallTilemap);
+                spawnedRoom.GetComponentInChildren<RoomPlatformGenerator>()?.Init(platformTilemap);
                 allRooms.Add(currentPosition, spawnedRoom);
             }
         }
@@ -228,7 +226,7 @@ public class MazeGenerator : MonoBehaviour
                     GameObject spawnedNode = Instantiate(wallPrefab, wallPosition, Quaternion.identity, borderWalls);
                     Room spawnedRoom = spawnedNode.GetComponent<Room>();
                     Vector2Int currentPosition = new Vector2Int(x, y);
-                    spawnedRoom.SetRoomProperties(RoomType.GridBorder, currentPosition, GlobalData.Instance.GetRoomColor(RoomType.GridBorder));
+                    spawnedRoom.SetRoomProperties(RoomType.GridBorder, currentPosition, GlobalData.Instance.GetRoomColor(RoomType.GridBorder), wallTilemap);
                     allRooms.Add(currentPosition, spawnedRoom);
                 }
             }

@@ -6,7 +6,6 @@ using UnityEngine.Tilemaps;
 public class RoomPlatformGenerator : MonoBehaviour
 {
     public GameObject platformPrefab;
-    public Tilemap platformTilemap;
     public Tile platformTile;
 
     public Room room;
@@ -20,7 +19,8 @@ public class RoomPlatformGenerator : MonoBehaviour
 
     private bool[,] grid;
     private Vector2Int roomWorldPosition;
-    
+    private Tilemap platformTilemap;
+
     public void Init(Tilemap _platformTilemap)
     {
         IEnumerator DelayedInit()
