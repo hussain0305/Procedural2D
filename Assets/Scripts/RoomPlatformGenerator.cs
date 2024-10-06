@@ -59,6 +59,8 @@ public class RoomPlatformGenerator : MonoBehaviour
                 }
             }
         }
+
+        room.setupProgress.platformsGenerated = true;
     }
 
     bool CanPlacePlatform(int gridX, int gridY, int length, int height)
@@ -131,5 +133,7 @@ public class RoomPlatformGenerator : MonoBehaviour
                 // block.transform.localScale = new Vector3(1.0f / roomWidth, 1.0f / roomHeight, 1);
             }
         }
+
+        room.setupProgress.platformTilesDone = true;
     }
 }

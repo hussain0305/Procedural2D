@@ -72,6 +72,22 @@ public struct RoomPaths
     }
 }
 
+public struct RoomSetupProgress
+{
+    public bool platformsGenerated;
+    public bool platformTilesDone;
+    public bool borderBlocksPlaced;
+    public bool borderTilesDone;
+    public bool pathsCreated;
+    public bool pathTilesRemoved;
+
+    public bool LayoutCompleted()
+    {
+        return platformsGenerated && platformTilesDone && borderBlocksPlaced && borderTilesDone && pathsCreated &&
+               pathTilesRemoved;
+    }
+}
+
 public class Global : MonoBehaviour
 {
     public static Dictionary<RoomEdge, Vector2Int> Directions

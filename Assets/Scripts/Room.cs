@@ -33,8 +33,10 @@ public class Room : MonoBehaviour
     [HideInInspector]
     public RoomInterior roomVolume;
 
+    [HideInInspector]
+    public RoomSetupProgress setupProgress;
+
     private Tilemap wallTilemap;
-    private bool borderTilesPlaced = false;
     
     private void Awake()
     {
@@ -68,6 +70,7 @@ public class Room : MonoBehaviour
         rightWall.SetupRightBorder();
         ceiling.SetupCeiling();
         floor.SetupFloor();
+        setupProgress.borderBlocksPlaced = true;
     }
 
     private void PlaceBorderTiles()
@@ -101,7 +104,7 @@ public class Room : MonoBehaviour
                 wallTilemap.SetTile(tilePosition, wallTile);
             }
 
-            borderTilesPlaced = true;
+            setupProgress.borderTilesDone = true;
         }
 
         StartCoroutine(DelayedDrawTiles());
@@ -124,7 +127,7 @@ public class Room : MonoBehaviour
     {
         IEnumerator CreateOpeningAfterBorderTilesLaid()
         {
-            yield return new WaitUntil(() => borderTilesPlaced);
+            yield return new WaitUntil(() => setupProgress.borderTilesDone);
             
             foreach (RoomBorder roomBorder in GetComponentsInChildren<RoomBorder>())
             {
@@ -143,6 +146,9 @@ public class Room : MonoBehaviour
                     break;
                 }
             }
+
+            setupProgress.pathsCreated = true;
+            setupProgress.pathTilesRemoved = true;
         }
 
         StartCoroutine(CreateOpeningAfterBorderTilesLaid());
