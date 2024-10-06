@@ -186,11 +186,6 @@ MonoBehaviour:
   ceiling: {fileID: 3121935791832640443}
   floor: {fileID: 4951890789190281519}
   roomSprite: {fileID: 7827904267741133941}
-  borderSprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   wallTile: {fileID: 11400000, guid: ae7571a188b4ba54f8cfc50379bb71a9, type: 2}
   gridIndex: {x: 0, y: 0}
   roomType: 0
@@ -4378,7 +4373,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.87, y: 0.8}
   m_EdgeRadius: 0
 --- !u!114 &7619949706190443500
 MonoBehaviour:
