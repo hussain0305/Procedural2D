@@ -34,7 +34,8 @@ public class Room : MonoBehaviour
     public RoomInterior roomVolume;
 
     private Tilemap wallTilemap;
-
+    private bool borderTilesPlaced = false;
+    
     private void Awake()
     {
         SetScaleAndBorders();
@@ -83,7 +84,7 @@ public class Room : MonoBehaviour
             Vector2Int bottomRightGridPosition = new Vector2Int(roomHalfWidth, -roomHalfHeight - 1);
             Vector2Int topRightGridPosition = new Vector2Int(roomHalfWidth, roomHalfHeight);
             Vector2Int bottomLeftGridPosition = new Vector2Int(-roomHalfWidth - 1, -roomHalfHeight - 1);
-            Vector3Int tilePosition = new Vector3Int(topLeftGridPosition.x + roomWorldPosition.x, topLeftGridPosition.y + roomWorldPosition.y, 0);
+            Vector3Int tilePosition;
             
             for (int x = topLeftGridPosition.x; x <= topRightGridPosition.x; x++)
             {
@@ -99,6 +100,8 @@ public class Room : MonoBehaviour
                 tilePosition = new Vector3Int(topRightGridPosition.x + roomWorldPosition.x, y + roomWorldPosition.y, 0);
                 wallTilemap.SetTile(tilePosition, wallTile);
             }
+
+            borderTilesPlaced = true;
         }
 
         StartCoroutine(DelayedDrawTiles());
@@ -114,26 +117,35 @@ public class Room : MonoBehaviour
         roomVolume.gridIndex = gridIndex;
 
         wallTilemap = _wallsTilemap;
-        // PlaceBorderTiles();
+        PlaceBorderTiles();
     }
 
     public void CreateOpening(RoomEdge _edge, int[] path)
     {
-        foreach (RoomBorder roomBorder in GetComponentsInChildren<RoomBorder>())
+        IEnumerator CreateOpeningAfterBorderTilesLaid()
         {
-            if (roomBorder.edge == _edge)
+            yield return new WaitUntil(() => borderTilesPlaced);
+            
+            foreach (RoomBorder roomBorder in GetComponentsInChildren<RoomBorder>())
             {
-                for (int i = path[0]; i <= path[path.Length - 1]; i++)
+                if (roomBorder.edge == _edge)
                 {
-                    if (roomBorder.borderBlock[i] != null)
+                    for (int i = path[0]; i <= path[path.Length - 1]; i++)
                     {
-                        Destroy(roomBorder.borderBlock[i]);
-                        roomBorder.borderBlock[i] = null;
+                        if (roomBorder.borderBlock[i] != null)
+                        {
+                            Vector3Int removingTile = new Vector3Int((int)(roomBorder.borderBlock[i].transform.position.x - 0.5f), (int)(roomBorder.borderBlock[i].transform.position.y - 0.5f), 0);
+                            wallTilemap.SetTile(removingTile, null);  
+                            Destroy(roomBorder.borderBlock[i]);
+                            roomBorder.borderBlock[i] = null;
+                        }
                     }
+                    break;
                 }
-                break;
             }
         }
+
+        StartCoroutine(CreateOpeningAfterBorderTilesLaid());
     }
 
     public void SpawnPickupInSector(PickupType pickup)
