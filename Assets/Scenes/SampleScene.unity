@@ -581,7 +581,7 @@ MonoBehaviour:
   cellSizeExterior_x: 0
   cellSizeExterior_y: 0
   roomPrefab: {fileID: 75916327972605727, guid: 73c9273eceaee2c4cbb5ee03eb568ac9, type: 3}
-  wallPrefab: {fileID: 75916327972605727, guid: 79b834fd83101c047943cba3a486b2e7, type: 3}
+  wallPrefab: {fileID: 75916327972605727, guid: 6add4477c9f70cb4ba4fc634a15866cb, type: 3}
   mainPath: {fileID: 1054518721}
   optionalRooms: {fileID: 2135372224}
   levelWalls: {fileID: 1281369474}

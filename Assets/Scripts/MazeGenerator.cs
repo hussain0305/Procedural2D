@@ -334,31 +334,33 @@ public class MazeGenerator : MonoBehaviour
 
                 if (allRooms.TryGetValue(neighbor, out var neighborRoom))
                 {
-                    RoomBorderHorizontal openHorizontalBorder = (RoomBorderHorizontal)Enum.GetValues(typeof(RoomBorderHorizontal)).GetValue(UnityEngine.Random.Range(0, Enum.GetValues(typeof(RoomBorderHorizontal)).Length));
-                    RoomBorderVertical openVerticalBorder = (RoomBorderVertical)Enum.GetValues(typeof(RoomBorderVertical)).GetValue(UnityEngine.Random.Range(0, Enum.GetValues(typeof(RoomBorderVertical)).Length));
                     if (IsVisitableRoom(neighborRoom))
                     {
                         allPaths.Add(pathA);
-
+                        int[] path;
                         switch (edge)
                         {
                             case RoomEdge.Ceiling:
                                 //found a neighbor above this cell, so choose a horizontal border and open the corresponding one in both rooms
-                                thisRoom.CreateOpening(RoomEdge.Ceiling, openHorizontalBorder);
-                                neighborRoom.CreateOpening(RoomEdge.Floor, openHorizontalBorder);
+                                path = GetPathIndices(RoomEdge.Ceiling);
+                                thisRoom.CreateOpening(RoomEdge.Ceiling, path);
+                                neighborRoom.CreateOpening(RoomEdge.Floor, path);
                                 break;
                             
                             case RoomEdge.Floor:
-                                thisRoom.CreateOpening(RoomEdge.Floor, openHorizontalBorder);
-                                neighborRoom.CreateOpening(RoomEdge.Ceiling, openHorizontalBorder);
+                                path = GetPathIndices(RoomEdge.Floor);
+                                thisRoom.CreateOpening(RoomEdge.Floor, path);
+                                neighborRoom.CreateOpening(RoomEdge.Ceiling, path);
                                 break;
                             case RoomEdge.Left:
-                                thisRoom.CreateOpening(RoomEdge.Left, openVerticalBorder);
-                                neighborRoom.CreateOpening(RoomEdge.Right, openVerticalBorder);
+                                path = GetPathIndices(RoomEdge.Left);
+                                thisRoom.CreateOpening(RoomEdge.Left, path);
+                                neighborRoom.CreateOpening(RoomEdge.Right, path);
                                 break;
                             case RoomEdge.Right:
-                                thisRoom.CreateOpening(RoomEdge.Right, openVerticalBorder);
-                                neighborRoom.CreateOpening(RoomEdge.Left, openVerticalBorder);
+                                path = GetPathIndices(RoomEdge.Right);
+                                thisRoom.CreateOpening(RoomEdge.Right, path);
+                                neighborRoom.CreateOpening(RoomEdge.Left, path);
                                 break;
                         }
                     }
@@ -383,5 +385,19 @@ public class MazeGenerator : MonoBehaviour
     {
         allRooms[startNode].SpawnPickupInSector(PickupType.MultiJump);
         allRooms[startNode].SpawnPickupInSector(PickupType.WallGrab);
+    }
+
+    private int[]GetPathIndices(RoomEdge edge)
+    {
+        bool isAWall = edge == RoomEdge.Left || edge == RoomEdge.Right;
+        int rangeLength = Random.Range(Global.MIN_PATH_WIDTH, Global.MAX_PATH_WIDTH + 1);
+        int start = Random.Range(0, (isAWall ? Global.CELL_SIZE_INTERIOR_Y : Global.CELL_SIZE_INTERIOR_X) - rangeLength + 1);
+        int[] result = new int[rangeLength];
+        for (int i = 0; i < rangeLength; i++)
+        {
+            result[i] = start + i;
+        }
+
+        return result;
     }
 }

@@ -60,22 +60,6 @@ public enum RoomEdge {
     Floor
 }
 
-[System.Serializable]
-public enum RoomBorderVertical {
-    Top,
-    MidTop,
-    MidBottom,
-    Bottom
-}
-
-[System.Serializable]
-public enum RoomBorderHorizontal {
-    Left,
-    MidLeft,
-    MidRight,
-    Right
-}
-
 public struct RoomPaths
 {
     public Vector2Int room1;
@@ -113,6 +97,8 @@ public class Global : MonoBehaviour
     public const int CELL_SIZE_INTERIOR_X = 14;
     public const int CELL_SIZE_INTERIOR_Y = 8;
     public const int CELL_WALL_SIZE = 2;
+    public const int MIN_PATH_WIDTH = 2;
+    public const int MAX_PATH_WIDTH = 5;
     public const int MIN_ROOMS_IN_MAIN_PATH = 14;
     public const int MAX_ROOMS_IN_MAIN_PATH = 20;
 
