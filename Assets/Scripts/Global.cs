@@ -74,12 +74,47 @@ public struct RoomPaths
 
 public struct RoomSetupProgress
 {
-    public bool platformsGenerated;
-    public bool platformTilesDone;
-    public bool borderBlocksPlaced;
-    public bool borderTilesDone;
-    public bool pathsCreated;
-    public bool pathTilesRemoved;
+    private bool platformsGenerated;
+    private bool platformTilesDone;
+    private bool borderBlocksPlaced;
+    private bool borderTilesDone;
+    private bool pathsCreated;
+    private bool pathTilesRemoved;
+
+    public void SetPlatformsGenerationCompleted()
+    {
+        platformsGenerated = true;
+    }
+    
+    public void SetPlatformTilesCompleted()
+    {
+        platformTilesDone = true;
+    }
+    
+    public void SetBorderBlocksPlacementCompleted()
+    {
+        borderBlocksPlaced = true;
+    }
+    
+    public void SetBorderTilesPlacementCompleted()
+    {
+        borderTilesDone = true;
+    }
+    
+    public void SetPathCreationCompleted()
+    {
+        pathsCreated = true;
+    }
+    
+    public void SetPathTilesRemovalCompleted()
+    {
+        pathTilesRemoved = true;
+    }
+
+    public bool GetBorderTilesPlaced()
+    {
+        return borderTilesDone;
+    }
 
     public bool LayoutCompleted()
     {

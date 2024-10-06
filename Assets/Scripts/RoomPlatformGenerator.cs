@@ -60,7 +60,7 @@ public class RoomPlatformGenerator : MonoBehaviour
             }
         }
 
-        room.setupProgress.platformsGenerated = true;
+        room.setupProgress.SetPlatformsGenerationCompleted();
     }
 
     bool CanPlacePlatform(int gridX, int gridY, int length, int height)
@@ -134,6 +134,7 @@ public class RoomPlatformGenerator : MonoBehaviour
             }
         }
 
-        room.setupProgress.platformTilesDone = true;
+        room.setupProgress.SetPlatformTilesCompleted();
+        room.grid = grid;
     }
 }

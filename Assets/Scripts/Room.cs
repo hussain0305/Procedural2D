@@ -20,6 +20,8 @@ public class Room : MonoBehaviour
     public SpriteRenderer roomSprite;
 
     public Tile wallTile;
+
+    public RoomAnalyzer roomAnalyzer;
     
     [HideInInspector]
     public Vector2Int gridIndex;
@@ -35,6 +37,9 @@ public class Room : MonoBehaviour
 
     [HideInInspector]
     public RoomSetupProgress setupProgress;
+
+    [HideInInspector]
+    public bool[,] grid;
 
     private Tilemap wallTilemap;
     
@@ -70,7 +75,7 @@ public class Room : MonoBehaviour
         rightWall.SetupRightBorder();
         ceiling.SetupCeiling();
         floor.SetupFloor();
-        setupProgress.borderBlocksPlaced = true;
+        setupProgress.SetBorderBlocksPlacementCompleted();
     }
 
     private void PlaceBorderTiles()
@@ -104,7 +109,7 @@ public class Room : MonoBehaviour
                 wallTilemap.SetTile(tilePosition, wallTile);
             }
 
-            setupProgress.borderTilesDone = true;
+            setupProgress.SetBorderTilesPlacementCompleted();
         }
 
         StartCoroutine(DelayedDrawTiles());
@@ -127,7 +132,7 @@ public class Room : MonoBehaviour
     {
         IEnumerator CreateOpeningAfterBorderTilesLaid()
         {
-            yield return new WaitUntil(() => setupProgress.borderTilesDone);
+            yield return new WaitUntil(() => setupProgress.GetBorderTilesPlaced());
             
             foreach (RoomBorder roomBorder in GetComponentsInChildren<RoomBorder>())
             {
@@ -147,8 +152,8 @@ public class Room : MonoBehaviour
                 }
             }
 
-            setupProgress.pathsCreated = true;
-            setupProgress.pathTilesRemoved = true;
+            setupProgress.SetPathCreationCompleted();
+            setupProgress.SetPathTilesRemovalCompleted();
         }
 
         StartCoroutine(CreateOpeningAfterBorderTilesLaid());
@@ -161,5 +166,10 @@ public class Room : MonoBehaviour
         {
             Instantiate(pickupPrefab, transform.position - new Vector3(4, 4, 0), Quaternion.identity, transform);
         }
+    }
+
+    public void AnalyzeRoom()
+    {
+        roomAnalyzer?.AnalyzeRoom(grid);
     }
 }

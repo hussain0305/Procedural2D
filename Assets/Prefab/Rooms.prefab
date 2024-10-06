@@ -187,6 +187,7 @@ MonoBehaviour:
   floor: {fileID: 4951890789190281519}
   roomSprite: {fileID: 7827904267741133941}
   wallTile: {fileID: 11400000, guid: ae7571a188b4ba54f8cfc50379bb71a9, type: 2}
+  roomAnalyzer: {fileID: 1828597828546269086}
   gridIndex: {x: 0, y: 0}
   roomType: 0
   roomNumber: 0
@@ -851,6 +852,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7430876074270391666}
   - component: {fileID: 1554457529071508484}
+  - component: {fileID: 1828597828546269086}
   m_Layer: 0
   m_Name: RoomInterior
   m_TagString: Untagged
@@ -896,6 +898,18 @@ MonoBehaviour:
   maxPlatformHeight: 3
   minHorizontalGap: 1
   minVerticalGap: 2
+--- !u!114 &1828597828546269086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883946497474253662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 063e6d87b9e44d34cb6c80a60fc4735f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1041526225048117797
 GameObject:
   m_ObjectHideFlags: 0

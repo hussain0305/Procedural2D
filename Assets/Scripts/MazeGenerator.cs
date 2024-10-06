@@ -77,8 +77,25 @@ public class MazeGenerator : MonoBehaviour
         PlacePickups();
         
         MazeGenerated();
+
+        AnalyzeRooms();
     }
-    
+
+    private void AnalyzeRooms()
+    {
+        IEnumerator AnalyzeRoomsAfterDelay()
+        {
+            yield return new WaitForSeconds(1);
+            foreach (Room room in allRooms.Values)
+            {
+                room.AnalyzeRoom();
+                yield return null;
+            }
+        }
+
+        StartCoroutine(AnalyzeRoomsAfterDelay());
+    }
+
     private void GenerateMaze()
     {
         grid = new int[gridSize, gridSize];
