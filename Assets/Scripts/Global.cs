@@ -152,6 +152,10 @@ public class Global : MonoBehaviour
     public const int MAX_PATH_WIDTH = 5;
     public const int MIN_ROOMS_IN_MAIN_PATH = 14;
     public const int MAX_ROOMS_IN_MAIN_PATH = 20;
+    
+    //Room Analysis
+    public const int VERTICAL_LANE_THRESHOLD = 6;
+    public const int HORIZONTAL_LANE_THRESHOLD = 10;
 
     public static Vector2Int GetDirection(RoomEdge edge)
     {
