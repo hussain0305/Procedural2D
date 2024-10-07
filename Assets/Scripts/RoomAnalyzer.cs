@@ -181,10 +181,12 @@ public class RoomAnalyzer : MonoBehaviour
         {
             for (int y = startY; y < startY + height; y++)
             {
-                areaCells.Add(new Vector2Int(x, y));
+                if (!grid[x, y])
+                {
+                    areaCells.Add(new Vector2Int(x, y));
+                }
             }
         }
-
         return areaCells;
     }
 

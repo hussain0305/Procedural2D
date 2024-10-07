@@ -232,22 +232,22 @@ public class MazeGenerator : MonoBehaviour
             }
         }
         
-        //Draw walls arounf the grid
-        for (int x = -1; x <= gridSize; x++)
-        {
-            for (int y = -1; y <= gridSize; y++)
-            {
-                if (x == -1 || x == gridSize || y == -1 || y == gridSize)
-                {
-                    Vector3 wallPosition = new Vector3(cellSizeExterior_x * x, cellSizeExterior_y * y, 0);
-                    GameObject spawnedNode = Instantiate(wallPrefab, wallPosition, Quaternion.identity, borderWalls);
-                    Room spawnedRoom = spawnedNode.GetComponent<Room>();
-                    Vector2Int currentPosition = new Vector2Int(x, y);
-                    spawnedRoom.SetRoomProperties(RoomType.GridBorder, currentPosition, GlobalData.Instance.GetRoomColor(RoomType.GridBorder), wallTilemap);
-                    allRooms.Add(currentPosition, spawnedRoom);
-                }
-            }
-        }
+        // //Draw walls arounf the grid
+        // for (int x = -1; x <= gridSize; x++)
+        // {
+        //     for (int y = -1; y <= gridSize; y++)
+        //     {
+        //         if (x == -1 || x == gridSize || y == -1 || y == gridSize)
+        //         {
+        //             Vector3 wallPosition = new Vector3(cellSizeExterior_x * x, cellSizeExterior_y * y, 0);
+        //             GameObject spawnedNode = Instantiate(wallPrefab, wallPosition, Quaternion.identity, borderWalls);
+        //             Room spawnedRoom = spawnedNode.GetComponent<Room>();
+        //             Vector2Int currentPosition = new Vector2Int(x, y);
+        //             spawnedRoom.SetRoomProperties(RoomType.GridBorder, currentPosition, GlobalData.Instance.GetRoomColor(RoomType.GridBorder), wallTilemap);
+        //             allRooms.Add(currentPosition, spawnedRoom);
+        //         }
+        //     }
+        // }
     }
 
     private void GetLongestPathInMaze()
