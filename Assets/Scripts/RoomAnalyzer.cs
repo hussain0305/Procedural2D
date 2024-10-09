@@ -121,9 +121,9 @@ public class RoomAnalyzer : MonoBehaviour
                 if (grid[x, y] || visited[x, y])
                     continue;
 
-                List<Vector2Int> closedSpace = FindClosedSpace(x, y);
+                List<Vector2Int> closedSpace = FindClosedSpace(x, y, visited);
 
-                if (closedSpace.Count >= 4 && IsClosedOnThreeSides(closedSpace))
+                if (closedSpace.Count >= 4 && closedSpace.Count <= 9 && HasHindrancesOnThreeSides(closedSpace))
                 {
                     closedSpaces.Add(closedSpace);
                     foreach (var cell in closedSpace)
@@ -137,7 +137,7 @@ public class RoomAnalyzer : MonoBehaviour
         return closedSpaces;
     }
 
-    List<Vector2Int> FindClosedSpace(int startX, int startY)
+    List<Vector2Int> FindClosedSpace(int startX, int startY, bool[,] visited)
     {
         List<Vector2Int> area = new List<Vector2Int>();
 
@@ -148,7 +148,7 @@ public class RoomAnalyzer : MonoBehaviour
                 if (startX + width > roomWidth || startY + height > roomHeight)
                     continue;
 
-                if (IsAreaFree(startX, startY, width, height))
+                if (IsClosedArea(startX, startY, width, height, visited))
                 {
                     for (int x = startX; x < startX + width; x++)
                     {
@@ -157,40 +157,76 @@ public class RoomAnalyzer : MonoBehaviour
                             area.Add(new Vector2Int(x, y));
                         }
                     }
+
                     return area;
                 }
             }
         }
 
+        MarkVisited(startX, startY, visited, 3, 3);
+
         return area;
     }
 
-    bool IsAreaFree(int startX, int startY, int width, int height)
+    bool IsClosedArea(int startX, int startY, int width, int height, bool[,] visited)
     {
         for (int x = startX; x < startX + width; x++)
         {
             for (int y = startY; y < startY + height; y++)
             {
-                if (grid[x, y])
+                if (visited[x, y] || grid[x, y])
                     return false;
             }
         }
+
+        for (int x = startX - 1; x <= startX + width; x++)
+        {
+            for (int y = startY - 1; y <= startY + height; y++)
+            {
+                if (x >= 0 && x < roomWidth && y >= 0 && y < roomHeight && !grid[x, y] && !visited[x, y])
+                    return false;
+            }
+        }
+
         return true;
     }
 
-    bool IsClosedOnThreeSides(List<Vector2Int> area)
+    void MarkVisited(int startX, int startY, bool[,] visited, int width, int height)
     {
-        HashSet<string> occupiedNeighbors = new HashSet<string>();
+        for (int x = startX; x < startX + width && x < roomWidth; x++)
+        {
+            for (int y = startY; y < startY + height && y < roomHeight; y++)
+            {
+                visited[x, y] = true;
+            }
+        }
+    }
+
+    bool HasHindrancesOnThreeSides(List<Vector2Int> area)
+    {
+        HashSet<string> hindrances = new HashSet<string>();
 
         foreach (var cell in area)
         {
-            if (cell.x == 0 || grid[cell.x - 1, cell.y]) occupiedNeighbors.Add("left");
-            if (cell.x == roomWidth - 1 || grid[cell.x + 1, cell.y]) occupiedNeighbors.Add("right");
-            if (cell.y == 0 || grid[cell.x, cell.y - 1]) occupiedNeighbors.Add("bottom");
-            if (cell.y == roomHeight - 1 || grid[cell.x, cell.y + 1]) occupiedNeighbors.Add("top");
+            if (cell.x == 0 || grid[cell.x - 1, cell.y]) hindrances.Add("left");
+            if (cell.x == roomWidth - 1 || grid[cell.x + 1, cell.y]) hindrances.Add("right");
+            if (cell.y == 0 || grid[cell.x, cell.y - 1]) hindrances.Add("bottom");
+            if (cell.y == roomHeight - 1 || grid[cell.x, cell.y + 1]) hindrances.Add("top");
         }
 
-        return occupiedNeighbors.Count >= 3;
+        return hindrances.Count >= 3;
+    }
+
+    bool RaycastForOpenPath(Vector2Int cell, Vector2 direction)
+    {
+        // Convert grid coordinates to world space (depending on your coordinate system)
+        Vector3 worldPosition = new Vector3(cell.x, cell.y, 0); 
+
+        // Perform the raycast
+        RaycastHit2D hit = Physics2D.Raycast(worldPosition, direction, 1.0f); // 1 unit ray
+
+        // Return true if the raycast hits a collider (indicating a closed path)
+        return hit.collider != null;
     }
 
     List<List<Vector2Int>> DetectSpaciousAreas()
