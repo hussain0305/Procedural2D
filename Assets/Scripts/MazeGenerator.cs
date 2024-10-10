@@ -78,7 +78,8 @@ public class MazeGenerator : MonoBehaviour
         DrawTiles();
         PlacePickups();
         MazeGenerated();
-
+        SetRoomNames(); //Primarily for in editor, can be removed in the final build
+        
         AnalyzeRooms();
     }
     
@@ -361,36 +362,29 @@ public class MazeGenerator : MonoBehaviour
                             case RoomEdge.Ceiling:
                                 //found a neighbor above this cell, so choose a horizontal border and open the corresponding one in both rooms
                                 path = GetPathIndices(RoomEdge.Ceiling);
-                                thisRoom.CreateOpening(RoomEdge.Ceiling, path);
-                                neighborRoom.CreateOpening(RoomEdge.Floor, path);
+                                thisRoom.CreateOpening(RoomEdge.Ceiling, path, neighborRoom);
+                                neighborRoom.CreateOpening(RoomEdge.Floor, path, thisRoom);
                                 break;
                             
                             case RoomEdge.Floor:
                                 path = GetPathIndices(RoomEdge.Floor);
-                                thisRoom.CreateOpening(RoomEdge.Floor, path);
-                                neighborRoom.CreateOpening(RoomEdge.Ceiling, path);
+                                thisRoom.CreateOpening(RoomEdge.Floor, path, neighborRoom);
+                                neighborRoom.CreateOpening(RoomEdge.Ceiling, path, thisRoom);
                                 break;
                             case RoomEdge.Left:
                                 path = GetPathIndices(RoomEdge.Left);
-                                thisRoom.CreateOpening(RoomEdge.Left, path);
-                                neighborRoom.CreateOpening(RoomEdge.Right, path);
+                                thisRoom.CreateOpening(RoomEdge.Left, path, neighborRoom);
+                                neighborRoom.CreateOpening(RoomEdge.Right, path, thisRoom);
                                 break;
                             case RoomEdge.Right:
                                 path = GetPathIndices(RoomEdge.Right);
-                                thisRoom.CreateOpening(RoomEdge.Right, path);
-                                neighborRoom.CreateOpening(RoomEdge.Left, path);
+                                thisRoom.CreateOpening(RoomEdge.Right, path, neighborRoom);
+                                neighborRoom.CreateOpening(RoomEdge.Left, path, thisRoom);
                                 break;
                         }
                     }
                 }
             }
-        }
-        int roomNumber = 0;
-        foreach (Vector2Int gridIndex in longestPath)
-        {
-            roomNumber++;
-            Room room = allRooms[gridIndex];
-            room.gameObject.name = "MainPathRoom - " + roomNumber;
         }
     }
 
@@ -408,6 +402,25 @@ public class MazeGenerator : MonoBehaviour
         {
             room.PlaceBorderTiles();
             room.DrawOpening();
+        }
+    }
+
+    private void SetRoomNames()
+    {
+        int roomNumber = 0;
+        foreach (Vector2Int gridPosition in allRooms.Keys)
+        {
+            string suffix = "";
+            if (longestPath.Contains(gridPosition))
+            {
+                roomNumber++;
+                suffix = "Main Path|" + roomNumber;
+            }
+            Room room = allRooms[gridPosition];
+            room.gameObject.name = gridPosition.ToString() + suffix;
+        }
+        foreach (Vector2Int gridIndex in longestPath)
+        {
         }
     }
 

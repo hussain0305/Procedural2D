@@ -42,7 +42,7 @@ public class Room : MonoBehaviour
     public bool[,] grid;
 
     private Tilemap wallTilemap;
-    private List<RoomOpening> openings = new List<RoomOpening>(); 
+    private Dictionary<Room, RoomOpening> neighbours = new Dictionary<Room, RoomOpening>(); 
     
     private void Awake()
     {
@@ -121,7 +121,7 @@ public class Room : MonoBehaviour
         wallTilemap = _wallsTilemap;
     }
 
-    public void CreateOpening(RoomEdge _edge, int[] path)
+    public void CreateOpening(RoomEdge _edge, int[] path, Room neighbour)
     {
         RoomOpening opening = new RoomOpening(_edge, path, new List<Vector3Int>());
         foreach (RoomBorder roomBorder in GetComponentsInChildren<RoomBorder>())
@@ -137,7 +137,7 @@ public class Room : MonoBehaviour
                         roomBorder.borderBlock[i] = null;
                     }
                 }
-                openings.Add(opening);
+                neighbours.Add(neighbour, opening);
                 break;
             }
         }
@@ -146,7 +146,7 @@ public class Room : MonoBehaviour
 
     public void DrawOpening()
     {
-        foreach (RoomOpening opening in openings)
+        foreach (RoomOpening opening in neighbours.Values)
         {
             foreach (Vector3Int blockPosition in opening.blockPositions)
             {
