@@ -167,6 +167,9 @@ public class Global : MonoBehaviour
     public const int MIN_ROOMS_IN_MAIN_PATH = 14;
     public const int MAX_ROOMS_IN_MAIN_PATH = 20;
     
+    public const float PLATFORM_CHANCE = 0.25f;
+    public const float PLATFORM_CHANCE_RANDOMIZATION = 0.1f;
+    
     //Room Analysis
     public const int VERTICAL_LANE_THRESHOLD = 6;
     public const int HORIZONTAL_LANE_THRESHOLD = 10;

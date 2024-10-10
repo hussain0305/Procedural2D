@@ -11,7 +11,6 @@ public class RoomPlatformGenerator : MonoBehaviour
     public Room room;
     public int roomWidth;
     public int roomHeight;
-    public float platformChance = 0.3f;
     public int minPlatformHeight = 1;
     public int maxPlatformHeight = 3;
     public int minHorizontalGap = 1;
@@ -20,9 +19,11 @@ public class RoomPlatformGenerator : MonoBehaviour
     private bool[,] grid;
     private Vector2Int roomWorldPosition;
     private Tilemap platformTilemap;
+    private float platformChance;
 
     public void Init(Tilemap _platformTilemap)
     {
+        platformChance = Random.Range(Global.PLATFORM_CHANCE - Global.PLATFORM_CHANCE_RANDOMIZATION, Global.PLATFORM_CHANCE + Global.PLATFORM_CHANCE_RANDOMIZATION);
         roomWidth = Global.CELL_SIZE_INTERIOR_X;
         roomHeight = Global.CELL_SIZE_INTERIOR_Y;
         grid = new bool[roomWidth, roomHeight];
