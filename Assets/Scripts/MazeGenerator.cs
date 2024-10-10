@@ -79,7 +79,7 @@ public class MazeGenerator : MonoBehaviour
         PlacePickups();
         MazeGenerated();
 
-        // AnalyzeRooms();
+        AnalyzeRooms();
     }
     
     private void AnalyzeRooms()
