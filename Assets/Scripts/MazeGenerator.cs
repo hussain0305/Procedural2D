@@ -72,15 +72,16 @@ public class MazeGenerator : MonoBehaviour
     {
         GenerateMaze();
         GetLongestPathInMaze();
-        DrawMaze();
+        CreateMaze();
         GeneratePaths();
+        GeneratePlatforms();
+        DrawTiles();
         PlacePickups();
-        
         MazeGenerated();
 
-        AnalyzeRooms();
+        // AnalyzeRooms();
     }
-
+    
     private void AnalyzeRooms()
     {
         IEnumerator AnalyzeRoomsAfterDelay()
@@ -179,7 +180,7 @@ public class MazeGenerator : MonoBehaviour
         return longestPath.Contains(position);
     }
 
-    private void DrawMaze()
+    private void CreateMaze()
     {
         platformTilemap.ClearAllTiles();
 
@@ -227,27 +228,27 @@ public class MazeGenerator : MonoBehaviour
                 GameObject spawnedNode = Instantiate(currentNodePrefab, position, Quaternion.identity, parentTransform);
                 Room spawnedRoom = spawnedNode.GetComponent<Room>();
                 spawnedRoom.SetRoomProperties(nodeType, currentPosition, GlobalData.Instance.GetRoomColor(nodeType), wallTilemap);
-                spawnedRoom.GetComponentInChildren<RoomPlatformGenerator>()?.Init(platformTilemap);
                 allRooms.Add(currentPosition, spawnedRoom);
             }
         }
         
-        // //Draw walls arounf the grid
-        // for (int x = -1; x <= gridSize; x++)
-        // {
-        //     for (int y = -1; y <= gridSize; y++)
-        //     {
-        //         if (x == -1 || x == gridSize || y == -1 || y == gridSize)
-        //         {
-        //             Vector3 wallPosition = new Vector3(cellSizeExterior_x * x, cellSizeExterior_y * y, 0);
-        //             GameObject spawnedNode = Instantiate(wallPrefab, wallPosition, Quaternion.identity, borderWalls);
-        //             Room spawnedRoom = spawnedNode.GetComponent<Room>();
-        //             Vector2Int currentPosition = new Vector2Int(x, y);
-        //             spawnedRoom.SetRoomProperties(RoomType.GridBorder, currentPosition, GlobalData.Instance.GetRoomColor(RoomType.GridBorder), wallTilemap);
-        //             allRooms.Add(currentPosition, spawnedRoom);
-        //         }
-        //     }
-        // }
+        /* Draw walls around the grid
+        for (int x = -1; x <= gridSize; x++)
+        {
+            for (int y = -1; y <= gridSize; y++)
+            {
+                if (x == -1 || x == gridSize || y == -1 || y == gridSize)
+                {
+                    Vector3 wallPosition = new Vector3(cellSizeExterior_x * x, cellSizeExterior_y * y, 0);
+                    GameObject spawnedNode = Instantiate(wallPrefab, wallPosition, Quaternion.identity, borderWalls);
+                    Room spawnedRoom = spawnedNode.GetComponent<Room>();
+                    Vector2Int currentPosition = new Vector2Int(x, y);
+                    spawnedRoom.SetRoomProperties(RoomType.GridBorder, currentPosition, GlobalData.Instance.GetRoomColor(RoomType.GridBorder), wallTilemap);
+                    allRooms.Add(currentPosition, spawnedRoom);
+                }
+            }
+        }
+        */
     }
 
     private void GetLongestPathInMaze()
@@ -390,6 +391,23 @@ public class MazeGenerator : MonoBehaviour
             roomNumber++;
             Room room = allRooms[gridIndex];
             room.gameObject.name = "MainPathRoom - " + roomNumber;
+        }
+    }
+
+    private void GeneratePlatforms()
+    {
+        foreach (Room room in allRooms.Values)
+        {
+            room.GetComponentInChildren<RoomPlatformGenerator>()?.Init(platformTilemap);
+        }
+    }
+
+    private void DrawTiles()
+    {
+        foreach (Room room in allRooms.Values)
+        {
+            room.PlaceBorderTiles();
+            room.DrawOpening();
         }
     }
 

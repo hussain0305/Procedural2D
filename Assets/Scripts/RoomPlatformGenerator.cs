@@ -23,19 +23,13 @@ public class RoomPlatformGenerator : MonoBehaviour
 
     public void Init(Tilemap _platformTilemap)
     {
-        IEnumerator DelayedInit()
-        {
-            yield return null;
-            roomWidth = Global.CELL_SIZE_INTERIOR_X;
-            roomHeight = Global.CELL_SIZE_INTERIOR_Y;
-            grid = new bool[roomWidth, roomHeight];
-            roomWorldPosition = new Vector2Int((int)room.gameObject.transform.position.x, (int)room.gameObject.transform.position.y);
+        roomWidth = Global.CELL_SIZE_INTERIOR_X;
+        roomHeight = Global.CELL_SIZE_INTERIOR_Y;
+        grid = new bool[roomWidth, roomHeight];
+        roomWorldPosition = new Vector2Int((int)room.gameObject.transform.position.x, (int)room.gameObject.transform.position.y);
 
-            platformTilemap = _platformTilemap;
-            GeneratePlatforms();
-        }
-
-        StartCoroutine(DelayedInit());
+        platformTilemap = _platformTilemap;
+        GeneratePlatforms();
     }
 
     void GeneratePlatforms()

@@ -72,6 +72,20 @@ public struct RoomPaths
     }
 }
 
+public struct RoomOpening
+{
+    public RoomEdge edge;
+    public int[] path;
+    public List<Vector3Int> blockPositions;
+    
+    public RoomOpening(RoomEdge _edge, int[] _path, List<Vector3Int> _blockPositions)
+    {
+        edge = _edge;
+        path = _path;
+        blockPositions = _blockPositions;
+    }
+}
+
 public struct RoomSetupProgress
 {
     private bool platformsGenerated;
