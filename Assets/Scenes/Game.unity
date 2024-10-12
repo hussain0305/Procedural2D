@@ -1243,6 +1243,14 @@ PrefabInstance:
       propertyPath: numJumps
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5322326531319013723, guid: b9da837bf90c2b446aaf7c05a88f9dea, type: 3}
+      propertyPath: jumpForce
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5322326531319013723, guid: b9da837bf90c2b446aaf7c05a88f9dea, type: 3}
+      propertyPath: gravityScale
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5809957265684869089, guid: b9da837bf90c2b446aaf7c05a88f9dea, type: 3}
       propertyPath: healthbar
       value: 
