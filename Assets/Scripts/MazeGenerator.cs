@@ -65,21 +65,37 @@ public class MazeGenerator : MonoBehaviour
         cellSizeExterior_y = Global.CELL_WALL_SIZE + Global.CELL_SIZE_INTERIOR_Y;
         allRooms = new Dictionary<Vector2Int, Room>();
         
-        SetupMaze();
+        StartCoroutine(SetupMaze());
     }
 
-    public void SetupMaze()
+    public IEnumerator SetupMaze()
     {
+        yield return null;
         GenerateMaze();
         GetLongestPathInMaze();
+                
+        yield return null;
         CreateMaze();
+                
+        yield return null;
         GeneratePaths();
+                
+        yield return null;
         GeneratePlatforms();
+                
+        yield return null;
         DrawTiles();
+                
+        yield return null;
         PlacePickups();
+                
+        yield return null;
         MazeGenerated();
+                
+        yield return null;
         SetRoomNames(); //Primarily for in editor, can be removed in the final build
         
+        yield return null;
         AnalyzeRooms();
     }
     
