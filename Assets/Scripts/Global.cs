@@ -164,6 +164,7 @@ public class Global : MonoBehaviour
     public const int CELL_WALL_SIZE = 2;
     public const int MIN_PATH_WIDTH = 2;
     public const int MAX_PATH_WIDTH = 5;
+    public const int PATHWAY_WIDTH = 2;
     public const int MIN_ROOMS_IN_MAIN_PATH = 14;
     public const int MAX_ROOMS_IN_MAIN_PATH = 20;
     

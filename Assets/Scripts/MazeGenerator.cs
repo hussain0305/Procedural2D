@@ -408,7 +408,7 @@ public class MazeGenerator : MonoBehaviour
     {
         foreach (Room room in allRooms.Values)
         {
-            room.GetComponentInChildren<RoomPlatformGenerator>()?.Init(platformTilemap);
+            room.GetComponentInChildren<RoomPlatformGenerator>()?.Init(platformTilemap, room.pathwayCells);
         }
     }
 

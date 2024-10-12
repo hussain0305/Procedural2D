@@ -41,8 +41,11 @@ public class Room : MonoBehaviour
     [HideInInspector]
     public bool[,] grid;
 
+    [HideInInspector]
+    public List<Vector2Int> pathwayCells = new List<Vector2Int>();
+
     private Tilemap wallTilemap;
-    private Dictionary<Room, RoomOpening> neighbours = new Dictionary<Room, RoomOpening>(); 
+    private Dictionary<Room, RoomOpening> neighbours = new Dictionary<Room, RoomOpening>();
     
     private void Awake()
     {
@@ -123,6 +126,7 @@ public class Room : MonoBehaviour
 
     public void CreateOpening(RoomEdge _edge, int[] path, Room neighbour)
     {
+        ClearPathway(_edge, path);
         RoomOpening opening = new RoomOpening(_edge, path, new List<Vector3Int>());
         foreach (RoomBorder roomBorder in GetComponentsInChildren<RoomBorder>())
         {
@@ -142,6 +146,50 @@ public class Room : MonoBehaviour
             }
         }
         setupProgress.SetPathCreationCompleted();
+    }
+
+    private void ClearPathway(RoomEdge edge, int[] path)
+    {
+        switch (edge)
+        {
+            case RoomEdge.Left:
+                foreach (int columnIndex in path)
+                {
+                    for (int i = 0; i < Global.PATHWAY_WIDTH; i++)
+                    {
+                        pathwayCells.Add(new Vector2Int(i, columnIndex));
+                    }
+                }
+                break;
+
+            case RoomEdge.Right:
+                foreach (int columnIndex in path)
+                {
+                    for (int i = Global.CELL_SIZE_INTERIOR_X - 1; i >= Global.CELL_SIZE_INTERIOR_X - Global.PATHWAY_WIDTH; i--)
+                    {
+                        pathwayCells.Add(new Vector2Int(i, columnIndex));
+                    }
+                }
+                break;
+            case RoomEdge.Ceiling:
+                foreach (int rowIndex in path)
+                {
+                    for (int i = Global.CELL_SIZE_INTERIOR_Y - 1; i >= Global.CELL_SIZE_INTERIOR_Y - Global.PATHWAY_WIDTH; i--)
+                    {
+                        pathwayCells.Add(new Vector2Int(rowIndex, i));
+                    }
+                }
+                break;
+            case RoomEdge.Floor:
+                foreach (int rowIndex in path)
+                {
+                    for (int i = 0; i < Global.PATHWAY_WIDTH; i++)
+                    {
+                        pathwayCells.Add(new Vector2Int(rowIndex, i));
+                    }
+                }
+                break;
+        }
     }
 
     public void DrawOpening()

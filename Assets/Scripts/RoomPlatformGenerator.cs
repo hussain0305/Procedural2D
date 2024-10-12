@@ -20,9 +20,11 @@ public class RoomPlatformGenerator : MonoBehaviour
     private Vector2Int roomWorldPosition;
     private Tilemap platformTilemap;
     private float platformChance;
-
-    public void Init(Tilemap _platformTilemap)
+    private List<Vector2Int> pathwayCells;
+    
+    public void Init(Tilemap _platformTilemap, List<Vector2Int> roomPathways)
     {
+        pathwayCells = roomPathways;
         platformChance = Random.Range(Global.PLATFORM_CHANCE - Global.PLATFORM_CHANCE_RANDOMIZATION, Global.PLATFORM_CHANCE + Global.PLATFORM_CHANCE_RANDOMIZATION);
         roomWidth = Global.CELL_SIZE_INTERIOR_X;
         roomHeight = Global.CELL_SIZE_INTERIOR_Y;
@@ -108,9 +110,12 @@ public class RoomPlatformGenerator : MonoBehaviour
                 int gridX = x + roomWidth / 2 + i;
                 int gridY = y + roomHeight / 2 - j;
                 grid[gridX, gridY] = true;
-
-                Vector3Int tilePosition = new Vector3Int(x + i + roomWorldPosition.x, y - j + roomWorldPosition.y, 0);
-                platformTilemap.SetTile(tilePosition, platformTile);
+                Vector2Int gridPos = new Vector2Int(gridX, gridY);
+                if (!pathwayCells.Contains(gridPos))
+                {
+                    Vector3Int tilePosition = new Vector3Int(x + i + roomWorldPosition.x, y - j + roomWorldPosition.y, 0);
+                    platformTilemap.SetTile(tilePosition, platformTile);
+                }
             }
         }
 
@@ -118,14 +123,19 @@ public class RoomPlatformGenerator : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                GameObject block = Instantiate(platformPrefab, transform);
+                Vector2Int gridPos = new Vector2Int(x + i + (roomWidth / 2), y - j + (roomHeight / 2));
+                
+                if (!pathwayCells.Contains(gridPos))
+                {
+                    GameObject block = Instantiate(platformPrefab, transform);
 
-                // 0.5f needs to be added because the blocks are 1x1 and the anchor is at the center
-                float localX = (x + i) + 0.5f;
-                float localY = (y - j) + 0.5f;
+                    // 0.5f needs to be added because the blocks are 1x1 and the anchor is at the center
+                    float localX = (x + i) + 0.5f;
+                    float localY = (y - j) + 0.5f;
 
-                block.transform.localPosition = new Vector3(localX, localY, 0);
-                // block.transform.localScale = new Vector3(1.0f / roomWidth, 1.0f / roomHeight, 1);
+                    block.transform.localPosition = new Vector3(localX, localY, 0);
+                    // block.transform.localScale = new Vector3(1.0f / roomWidth, 1.0f / roomHeight, 1);
+                }
             }
         }
 

@@ -12,6 +12,7 @@ public class RoomAnalyzer : MonoBehaviour
     public static bool showClosedAreas = false;
     public static bool showFreeAreas = false;
     public static bool showOccupiedAreas = false;
+    public static bool showPathways = false;
     
     private bool[,] grid; // false = empty, true = occupied
 
@@ -399,6 +400,12 @@ public class RoomAnalyzer : MonoBehaviour
         showOccupiedAreas = !showOccupiedAreas;
     }
 
+    [UnityEditor.MenuItem("Gizmos/Show Pathways(Gray)")]
+    public static void TogglePathways()
+    {
+        showPathways = !showPathways;
+    }
+
     [DrawGizmo(GizmoType.NotInSelectionHierarchy | GizmoType.Selected)]
     private static void DrawGizmos(RoomAnalyzer room, GizmoType gizmoType)
     {
@@ -487,6 +494,17 @@ public class RoomAnalyzer : MonoBehaviour
                         Gizmos.DrawCube(pos, new Vector3(1, 1, 1));
                     }
                 }
+            }
+        }
+
+        if (showPathways)
+        {
+            Gizmos.color = Color.gray;
+            Room roomScript = room.GetComponentInParent<Room>();
+            foreach (Vector2Int pathway in roomScript.pathwayCells)
+            {
+                Vector3 pos = roomBasePosition + new Vector3(pathway.x, pathway.y, 0) - offset;
+                Gizmos.DrawCube(pos, new Vector3(1, 1, 1));
             }
         }
     }
