@@ -11,28 +11,29 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector]
     public Rigidbody2D rb;
-    
-    private int additionalJumps = 0;
-    private bool isGrounded = false;
-    private bool isTouchingWall = false;
-    private int jumpsRemaining;
-    private float groundCheckRadius = 0.5f;
+    [HideInInspector] 
+    public bool isGrounded = true;
+    [HideInInspector] 
+    public bool isTouchingWall = false;
+    [HideInInspector] 
+    public Abilities abilities;
 
+    private int jumpsRemaining;
+    
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = gravityScale;
-        jumpsRemaining = additionalJumps;
-        groundCheckRadius = (transform.localScale.x / 2) * 5 / 4;
+        jumpsRemaining = abilities.additionalJumps;
     }
 
     void Update()
     {
         MovePlayer();
-        CheckIfGrounded();
-        CheckIfTouchingWall();
+        UpdatesNumJumps();
         HandleJump();
         HandleWallSlide();
+        
     }
 
     void MovePlayer()
@@ -52,39 +53,29 @@ public class PlayerController : MonoBehaviour
 
     void HandleWallSlide()
     {
-        if (isTouchingWall && !isGrounded && rb.velocity.y < 0)
+        if (abilities.hasWallGrab && Input.GetButton("WallGrab") && isTouchingWall)
         {
-            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -wallSlideSpeed));
+            rb.gravityScale = 0;
+            rb.velocity = Vector2.zero;
+        }
+        else// if (isTouchingWall && !isGrounded && rb.velocity.y < 0)
+        {
+            rb.gravityScale = gravityScale;
         }
     }
 
-    void CheckIfGrounded()
+    void UpdatesNumJumps()
     {
-        isGrounded = Physics2D.OverlapCircle(transform.position, groundCheckRadius, GlobalData.Instance.groundLayer);
-
         if (isGrounded)
         {
-            jumpsRemaining = additionalJumps;
+            jumpsRemaining = abilities.additionalJumps;
         }
     }
-
-    void CheckIfTouchingWall()
-    {
-        isTouchingWall = Physics2D.OverlapCircle(transform.position, groundCheckRadius, GlobalData.Instance.wallLayer);
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        // Visualize ground check and wall check in the editor
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, groundCheckRadius);
-    }
-    
     
     #region Ability
     public void IncrementNumJumps()
     {
-        additionalJumps++;
+        abilities.additionalJumps++;
     }
     #endregion
 }

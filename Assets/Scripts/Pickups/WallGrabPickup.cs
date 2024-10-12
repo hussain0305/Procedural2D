@@ -6,7 +6,7 @@ public class WallGrabPickup : Pickup
 {
     public override void WasPickedUp(PlayerController player)
     {
-        player.GetComponent<Collider2D>().sharedMaterial = GlobalData.Instance.wallGrabMaterial;
+        player.abilities.hasWallGrab = true;
         base.WasPickedUp(player);
     }
 }

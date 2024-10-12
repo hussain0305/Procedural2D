@@ -137,6 +137,12 @@ public struct RoomSetupProgress
     }
 }
 
+public struct Abilities
+{
+    public bool hasWallGrab;
+    public int additionalJumps;
+}
+
 public class Global : MonoBehaviour
 {
     public static Dictionary<RoomEdge, Vector2Int> Directions

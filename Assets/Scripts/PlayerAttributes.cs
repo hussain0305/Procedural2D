@@ -23,7 +23,7 @@ public class PlayerAttributes : MonoBehaviour
         {
             if (currentHealth != value)
             {
-                currentHealth = Mathf.Max(0, value);
+                currentHealth = Mathf.Clamp(value, 0, maxHealth);
                 TriggerHealthChanged();
             }
         }
