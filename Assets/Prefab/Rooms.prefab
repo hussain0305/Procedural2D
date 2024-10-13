@@ -192,6 +192,7 @@ MonoBehaviour:
   roomType: 0
   roomNumber: 0
   roomVolume: {fileID: 0}
+  pathwayCells: []
 --- !u!1 &139653946838633503
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,12 +889,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74330395fb3a3764184ed7d8be9f8c5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platformPrefab: {fileID: 7056408427868486686, guid: 13b003ba545b71e47a83f133859f141c, type: 3}
+  platformPrefab: {fileID: 8269579894436021940, guid: 13b003ba545b71e47a83f133859f141c, type: 3}
   platformTile: {fileID: 11400000, guid: 91b7f30aa11ecd74abffc97f5cb26f41, type: 2}
   room: {fileID: 3541231696009791291}
   roomWidth: 14
   roomHeight: 8
-  platformChance: 0.4
   minPlatformHeight: 1
   maxPlatformHeight: 3
   minHorizontalGap: 1

@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.Tilemaps;
 
 public class PlatformBlock : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [FormerlySerializedAs("gridIndex")] [HideInInspector]
+    public Vector3Int tilePosition;
 
-    // Update is called once per frame
-    void Update()
+    [HideInInspector]
+    public Tilemap platformTilemap;
+
+    public void DestroyBlock()
     {
-        
+        platformTilemap.SetTile(tilePosition, null);
+        Destroy(this.gameObject);
     }
 }

@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
     public float gravityScale = 2f;
-    public float wallSlideSpeed = 2f;
+    public Weapon equippedWeapon;
 
     [HideInInspector]
     public Rigidbody2D rb;
@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private int jumpsRemaining;
     private bool canGrab = true;
     private bool isGrabbingWall = false;
+    private Vector2 lastDirection = Vector2.right;
     
     void Start()
     {
@@ -35,11 +36,22 @@ public class PlayerController : MonoBehaviour
         UpdatesNumJumps();
         HandleWallGrab();
         HandleJump();
-        Debug.Log("Jumps: " + jumpsRemaining + "| is grounded = " + isGrounded);
+        CheckFireRay();
     }
 
     void MovePlayer()
     {
+        float moveInputHorizontal = Input.GetAxis("Horizontal");
+        float moveInputVertical = Input.GetAxis("Vertical");
+        if (moveInputVertical != 0)
+        {
+            lastDirection = new Vector2(0, Mathf.Sign(moveInputVertical));
+        }
+        else if (moveInputHorizontal != 0)
+        {
+            lastDirection = new Vector2(Mathf.Sign(moveInputHorizontal), 0);
+        }
+        
         float moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
     }
@@ -95,12 +107,19 @@ public class PlayerController : MonoBehaviour
             rb.gravityScale = gravityScale;
         }
     }
+    
+    void CheckFireRay()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            equippedWeapon.PerformPrimaryAttack(lastDirection);
+        }
+    }
 
     void UpdatesNumJumps()
     {
         if (isGrounded)
         {
-            Debug.Log("Reset here");
             jumpsRemaining = abilities.additionalJumps;
         }
     }

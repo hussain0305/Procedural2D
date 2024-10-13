@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class RoomPlatformGenerator : MonoBehaviour
 {
-    public GameObject platformPrefab;
+    public PlatformBlock platformPrefab;
     public Tile platformTile;
 
     public Room room;
@@ -127,14 +127,15 @@ public class RoomPlatformGenerator : MonoBehaviour
                 
                 if (!pathwayCells.Contains(gridPos))
                 {
-                    GameObject block = Instantiate(platformPrefab, transform);
-
+                    PlatformBlock block = Instantiate(platformPrefab, transform);
+                    Vector3Int tilePosition = new Vector3Int(x + i + roomWorldPosition.x, y - j + roomWorldPosition.y, 0);
+                    block.tilePosition = tilePosition;
+                    block.platformTilemap = platformTilemap;
                     // 0.5f needs to be added because the blocks are 1x1 and the anchor is at the center
                     float localX = (x + i) + 0.5f;
                     float localY = (y - j) + 0.5f;
 
                     block.transform.localPosition = new Vector3(localX, localY, 0);
-                    // block.transform.localScale = new Vector3(1.0f / roomWidth, 1.0f / roomHeight, 1);
                 }
             }
         }
