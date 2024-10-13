@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     public Abilities abilities;
 
     private int jumpsRemaining;
+    private bool canGrab = true;
+    private bool isGrabbingWall = false;
     
     void Start()
     {
@@ -31,9 +33,9 @@ public class PlayerController : MonoBehaviour
     {
         MovePlayer();
         UpdatesNumJumps();
+        HandleWallGrab();
         HandleJump();
-        HandleWallSlide();
-        
+        Debug.Log("Jumps: " + jumpsRemaining + "| is grounded = " + isGrounded);
     }
 
     void MovePlayer()
@@ -44,22 +46,52 @@ public class PlayerController : MonoBehaviour
 
     void HandleJump()
     {
-        if (Input.GetButtonDown("Jump") && (isGrounded || jumpsRemaining > 0))
+        IEnumerator ResetCanGrab()
+        {
+            yield return new WaitForSeconds(0.2f);
+            canGrab = true;
+        }
+
+        void PerformJump()
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            jumpsRemaining--;
+        }
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            if (isGrounded)
+            {
+                jumpsRemaining = abilities.additionalJumps;
+                PerformJump();
+            }
+            else if (isGrabbingWall)
+            {
+                canGrab = false;
+                isGrabbingWall = false;
+                rb.gravityScale = gravityScale;
+                jumpsRemaining = abilities.additionalJumps;
+                PerformJump();
+                StartCoroutine(ResetCanGrab());
+            }
+            else if(jumpsRemaining > 0)
+            {
+                jumpsRemaining--;
+                PerformJump();
+            }
         }
     }
 
-    void HandleWallSlide()
+    void HandleWallGrab()
     {
-        if (abilities.hasWallGrab && Input.GetButton("WallGrab") && isTouchingWall)
+        if (Input.GetButton("WallGrab") && isTouchingWall && abilities.hasWallGrab && canGrab)
         {
             rb.gravityScale = 0;
             rb.velocity = Vector2.zero;
+            isGrabbingWall = true;
         }
-        else// if (isTouchingWall && !isGrounded && rb.velocity.y < 0)
+        else
         {
+            isGrabbingWall = false;
             rb.gravityScale = gravityScale;
         }
     }
@@ -68,6 +100,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isGrounded)
         {
+            Debug.Log("Reset here");
             jumpsRemaining = abilities.additionalJumps;
         }
     }
