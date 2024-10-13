@@ -14,19 +14,30 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         MazeGenerator.OnMazeGenerationComplete += OnMazeGenerationComplete;
+        MazeGenerator.OnAllRoomsAnalyzed += OnAllRoomsAnalyzed;
         EventManager.OnRoomEntered += HandleRoomEntered;
     }
 
     private void OnDisable()
     {
         MazeGenerator.OnMazeGenerationComplete -= OnMazeGenerationComplete;
+        MazeGenerator.OnAllRoomsAnalyzed -= OnAllRoomsAnalyzed;
         EventManager.OnRoomEntered -= HandleRoomEntered;
     }
     private void OnMazeGenerationComplete()
     {
-        Vector3 roomPosition = mazeGenerator.allRooms[mazeGenerator.startNode].transform.position;
-        player.transform.position = roomPosition;
         SetCameraOnRoom(mazeGenerator.startNode);
+    }
+
+    private void OnAllRoomsAnalyzed()
+    {
+        PlacePlayerInStartingRoom();
+    }
+
+    private void PlacePlayerInStartingRoom()
+    {
+        Room startingRoom = mazeGenerator.allRooms[mazeGenerator.startNode];
+        player.transform.position = startingRoom.GetCellLocation(startingRoom.GetCenterOfArea(startingRoom.GetBiggestSpaciousAreaOutsideOfPathways()));
     }
 
     private void HandleRoomEntered(Vector2Int gridIndex)

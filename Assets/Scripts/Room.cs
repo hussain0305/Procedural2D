@@ -217,4 +217,141 @@ public class Room : MonoBehaviour
     {
         roomAnalyzer?.AnalyzeRoom(grid);
     }
+
+    public List<List<Vector2Int>> GetSpaciousAreas()
+    {
+        return roomAnalyzer.spaciousAreas;
+    }
+
+    public List<Vector2Int> GetBiggestSpaciousArea()
+    {
+        if (roomAnalyzer.spaciousAreas == null || roomAnalyzer.spaciousAreas.Count == 0)
+        {
+            return null;
+        }
+
+        List<Vector2Int> biggestSpaciousArea = roomAnalyzer.spaciousAreas[0];
+        foreach (List<Vector2Int> spaciousArea in roomAnalyzer.spaciousAreas)
+        {
+            if (spaciousArea.Count > biggestSpaciousArea.Count)
+            {
+                biggestSpaciousArea = spaciousArea;
+            }
+        }
+
+        return biggestSpaciousArea;
+    }
+
+    public List<Vector2Int> GetBiggestSpaciousAreaOutsideOfPathways()
+    {
+        if (roomAnalyzer.spaciousAreas == null || roomAnalyzer.spaciousAreas.Count == 0)
+        {
+            return null;
+        }
+
+        List<Vector2Int> biggestSpaciousArea = roomAnalyzer.spaciousAreas[0];
+        foreach (List<Vector2Int> spaciousArea in roomAnalyzer.spaciousAreas)
+        {
+            if (spaciousArea.Count > biggestSpaciousArea.Count && !AreaIsAPathway(spaciousArea))
+            {
+                biggestSpaciousArea = spaciousArea;
+            }
+        }
+
+        return biggestSpaciousArea;
+    }
+
+    public Vector2Int GetCenterOfArea(List<Vector2Int> area)
+    {
+        if (area == null || area.Count == 0)
+        {
+            Debug.LogError("Area list is empty or null.");
+            return Vector2Int.zero;
+        }
+
+        int minX = int.MaxValue;
+        int maxX = int.MinValue;
+        int minY = int.MaxValue;
+        int maxY = int.MinValue;
+
+        foreach (Vector2Int point in area)
+        {
+            if (point.x < minX) minX = point.x;
+            if (point.x > maxX) maxX = point.x;
+            if (point.y < minY) minY = point.y;
+            if (point.y > maxY) maxY = point.y;
+        }
+
+        int centerX = (minX + maxX) / 2;
+        int centerY = (minY + maxY) / 2;
+
+        List<Vector2Int> centerPoints = new List<Vector2Int>();
+        foreach (Vector2Int point in area)
+        {
+            if (point.x == centerX || point.y == centerY)
+            {
+                centerPoints.Add(point);
+            }
+        }
+
+        if (centerPoints.Count > 0)
+        {
+            centerPoints.Sort((a, b) => a.x.CompareTo(b.x));
+            int middleIndex = centerPoints.Count / 2;
+            return centerPoints[middleIndex];
+        }
+
+        return new Vector2Int(centerX, centerY);
+    }
+
+    public Vector2Int GetBottomCenterOfArea(List<Vector2Int> area)
+    {
+        if (area == null || area.Count == 0)
+        {
+            Debug.LogError("Area list is empty or null.");
+            return Vector2Int.zero;
+        }
+
+        int minY = int.MaxValue;
+        foreach (Vector2Int point in area)
+        {
+            if (point.y < minY)
+            {
+                minY = point.y;
+            }
+        }
+
+        List<Vector2Int> bottomRowPoints = new List<Vector2Int>();
+        foreach (Vector2Int point in area)
+        {
+            if (point.y == minY)
+            {
+                bottomRowPoints.Add(point);
+            }
+        }
+
+        bottomRowPoints.Sort((a, b) => a.x.CompareTo(b.x));
+
+        int middleIndex = bottomRowPoints.Count / 2;
+
+        return bottomRowPoints[middleIndex];
+    }
+
+    public Vector3 GetCellLocation(Vector2Int cell)
+    {
+        return transform.position + new Vector3(cell.x - ((float)Global.CELL_SIZE_INTERIOR_X / 2), cell.y - ((float)Global.CELL_SIZE_INTERIOR_Y / 2), 0);
+    }
+    
+    public bool AreaIsAPathway(List<Vector2Int> area)
+    {
+        foreach (Vector2Int cell in area)
+        {
+            if (pathwayCells.Contains(cell))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

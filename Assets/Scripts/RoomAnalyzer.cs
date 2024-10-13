@@ -19,10 +19,14 @@ public class RoomAnalyzer : MonoBehaviour
     private int roomWidth;
     private int roomHeight;
 
-    private List<List<Vector2Int>> horizontalLanes = new List<List<Vector2Int>>();
-    private List<List<Vector2Int>> verticalLanes = new List<List<Vector2Int>>();
-    private List<List<Vector2Int>> spaciousAreas = new List<List<Vector2Int>>();
-    private List<List<Vector2Int>> closedAreas = new List<List<Vector2Int>>();
+    [HideInInspector]
+    public List<List<Vector2Int>> horizontalLanes = new List<List<Vector2Int>>();
+    [HideInInspector]
+    public List<List<Vector2Int>> verticalLanes = new List<List<Vector2Int>>();
+    [HideInInspector]
+    public List<List<Vector2Int>> spaciousAreas = new List<List<Vector2Int>>();
+    [HideInInspector]
+    public List<List<Vector2Int>> closedAreas = new List<List<Vector2Int>>();
     
     public void AnalyzeRoom(bool[,] _grid)
     {

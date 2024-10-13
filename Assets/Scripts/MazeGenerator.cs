@@ -56,6 +56,7 @@ public class MazeGenerator : MonoBehaviour
     private HashSet<RoomPaths> allPaths;
     
     public static event Action OnMazeGenerationComplete;
+    public static event Action OnAllRoomsAnalyzed;
     public void Start()
     {
         gridSize = Global.GRID_SIZE;
@@ -88,27 +89,28 @@ public class MazeGenerator : MonoBehaviour
                 
         yield return null;
         PlacePickups();
-                
-        yield return null;
-        MazeGenerated();
-                
-        yield return null;
-        SetRoomNames(); //Primarily for in editor, can be removed in the final build
         
         yield return null;
         AnalyzeRooms();
+        
+        yield return null;
+        MazeGenerated();
+        
+        yield return null;
+        SetRoomNames(); //Primarily for in editor, can be removed in the final build
     }
     
     private void AnalyzeRooms()
     {
         IEnumerator AnalyzeRoomsAfterDelay()
         {
-            yield return new WaitForSeconds(1);
+            // yield return new WaitForSeconds(1);
             foreach (Room room in allRooms.Values)
             {
                 room.AnalyzeRoom();
                 yield return null;
             }
+            OnAllRoomsAnalyzed?.Invoke();
         }
 
         StartCoroutine(AnalyzeRoomsAfterDelay());
