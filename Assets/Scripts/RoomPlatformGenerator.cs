@@ -9,13 +9,13 @@ public class RoomPlatformGenerator : MonoBehaviour
     public Tile platformTile;
 
     public Room room;
-    public int roomWidth;
-    public int roomHeight;
     public int minPlatformHeight = 1;
     public int maxPlatformHeight = 3;
     public int minHorizontalGap = 1;
     public int minVerticalGap = 2;
 
+    private int roomWidth;
+    private int roomHeight;
     private bool[,] grid;
     private Vector2Int roomWorldPosition;
     private Tilemap platformTilemap;

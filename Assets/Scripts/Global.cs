@@ -165,8 +165,8 @@ public class Global : MonoBehaviour
     private static Dictionary<RoomEdge, Vector2Int> directions;
     
     public const int GRID_SIZE = 8;
-    public const int CELL_SIZE_INTERIOR_X = 14;
-    public const int CELL_SIZE_INTERIOR_Y = 8;
+    public const int CELL_SIZE_INTERIOR_X = 22;
+    public const int CELL_SIZE_INTERIOR_Y = 12;
     public const int CELL_WALL_SIZE = 2;
     public const int MIN_PATH_WIDTH = 2;
     public const int MAX_PATH_WIDTH = 5;

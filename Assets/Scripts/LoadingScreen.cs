@@ -21,6 +21,7 @@ public class LoadingScreen : MonoBehaviour
 
     private void OnEnable()
     {
+        loadingScreen.SetActive(true);
         MazeGenerator.OnMazeGenerationComplete += OnMazeGenerationComplete;
         MazeGenerator.OnAllRoomsAnalyzed += OnAllRoomsAnalyzed;
         InitTexts();
