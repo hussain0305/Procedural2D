@@ -3,20 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class LoadingScreen : MonoBehaviour
 {
     public Text loadingText;
     public GameObject loadingScreen;
 
-    private List<string> loadingScreenTexts;
+    private List<List<string>> loadingScreenTexts;
     
     private void InitTexts()
     {
-        loadingScreenTexts = new List<string>();
-        loadingScreenTexts.Add("Loading The Abyss.");
-        loadingScreenTexts.Add("Loading The Abyss..");
-        loadingScreenTexts.Add("Loading The Abyss...");
+        loadingScreenTexts = new List<List<string>>();
+        loadingScreenTexts.Add(new List<string> { "Descending into The Abyss.", "Descending into The Abyss..", "Descending into The Abyss..." });
+        loadingScreenTexts.Add(new List<string> { "The Abyss beckons.", "The Abyss beckons..", "The Abyss beckons..." });
+        loadingScreenTexts.Add(new List<string> { "Into the depths of madness.", "Into the depths of madness..", "Into the depths of madness..." });
+        loadingScreenTexts.Add(new List<string> { "The shadows stir beneath.", "The shadows stir beneath..", "The shadows stir beneath..." });
+        loadingScreenTexts.Add(new List<string> { "Falling further from the light.", "Falling further from the light..", "Falling further from the light..." });
+        loadingScreenTexts.Add(new List<string> { "Embracing the void.", "Embracing the void..", "Embracing the void..." });
+        loadingScreenTexts.Add(new List<string> { "The labyrinth shifts once more.", "The labyrinth shifts once more..", "The labyrinth shifts once more..." });
+        loadingScreenTexts.Add(new List<string> { "Whispers from the dark await.", "Whispers from the dark await..", "Whispers from the dark await..." });
+        loadingScreenTexts.Add(new List<string> { "The echoes of eternity call.", "The echoes of eternity call..", "The echoes of eternity call..." });
+        loadingScreenTexts.Add(new List<string> { "Venturing into the unknown.", "Venturing into the unknown..", "Venturing into the unknown..." });
     }
 
     private void OnEnable()
@@ -48,12 +56,14 @@ public class LoadingScreen : MonoBehaviour
 
     IEnumerator LoadingScreenText()
     {
+        int randomMessage = Random.Range(0, loadingScreenTexts.Count);
+        int totalMessages = loadingScreenTexts[randomMessage].Count;
         int index = 0;
         while (true)
         {
-            loadingText.text = loadingScreenTexts[index];
-            index = (index + 1) % loadingScreenTexts.Count;
-            yield return new WaitForSeconds(0.25f);
+            loadingText.text = loadingScreenTexts[randomMessage][index];
+            index = (index + 1) % totalMessages;
+            yield return new WaitForSeconds(1f);
         }
     }
 
