@@ -186,8 +186,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3621518919915425126}
-  - component: {fileID: 4334761771944271584}
   - component: {fileID: 6718190846563796522}
+  - component: {fileID: 2443756639959746669}
   m_Layer: 9
   m_Name: Ground
   m_TagString: Untagged
@@ -204,14 +204,27 @@ Transform:
   m_GameObject: {fileID: 4625110621591059027}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.56, z: 0}
+  m_LocalPosition: {x: 0, y: -0.538, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 565007395122606950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &4334761771944271584
-CircleCollider2D:
+--- !u!114 &6718190846563796522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4625110621591059027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf84aff60e8556d4b96a0937a933b314, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 5322326531319013723}
+--- !u!70 &2443756639959746669
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -243,21 +256,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.05
---- !u!114 &6718190846563796522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4625110621591059027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf84aff60e8556d4b96a0937a933b314, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 5322326531319013723}
+  m_Size: {x: 1.23, y: 0.05}
+  m_Direction: 1
 --- !u!1 &6043265385569033473
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,8 +353,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2382799534944137224}
-  - component: {fileID: 1265500834308943837}
   - component: {fileID: 9012846354004443797}
+  - component: {fileID: 403799163303882429}
   m_Layer: 9
   m_Name: Wall_Right
   m_TagString: Untagged
@@ -371,14 +371,27 @@ Transform:
   m_GameObject: {fileID: 6517862998644379422}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.555, y: 0, z: 0}
+  m_LocalPosition: {x: 0.54, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 565007395122606950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &1265500834308943837
-CircleCollider2D:
+--- !u!114 &9012846354004443797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6517862998644379422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34b91afcf9a54014db429b3b43b25b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 5322326531319013723}
+--- !u!70 &403799163303882429
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -410,21 +423,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.05
---- !u!114 &9012846354004443797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6517862998644379422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34b91afcf9a54014db429b3b43b25b48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 5322326531319013723}
+  m_Size: {x: 0.05, y: 0.59}
+  m_Direction: 0
 --- !u!1 &6889792636595277018
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,8 +434,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1519733306466681716}
-  - component: {fileID: 5237848177899299769}
   - component: {fileID: 9117435252677609697}
+  - component: {fileID: 639129121352452455}
   m_Layer: 9
   m_Name: Wall_Left
   m_TagString: Untagged
@@ -452,14 +452,27 @@ Transform:
   m_GameObject: {fileID: 6889792636595277018}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.555, y: 0, z: 0}
+  m_LocalPosition: {x: -0.54, y: -0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 565007395122606950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &5237848177899299769
-CircleCollider2D:
+--- !u!114 &9117435252677609697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889792636595277018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34b91afcf9a54014db429b3b43b25b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 5322326531319013723}
+--- !u!70 &639129121352452455
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -491,21 +504,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.05
---- !u!114 &9117435252677609697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6889792636595277018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34b91afcf9a54014db429b3b43b25b48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 5322326531319013723}
+  m_Size: {x: 0.05, y: 0.59}
+  m_Direction: 0
 --- !u!1 &6948401602068382837
 GameObject:
   m_ObjectHideFlags: 0
