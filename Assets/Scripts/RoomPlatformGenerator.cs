@@ -9,10 +9,6 @@ public class RoomPlatformGenerator : MonoBehaviour
     public Tile platformTile;
 
     public Room room;
-    public int minPlatformHeight = 1;
-    public int maxPlatformHeight = 3;
-    public int minHorizontalGap = 1;
-    public int minVerticalGap = 2;
 
     private int roomWidth;
     private int roomHeight;
@@ -49,7 +45,7 @@ public class RoomPlatformGenerator : MonoBehaviour
                 if (Random.value < platformChance && !grid[gridX, gridY])
                 {
                     int platformLength = Random.Range(2, 6);
-                    int platformHeight = Random.Range(minPlatformHeight, maxPlatformHeight + 1);
+                    int platformHeight = Random.Range(Global.PLATFORM_MIN_HEIGHT, Global.PLATFORM_MAX_HEIGHT + 1);
 
                     if (CanPlacePlatform(gridX, gridY, platformLength, platformHeight))
                     {
@@ -86,7 +82,7 @@ public class RoomPlatformGenerator : MonoBehaviour
 
         }
 
-        for (int i = -minHorizontalGap; i < length + minHorizontalGap; i++)
+        for (int i = -Global.PLATFORM_MIN_HORIZONTAL_GAP; i < length + Global.PLATFORM_MIN_HORIZONTAL_GAP; i++)
         {
             if (gridX + i >= 0 && gridX + i < roomWidth)
             {
@@ -102,7 +98,7 @@ public class RoomPlatformGenerator : MonoBehaviour
 
         for (int i = 0; i < length; i++)
         {
-            for (int j = -minVerticalGap; j < height + minVerticalGap; j++)
+            for (int j = -Global.PLATFORM_MIN_VERTICAL_GAP; j < height + Global.PLATFORM_MIN_VERTICAL_GAP; j++)
             {
                 if (gridY - j >= 0 && gridY - j < roomHeight && grid[gridX + i, gridY - j])
                 {
