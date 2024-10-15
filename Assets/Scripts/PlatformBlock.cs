@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
-public class PlatformBlock : MonoBehaviour
+public class PlatformBlock : Damageable
 {
     [FormerlySerializedAs("gridIndex")] [HideInInspector]
     public Vector3Int tilePosition;
@@ -12,9 +12,15 @@ public class PlatformBlock : MonoBehaviour
     [HideInInspector]
     public Tilemap platformTilemap;
 
-    public void DestroyBlock()
+    [HideInInspector]
+    public bool isDestructible = true;
+
+    public override void DealDamage(int damageAmount)
     {
-        platformTilemap.SetTile(tilePosition, null);
-        Destroy(this.gameObject);
+        if (isDestructible)
+        {
+            platformTilemap.SetTile(tilePosition, null);
+            Destroy(this.gameObject);
+        }
     }
 }

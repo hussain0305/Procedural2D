@@ -21,7 +21,7 @@ public class Whip : Weapon
 
         if (hit.collider != null)
         {
-            hit.collider.GetComponent<PlatformBlock>()?.DestroyBlock();
+            hit.collider.GetComponent<Damageable>()?.DealDamage(damage);
         }
     }
 }

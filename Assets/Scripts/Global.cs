@@ -185,7 +185,7 @@ public class Global : MonoBehaviour
     public const int HORIZONTAL_LANE_THRESHOLD = 10;
     
     //Starting Room
-    public const int STARTING_AREA_HEIGHT = 6;
+    public const int STARTING_AREA_HEIGHT = 5;
     public const int STARTING_AREA_WIDTH = 14;
 
     public static Vector2Int GetDirection(RoomEdge edge)

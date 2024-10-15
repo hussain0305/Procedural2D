@@ -5,7 +5,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public float cooldown = 2f;
-
+    public int damage;
     protected float lastUsedAt = 0;
     
     public virtual void PerformPrimaryAttack()

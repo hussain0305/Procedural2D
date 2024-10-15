@@ -39,17 +39,17 @@ public class StartingRoom : MonoBehaviour
                 //construct ground and ceiling
                 if (j == startY || j == endY)
                 {
-                    platformGenerator.PlacePlatformBlockAt(i, j);
+                    platformGenerator.PlacePlatformBlockAt(i, j, false);
                 }
                 //construct close wall
                 if (i == closedSide)
                 {
-                    platformGenerator.PlacePlatformBlockAt(i, j);
+                    platformGenerator.PlacePlatformBlockAt(i, j, false);
                 }
                 //construct wall with exit
                 if (i == openSide && (j <= startY + 1 || j >= endY - 1))
                 {
-                    platformGenerator.PlacePlatformBlockAt(i, j);
+                    platformGenerator.PlacePlatformBlockAt(i, j, false);
                 }
             }
         }

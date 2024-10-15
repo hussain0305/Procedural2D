@@ -126,7 +126,7 @@ public class RoomPlatformGenerator : MonoBehaviour
                 
                 if (!pathwayCells.Contains(gridPos))
                 {
-                    PlacePlatformBlockAt(gridX, gridY);
+                    PlacePlatformBlockAt(gridX, gridY, true);
                 }
             }
         }
@@ -135,7 +135,7 @@ public class RoomPlatformGenerator : MonoBehaviour
         room.roomGridBuildings = grid;
     }
 
-    public void PlacePlatformBlockAt(int gridX, int gridY)
+    public void PlacePlatformBlockAt(int gridX, int gridY, bool isDamageable)
     {
         int halfRoomWidth = roomWidth / 2;
         int halfRoomHeight = roomHeight / 2;
@@ -148,6 +148,7 @@ public class RoomPlatformGenerator : MonoBehaviour
         platformTilemap.SetTile(tilePosition, platformTile);
 
         PlatformBlock block = Instantiate(platformPrefab, transform);
+        block.isDestructible = isDamageable;
         block.tilePosition = tilePosition;
         block.platformTilemap = platformTilemap;
         // 0.5f needs to be added because the blocks are 1x1 and the anchor is at the center
