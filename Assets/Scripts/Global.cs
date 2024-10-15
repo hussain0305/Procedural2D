@@ -11,6 +11,9 @@ public enum Ability { MultiJump, WallGrab}
 public enum PickupType { MultiJump, WallGrab}
 
 [System.Serializable]
+public enum AreaType { Free, Shop}
+
+[System.Serializable]
 public struct PickupPrefabs
 {
     public PickupType pickupType;
@@ -180,6 +183,10 @@ public class Global : MonoBehaviour
     //Room Analysis
     public const int VERTICAL_LANE_THRESHOLD = 6;
     public const int HORIZONTAL_LANE_THRESHOLD = 10;
+    
+    //Starting Room
+    public const int STARTING_AREA_HEIGHT = 6;
+    public const int STARTING_AREA_WIDTH = 14;
 
     public static Vector2Int GetDirection(RoomEdge edge)
     {

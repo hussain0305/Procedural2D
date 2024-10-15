@@ -21,6 +21,7 @@ public class Room : MonoBehaviour
 
     public Tile wallTile;
 
+    public RoomPlatformGenerator platformGenerator;
     public RoomAnalyzer roomAnalyzer;
     
     [HideInInspector]
@@ -39,7 +40,10 @@ public class Room : MonoBehaviour
     public RoomSetupProgress setupProgress;
 
     [HideInInspector]
-    public bool[,] grid;
+    public bool[,] roomGridBuildings;
+
+    [HideInInspector]
+    public AreaType[,] roomGridNPCAreas;
 
     [HideInInspector]
     public List<Vector2Int> pathwayCells = new List<Vector2Int>();
@@ -112,7 +116,7 @@ public class Room : MonoBehaviour
         setupProgress.SetBorderTilesPlacementCompleted();
     }
     
-    public void SetRoomProperties(RoomType _roomType, Vector2Int _gridIndex, Color _color, Tilemap _wallsTilemap)
+    public void InitRoom(RoomType _roomType, Vector2Int _gridIndex, Color _color, Tilemap _wallsTilemap, Tilemap _platformTilemap)
     {
         roomType = _roomType;
         gridIndex = _gridIndex;
@@ -122,6 +126,11 @@ public class Room : MonoBehaviour
         roomVolume.gridIndex = gridIndex;
 
         wallTilemap = _wallsTilemap;
+
+        roomGridBuildings = new bool[Global.CELL_SIZE_INTERIOR_X, Global.CELL_SIZE_INTERIOR_Y];
+        roomGridNPCAreas = new AreaType[Global.CELL_SIZE_INTERIOR_X, Global.CELL_SIZE_INTERIOR_Y];
+        
+        platformGenerator?.Init(_platformTilemap, pathwayCells);
     }
 
     public void CreateOpening(RoomEdge _edge, int[] path, Room neighbour)
@@ -204,6 +213,11 @@ public class Room : MonoBehaviour
         setupProgress.SetPathTilesRemovalCompleted();
     }
 
+    public void GeneratePlatforms(Tilemap _platformTilemap)
+    {
+        platformGenerator?.GeneratePlatforms();
+    }
+    
     public void SpawnPickupInSector(PickupType pickup)
     {
         GameObject pickupPrefab = GlobalData.Instance.GetPickupPrefab(pickup);
@@ -215,7 +229,7 @@ public class Room : MonoBehaviour
 
     public void AnalyzeRoom()
     {
-        roomAnalyzer?.AnalyzeRoom(grid);
+        roomAnalyzer?.AnalyzeRoom(roomGridBuildings);
     }
 
     public List<List<Vector2Int>> GetSpaciousAreas()

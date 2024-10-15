@@ -187,6 +187,7 @@ MonoBehaviour:
   floor: {fileID: 4951890789190281519}
   roomSprite: {fileID: 7827904267741133941}
   wallTile: {fileID: 11400000, guid: ae7571a188b4ba54f8cfc50379bb71a9, type: 2}
+  platformGenerator: {fileID: 1554457529071508484}
   roomAnalyzer: {fileID: 1828597828546269086}
   gridIndex: {x: 0, y: 0}
   roomType: 0

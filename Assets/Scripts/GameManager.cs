@@ -36,8 +36,9 @@ public class GameManager : MonoBehaviour
 
     private void PlacePlayerInStartingRoom()
     {
-        Room startingRoom = mazeGenerator.allRooms[mazeGenerator.startNode];
-        player.transform.position = startingRoom.GetCellLocation(startingRoom.GetCenterOfArea(startingRoom.GetBiggestSpaciousAreaOutsideOfPathways()));
+        Room room = mazeGenerator.allRooms[mazeGenerator.startNode];
+        StartingRoom startingRoom = room.GetComponentInChildren<StartingRoom>();
+        player.transform.position = room.GetCellLocation(startingRoom.playerStartPosition);
     }
 
     private void HandleRoomEntered(Vector2Int gridIndex)

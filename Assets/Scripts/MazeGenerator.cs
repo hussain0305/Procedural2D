@@ -80,7 +80,10 @@ public class MazeGenerator : MonoBehaviour
                 
         yield return null;
         GeneratePaths();
-                
+        
+        yield return null;
+        GenerateEssentialAreas();
+
         yield return null;
         GeneratePlatforms();
                 
@@ -99,7 +102,7 @@ public class MazeGenerator : MonoBehaviour
         yield return null;
         SetRoomNames(); //Primarily for in editor, can be removed in the final build
     }
-    
+
     private void AnalyzeRooms()
     {
         IEnumerator AnalyzeRoomsAfterDelay()
@@ -246,7 +249,7 @@ public class MazeGenerator : MonoBehaviour
                 }
                 GameObject spawnedNode = Instantiate(currentNodePrefab, position, Quaternion.identity, parentTransform);
                 Room spawnedRoom = spawnedNode.GetComponent<Room>();
-                spawnedRoom.SetRoomProperties(nodeType, currentPosition, GlobalData.Instance.GetRoomColor(nodeType), wallTilemap);
+                spawnedRoom.InitRoom(nodeType, currentPosition, GlobalData.Instance.GetRoomColor(nodeType), wallTilemap, platformTilemap);
                 allRooms.Add(currentPosition, spawnedRoom);
             }
         }
@@ -405,12 +408,17 @@ public class MazeGenerator : MonoBehaviour
             }
         }
     }
+    
+    private void GenerateEssentialAreas()
+    {
+        allRooms[startNode].gameObject.AddComponent<StartingRoom>().SetupStartingRoom(allRooms[startNode], allRooms[startNode].platformGenerator);
+    }
 
     private void GeneratePlatforms()
     {
         foreach (Room room in allRooms.Values)
         {
-            room.GetComponentInChildren<RoomPlatformGenerator>()?.Init(platformTilemap, room.pathwayCells);
+            room.GeneratePlatforms(platformTilemap);
         }
     }
 

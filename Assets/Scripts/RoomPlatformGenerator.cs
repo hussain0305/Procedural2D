@@ -28,21 +28,23 @@ public class RoomPlatformGenerator : MonoBehaviour
         platformChance = Random.Range(Global.PLATFORM_CHANCE - Global.PLATFORM_CHANCE_RANDOMIZATION, Global.PLATFORM_CHANCE + Global.PLATFORM_CHANCE_RANDOMIZATION);
         roomWidth = Global.CELL_SIZE_INTERIOR_X;
         roomHeight = Global.CELL_SIZE_INTERIOR_Y;
-        grid = new bool[roomWidth, roomHeight];
+        grid = room.roomGridBuildings;
         roomWorldPosition = new Vector2Int((int)room.gameObject.transform.position.x, (int)room.gameObject.transform.position.y);
 
         platformTilemap = _platformTilemap;
-        GeneratePlatforms();
     }
 
-    void GeneratePlatforms()
+    public void GeneratePlatforms()
     {
-        for (int y = -(roomHeight / 2); y < roomHeight / 2; y++)
+        int halfRoomHeight = roomHeight / 2;
+        int halfRoomWidth = roomWidth / 2;
+        
+        for (int y = -halfRoomHeight; y < halfRoomHeight; y++)
         {
-            for (int x = -(roomWidth / 2); x < roomWidth / 2; x++)
+            for (int x = -halfRoomWidth; x < halfRoomWidth / 2; x++)
             {
-                int gridX = x + roomWidth / 2;
-                int gridY = y + roomHeight / 2;
+                int gridX = x + halfRoomWidth;
+                int gridY = y + halfRoomHeight;
 
                 if (Random.value < platformChance && !grid[gridX, gridY])
                 {
@@ -70,6 +72,18 @@ public class RoomPlatformGenerator : MonoBehaviour
         if (gridY - height < 0 || gridY > roomHeight)
         {
             return false;
+        }
+
+        for (int i = 0; i < length; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if (room.roomGridNPCAreas[gridX + i, gridY - j] != AreaType.Free)
+                {
+                    return false;
+                }
+            }
+
         }
 
         for (int i = -minHorizontalGap; i < length + minHorizontalGap; i++)
@@ -102,45 +116,44 @@ public class RoomPlatformGenerator : MonoBehaviour
 
     void PlacePlatform(int x, int y, int length, int height)
     {
-        // Mark the grid tiles as occupied
         for (int i = 0; i < length; i++)
         {
             for (int j = 0; j < height; j++)
             {
                 int gridX = x + roomWidth / 2 + i;
                 int gridY = y + roomHeight / 2 - j;
-                grid[gridX, gridY] = true;
                 Vector2Int gridPos = new Vector2Int(gridX, gridY);
-                if (!pathwayCells.Contains(gridPos))
-                {
-                    Vector3Int tilePosition = new Vector3Int(x + i + roomWorldPosition.x, y - j + roomWorldPosition.y, 0);
-                    platformTilemap.SetTile(tilePosition, platformTile);
-                }
-            }
-        }
-
-        for (int i = 0; i < length; i++)
-        {
-            for (int j = 0; j < height; j++)
-            {
-                Vector2Int gridPos = new Vector2Int(x + i + (roomWidth / 2), y - j + (roomHeight / 2));
                 
                 if (!pathwayCells.Contains(gridPos))
                 {
-                    PlatformBlock block = Instantiate(platformPrefab, transform);
-                    Vector3Int tilePosition = new Vector3Int(x + i + roomWorldPosition.x, y - j + roomWorldPosition.y, 0);
-                    block.tilePosition = tilePosition;
-                    block.platformTilemap = platformTilemap;
-                    // 0.5f needs to be added because the blocks are 1x1 and the anchor is at the center
-                    float localX = (x + i) + 0.5f;
-                    float localY = (y - j) + 0.5f;
-
-                    block.transform.localPosition = new Vector3(localX, localY, 0);
+                    PlacePlatformBlockAt(gridX, gridY);
                 }
             }
         }
 
         room.setupProgress.SetPlatformTilesCompleted();
-        room.grid = grid;
+        room.roomGridBuildings = grid;
+    }
+
+    public void PlacePlatformBlockAt(int gridX, int gridY)
+    {
+        int halfRoomWidth = roomWidth / 2;
+        int halfRoomHeight = roomHeight / 2;
+
+        int gridXWithPositionalOffset = gridX - halfRoomWidth;
+        int gridYWithPositionalOffset = gridY - halfRoomHeight;
+        
+        grid[gridX, gridY] = true;
+        Vector3Int tilePosition = new Vector3Int(gridXWithPositionalOffset + roomWorldPosition.x, gridYWithPositionalOffset + roomWorldPosition.y, 0);
+        platformTilemap.SetTile(tilePosition, platformTile);
+
+        PlatformBlock block = Instantiate(platformPrefab, transform);
+        block.tilePosition = tilePosition;
+        block.platformTilemap = platformTilemap;
+        // 0.5f needs to be added because the blocks are 1x1 and the anchor is at the center
+        float localX = gridXWithPositionalOffset + 0.5f;
+        float localY = gridYWithPositionalOffset + 0.5f;
+
+        block.transform.localPosition = new Vector3(localX, localY, 0);
     }
 }
