@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     public MazeGenerator mazeGenerator;
     public PlayerController player;
     
+    [Header("Scriptable Objects")]
+    public NPCList npcList;  
+    
     private Coroutine cameraLerp;
     
     private void OnEnable()
@@ -32,6 +35,7 @@ public class GameManager : MonoBehaviour
     private void OnAllRoomsAnalyzed()
     {
         PlacePlayerInStartingRoom();
+        PlaceShopkeeperInStartingRoom();
     }
 
     private void PlacePlayerInStartingRoom()
@@ -39,6 +43,18 @@ public class GameManager : MonoBehaviour
         Room room = mazeGenerator.allRooms[mazeGenerator.startNode];
         StartingRoom startingRoom = room.GetComponentInChildren<StartingRoom>();
         player.transform.position = room.GetCellLocation(startingRoom.playerStartPosition);
+    }
+
+    private void PlaceShopkeeperInStartingRoom()
+    {
+        Room room = mazeGenerator.allRooms[mazeGenerator.startNode];
+        StartingRoom startingRoom = room.GetComponentInChildren<StartingRoom>();
+
+        NPC shopkeeperPrefab = npcList.GetNPC(NPCCharacter.CyrusTheMadScribe);
+        if (shopkeeperPrefab != null)
+        {
+            Instantiate(shopkeeperPrefab, room.GetCellLocation(startingRoom.shopkeeperPosition), Quaternion.identity);
+        }
     }
 
     private void HandleRoomEntered(Vector2Int gridIndex)

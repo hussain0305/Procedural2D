@@ -14,6 +14,9 @@ public enum PickupType { MultiJump, WallGrab}
 public enum AreaType { Free, Shop}
 
 [System.Serializable]
+public enum PopupType { NPC, ShopItem, ItemInfo }
+
+[System.Serializable]
 public struct PickupPrefabs
 {
     public PickupType pickupType;
