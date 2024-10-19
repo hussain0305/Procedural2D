@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class Shopkeeper : NPC
 {
-    
+    public void Init()
+    {
+        
+    }
 }

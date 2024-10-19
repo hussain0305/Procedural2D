@@ -56,6 +56,11 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
     }
 
+    public void ForceStopPlayer()
+    {
+        rb.velocity = Vector2.zero;
+    }
+
     void HandleJump()
     {
         IEnumerator ResetCanGrab()

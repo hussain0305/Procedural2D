@@ -11,10 +11,25 @@ public enum Ability { MultiJump, WallGrab}
 public enum PickupType { MultiJump, WallGrab}
 
 [System.Serializable]
+public enum PurchableItemType { MultiJump, WallGrab}
+
+[System.Serializable]
+public struct PurchasableItemInfo
+{
+    public PurchableItemType itemType;
+    public string itemName;
+    public string description;
+    public Sprite itemIcon;
+    public int price;
+    public bool isConsumable;
+    public GameObject prefab;
+}
+
+[System.Serializable]
 public enum AreaType { Free, Shop}
 
 [System.Serializable]
-public enum PopupType { NPC, ShopItem, ItemInfo }
+public enum PopupType { NPC, PurchasableItem, ItemInfo, InteractionPrompt }
 
 [System.Serializable]
 public struct PickupPrefabs
@@ -196,9 +211,24 @@ public class Global : MonoBehaviour
     //Starting Room
     public const int STARTING_AREA_HEIGHT = 5;
     public const int STARTING_AREA_WIDTH = 14;
+    
+    //UI Prompts
+    public const float POPUP_VERTICAL_OFFSET = 1;
+    public const float POPUP_HORIZONTAL_OFFSET = 0;
 
     public static Vector2Int GetDirection(RoomEdge edge)
     {
         return Directions[edge];
     }
+
+    public static Vector3 GetPromptOffset()
+    {
+        return new Vector3(POPUP_HORIZONTAL_OFFSET, POPUP_VERTICAL_OFFSET, 0);
+    }
+    
+    public static Vector3 GetPromptOffset(Vector3 additionalOffset)
+    {
+        return new Vector3(POPUP_HORIZONTAL_OFFSET + additionalOffset.x, POPUP_VERTICAL_OFFSET + additionalOffset.y, 0);
+    }
+
 }

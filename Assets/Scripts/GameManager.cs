@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
+    
     public MazeGenerator mazeGenerator;
     public PlayerController player;
     
@@ -14,6 +16,18 @@ public class GameManager : MonoBehaviour
     
     private Coroutine cameraLerp;
     
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private void OnEnable()
     {
         MazeGenerator.OnMazeGenerationComplete += OnMazeGenerationComplete;
@@ -97,4 +111,14 @@ public class GameManager : MonoBehaviour
         cameraLerp = StartCoroutine(LerpCameraToRoom());
     }
 
+    public void DisablePlayerControls()
+    {
+        player.ForceStopPlayer();
+        player.enabled = false;
+    }
+
+    public void EnablePlayerControls()
+    {
+        player.enabled = true;
+    }
 }
