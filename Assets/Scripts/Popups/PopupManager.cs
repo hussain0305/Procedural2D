@@ -12,6 +12,7 @@ public class PopupManager : MonoBehaviour
     public PopupItemInfo itemInfoPopup;
     public InteractionPrompt interactionPrompt;
     public NPCInteractionMenu npcInteractionMenu;
+    public Shop shop;
     public Canvas worldSpaceCanvas;
 
     private Popup currentPopup;
@@ -47,6 +48,20 @@ public class PopupManager : MonoBehaviour
         }
         ShowPopupWithoutAnimation();
         PositionPopupInWorldSpace(position);
+    }
+
+    private void ShowPopup(Popup newPopup, System.Action setupAction)
+    {
+        HideCurrentPopup();
+        currentPopup = newPopup;
+
+        setupAction?.Invoke();
+
+        if (currentAnimation != null)
+        {
+            StopCoroutine(currentAnimation);
+        }
+        ShowPopupWithoutAnimation();
     }
 
     public void HideCurrentPopup(bool closeAnimation = false)
@@ -157,6 +172,11 @@ public class PopupManager : MonoBehaviour
     public void ShowActionPrompt(Vector3 position, string name, string description)
     {
         ShowPopup(interactionPrompt, position, () => UpdateInteractionInfoPopup(name, description));
+    }
+
+    public void ShowShop()
+    {
+        ShowPopup(shop, () => UpdateInteractionInfoPopup(name, null));
     }
 
     private void UpdateNPCPopup(string prompt, string description)

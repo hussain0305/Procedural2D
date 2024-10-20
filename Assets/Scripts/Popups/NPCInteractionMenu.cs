@@ -51,7 +51,7 @@ public class NPCInteractionMenu : Popup
             }
         }
 
-        if (Input.GetButtonDown("Submit") || Input.GetButtonDown("Action"))
+        if (Input.GetButtonDown("Action"))
         {
             interactionButtons[currentButtonIndex].button.onClick.Invoke();
         }

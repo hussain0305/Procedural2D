@@ -15,15 +15,13 @@ MonoBehaviour:
   items:
   - itemType: 0
     itemName: Multi Jump
-    description: Allows you an additional jump while in air. Multiple puchases stack
+    description: Allows you an additional jump while in air
     itemIcon: {fileID: 0}
     price: 10
-    isConsumable: 1
-    prefab: {fileID: 0}
+    inventoryCount: 3
   - itemType: 1
     itemName: Wall Grab
-    description: Allows you to grab onto wall, and jump off of them
+    description: Grab onto walls, and jump off of them
     itemIcon: {fileID: 0}
     price: 10
-    isConsumable: 1
-    prefab: {fileID: 0}
+    inventoryCount: 1

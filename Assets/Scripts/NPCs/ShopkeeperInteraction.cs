@@ -11,6 +11,6 @@ public class ShopkeeperInteraction : NPCInteraction
     
     public void Interaction_Shop()
     {
-        Debug.Log("Shopped with the Shopkeeper");
+        PopupManager.Instance.ShowShop();
     }
 }

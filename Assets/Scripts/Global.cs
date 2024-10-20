@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,8 +22,8 @@ public struct PurchasableItemInfo
     public string description;
     public Sprite itemIcon;
     public int price;
-    public bool isConsumable;
-    public GameObject prefab;
+    public int inventoryCount;
+    public Action OnPurchaseAction; 
 }
 
 [System.Serializable]
