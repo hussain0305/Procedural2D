@@ -90,8 +90,8 @@ public class MazeGenerator : MonoBehaviour
         yield return null;
         DrawTiles();
                 
-        yield return null;
-        PlacePickups();
+        // yield return null;
+        // PlacePickups();
         
         yield return null;
         AnalyzeRooms();
@@ -457,8 +457,8 @@ public class MazeGenerator : MonoBehaviour
     
     private void PlacePickups()
     {
-        allRooms[startNode].SpawnPickupInSector(PickupType.MultiJump);
-        allRooms[startNode].SpawnPickupInSector(PickupType.WallGrab);
+        // allRooms[startNode].SpawnPickupInSector(PickupType.MultiJump);
+        // allRooms[startNode].SpawnPickupInSector(PickupType.WallGrab);
     }
 
     private int[]GetPathIndices(RoomEdge edge)
