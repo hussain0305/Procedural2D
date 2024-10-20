@@ -19,8 +19,9 @@ public class Shop : Menu<PurchasableItemInfo>
     {
         itemActions = new Dictionary<PurchableItemType, Action>
         {
-            { PurchableItemType.WallGrab, () => GameManager.Instance.player.abilities.hasWallGrab = true },
-            { PurchableItemType.MultiJump, () => GameManager.Instance.player.abilities.additionalJumps++ },
+            { PurchableItemType.WallGrab, () => GameManager.Instance.GivePlayerWallGrab() },
+            { PurchableItemType.MultiJump, () => GameManager.Instance.GivePlayerAdditionalJump() },
+            { PurchableItemType.Dash, () => GameManager.Instance.GivePlayerDash() },
         };
 
         availableItems = new List<PurchasableItemInfo>(purchasableItems.items);

@@ -25,3 +25,9 @@ MonoBehaviour:
     itemIcon: {fileID: 0}
     price: 10
     inventoryCount: 1
+  - itemType: 2
+    itemName: Dash
+    description: Dash forward a small distance
+    itemIcon: {fileID: 0}
+    price: 10
+    inventoryCount: 1

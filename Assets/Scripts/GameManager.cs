@@ -121,4 +121,23 @@ public class GameManager : MonoBehaviour
     {
         player.enabled = true;
     }
+
+    #region Player Abilities
+
+    public void GivePlayerDash()
+    {
+        player.abilities.hasDash = true;
+    }
+
+    public void GivePlayerWallGrab()
+    {
+        player.abilities.hasWallGrab = true;
+    }
+
+    public void GivePlayerAdditionalJump()
+    {
+        player.abilities.additionalJumps++;
+    }
+
+    #endregion
 }

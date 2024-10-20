@@ -12,7 +12,7 @@ public enum Ability { MultiJump, WallGrab}
 public enum PickupType { MultiJump, WallGrab}
 
 [System.Serializable]
-public enum PurchableItemType { MultiJump, WallGrab}
+public enum PurchableItemType { MultiJump, WallGrab, Dash}
 
 [System.Serializable]
 public struct PurchasableItemInfo
@@ -162,6 +162,7 @@ public struct RoomSetupProgress
 public struct Abilities
 {
     public bool hasWallGrab;
+    public bool hasDash;
     public int additionalJumps;
 }
 
