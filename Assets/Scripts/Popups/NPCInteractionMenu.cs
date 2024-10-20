@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -28,6 +29,11 @@ public class NPCInteractionMenu : Popup
         {
             Destroy(gameObject);
         }
+    }
+
+    private void OnEnable()
+    {
+        currentButtonIndex = 0;
     }
 
     private void Update()

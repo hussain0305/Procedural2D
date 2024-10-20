@@ -2238,11 +2238,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d852725d60dea9a44bcb7c311d3404f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  purchasableItems: {fileID: 11400000, guid: 972f432a84b5c5942a2dae1c55e05c90, type: 2}
-  shopItemPrefab: {fileID: 93285648392253255, guid: 5e8ca1907dbff184589ce7cde2fef0eb, type: 3}
+  menuItemPrefab: {fileID: 93285648392253255, guid: 5e8ca1907dbff184589ce7cde2fef0eb, type: 3}
   itemParent: {fileID: 1145105902}
   exitButton: {fileID: 1405868396}
   exitButtonHighlight: {fileID: 1973685074}
+  purchasableItems: {fileID: 11400000, guid: 972f432a84b5c5942a2dae1c55e05c90, type: 2}
 --- !u!1 &947366815
 GameObject:
   m_ObjectHideFlags: 0
