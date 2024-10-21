@@ -15,13 +15,13 @@ public class Shop : Menu<PurchasableItemInfo>
     {
         InitShop();
         base.Start();
-        PlayerInventory.OnCoinAmountChanged += UpdateCoinBalanceOnScreen;
+        PlayerInventory.OnCoinAmountChanged += UpdateCoinBalance;
     }
 
-    public void OnEnable()
+    protected override void OnEnable()
     {
         base.OnEnable();
-        UpdateCoinBalanceOnScreen(GameManager.Instance.PlayerInventory.GetCoinsBalance());
+        UpdateCoinBalance(GameManager.Instance.PlayerInventory.GetCoinsBalance());
     }
     
     private void InitShop()
@@ -56,17 +56,25 @@ public class Shop : Menu<PurchasableItemInfo>
             selectedItem.inventoryCount--;
 
             MenuItem<PurchasableItemInfo> currentShopItem = menuItems[currentItemIndex];
-            currentShopItem.inventoryCount.text = selectedItem.inventoryCount.ToString();
+            currentShopItem.inventoryCountText.text = selectedItem.inventoryCount.ToString();
             availableItems[currentItemIndex] = selectedItem;
             PurchaseItem(selectedItem);
-
-            if (selectedItem.inventoryCount == 0)
-            {
-                currentShopItem.inventorySection.SetActive(false);
-                currentShopItem.soldOutSection.SetActive(true);
-                itemAvailability[currentItemIndex] = false;
-                NavigateMenu(1);
-            }
+            currentShopItem.Setup(
+                selectedItem, 
+                selectedItem.itemName, 
+                selectedItem.description, 
+                selectedItem.itemIcon, 
+                selectedItem.price, 
+                selectedItem.inventoryCount
+            );
+            EvaluateMenu();
+            // if (selectedItem.inventoryCount == 0)
+            // {
+            //     currentShopItem.inventorySection.SetActive(false);
+            //     currentShopItem.soldOutSection.SetActive(true);
+            //     itemAvailability[currentItemIndex] = false;
+            //     NavigateMenu(1);
+            // }
         }
     }
 
@@ -79,8 +87,35 @@ public class Shop : Menu<PurchasableItemInfo>
         }
     }
 
-    public void UpdateCoinBalanceOnScreen(int coins)
+    public void UpdateCoinBalance(int coins)
     {
         coinAmountText.text = coins.ToString();
+        EvaluateMenu();
+    }
+    
+    public override void EvaluateMenu()
+    {
+        if (itemAffordability == null)
+        {
+            itemAffordability = new Dictionary<int, bool>();
+        }
+        int playerCoinBalance = GameManager.Instance.PlayerInventory.GetCoinsBalance();
+        for (int i = 0; i < availableItems.Count; i++)
+        {
+            var purchasableItem = (PurchasableItemInfo)(object)availableItems[i]; 
+            itemAffordability.TryAdd(i, true);
+            itemAffordability[i] = purchasableItem.price <= playerCoinBalance;
+            itemAvailability[i] = purchasableItem.inventoryCount > 0;
+            MenuItem<PurchasableItemInfo> shopItem = menuItems[i];
+            shopItem.UpdateVisibleSections();
+        }
+
+        if (currentItemIndex < availableItems.Count)
+        {
+            if (!itemAffordability[currentItemIndex] || !itemAvailability[currentItemIndex])
+            {
+                NavigateMenu(1);
+            }
+        }
     }
 }

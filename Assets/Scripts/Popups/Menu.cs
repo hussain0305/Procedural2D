@@ -13,6 +13,7 @@ public class Menu<T> : Popup
     protected List<T> availableItems = new List<T>();
     protected List<MenuItem<T>> menuItems = new List<MenuItem<T>>();
     protected Dictionary<int, bool> itemAvailability;
+    protected Dictionary<int, bool> itemAffordability;
 
     protected int currentItemIndex = 0;
     private float inputCooldown = 0.2f;
@@ -30,6 +31,7 @@ public class Menu<T> : Popup
     protected virtual void OnEnable()
     {
         GameManager.Instance.DisablePlayerControls();
+        EvaluateMenu();
         HighlightOnEnable();
     }
 
@@ -100,7 +102,7 @@ public class Menu<T> : Popup
                 foundNext = true;
                 HighlightButton(nextIndexInNavigation);
             }
-            else if (nextIndexInNavigation < availableItems.Count && itemAvailability[nextIndexInNavigation])
+            else if (nextIndexInNavigation < availableItems.Count && itemAvailability[nextIndexInNavigation] && itemAffordability[nextIndexInNavigation])
             {
                 foundNext = true;
                 HighlightButton(nextIndexInNavigation);
@@ -140,9 +142,14 @@ public class Menu<T> : Popup
 
             menuItems.Add(menuItem);
         }
+        EvaluateMenu();
     }
 
     protected virtual void SetupMenuItem(MenuItem<T> menuItem, T item)
+    {
+    }
+
+    public virtual void EvaluateMenu()
     {
     }
 }
