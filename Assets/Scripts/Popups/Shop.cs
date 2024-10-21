@@ -20,8 +20,8 @@ public class Shop : Menu<PurchasableItemInfo>
 
     public void OnEnable()
     {
+        base.OnEnable();
         UpdateCoinBalanceOnScreen(GameManager.Instance.PlayerInventory.GetCoinsBalance());
-        Debug.Log("Updated on screen");
     }
     
     private void InitShop()

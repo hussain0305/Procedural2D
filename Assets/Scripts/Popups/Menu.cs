@@ -27,7 +27,7 @@ public class Menu<T> : Popup
         HighlightOnEnable();
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         GameManager.Instance.DisablePlayerControls();
         HighlightOnEnable();
