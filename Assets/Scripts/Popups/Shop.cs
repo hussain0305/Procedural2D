@@ -2,10 +2,12 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine.UI;
 
 public class Shop : Menu<PurchasableItemInfo>
 {
+    public TextMeshProUGUI coinAmountText;
     public PurchasableItems purchasableItems;
     private Dictionary<PurchableItemType, Action> itemActions;
 
@@ -13,10 +15,18 @@ public class Shop : Menu<PurchasableItemInfo>
     {
         InitShop();
         base.Start();
+        PlayerInventory.OnCoinAmountChanged += UpdateCoinBalanceOnScreen;
     }
 
+    public void OnEnable()
+    {
+        UpdateCoinBalanceOnScreen(GameManager.Instance.PlayerInventory.GetCoinsBalance());
+        Debug.Log("Updated on screen");
+    }
+    
     private void InitShop()
     {
+        
         itemActions = new Dictionary<PurchableItemType, Action>
         {
             { PurchableItemType.WallGrab, () => GameManager.Instance.GivePlayerWallGrab() },
@@ -64,7 +74,13 @@ public class Shop : Menu<PurchasableItemInfo>
     {
         if (itemActions.TryGetValue(item.itemType, out Action purchaseAction))
         {
+            GameManager.Instance.PlayerInventory.SpendCoin(item.price);
             purchaseAction.Invoke();
         }
+    }
+
+    public void UpdateCoinBalanceOnScreen(int coins)
+    {
+        coinAmountText.text = coins.ToString();
     }
 }

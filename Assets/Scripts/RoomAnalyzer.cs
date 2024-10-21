@@ -363,6 +363,7 @@ public class RoomAnalyzer : MonoBehaviour
         return true;
     }
     
+#if UNITY_EDITOR
     #region Gizmos
     private int currentSpaciousAreaIndex = 0;
     private float nextAreaTime = 0f;
@@ -513,7 +514,6 @@ public class RoomAnalyzer : MonoBehaviour
         }
     }
     #endregion
-    
     void Update()
     {
         if (Time.time > nextAreaTime && spaciousAreas != null && spaciousAreas.Count > 0)
@@ -522,6 +522,6 @@ public class RoomAnalyzer : MonoBehaviour
             nextAreaTime = Time.time + displayDuration;
         }
     }
-    
-    
+#endif
+
 }

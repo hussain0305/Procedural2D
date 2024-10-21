@@ -4,9 +4,8 @@ using UnityEngine;
 [System.Serializable]
 public class SaveData
 {
-    public int currentHealthLevel = 100;
-    public int playerScore;
-    public Vector3 playerPosition;
+    public int healthLevel = 100;
+    public int startingCoin = 20;
 }
 
 public static class SaveSystem

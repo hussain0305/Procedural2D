@@ -9,8 +9,16 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     
     public MazeGenerator mazeGenerator;
-    public PlayerController player;
     
+    //Player
+    public PlayerController player;
+    private PlayerInventory playerInventory;
+    private PlayerAttributes playerAttributes;
+
+    public PlayerController PlayerController => player;
+    public PlayerInventory PlayerInventory => playerInventory;
+    public PlayerAttributes PlayerAttributes => playerAttributes;
+
     [Header("Scriptable Objects")]
     public NPCList npcList;  
     
@@ -28,6 +36,13 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void Start()
+    {
+        playerInventory = player.GetComponent<PlayerInventory>();
+        playerAttributes = player.GetComponent<PlayerAttributes>();
+    }
+
     private void OnEnable()
     {
         MazeGenerator.OnMazeGenerationComplete += OnMazeGenerationComplete;

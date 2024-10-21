@@ -36,7 +36,7 @@ public class PlayerAttributes : MonoBehaviour
 
     public void InitHealth()
     {
-        maxHealth = SaveManager.GetCurrentHealthLevel();
+        maxHealth = SaveManager.GetHealthLevel();
         CurrentHealth = maxHealth - 50;
     }
 

@@ -6,7 +6,7 @@ public class PurchasableItem_WallGrab : PurchasableItem
 {
     public override void WasPurchased()
     {
-        GameManager.Instance.player.abilities.hasWallGrab = true;
+        GameManager.Instance.PlayerController.abilities.hasWallGrab = true;
         PostPurchase();
     }
 }

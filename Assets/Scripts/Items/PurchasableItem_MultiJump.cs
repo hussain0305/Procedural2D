@@ -6,7 +6,7 @@ public class PurchasableItem_MultiJump : PurchasableItem
 {
     public override void WasPurchased()
     {
-        GameManager.Instance.player.IncrementNumJumps();
+        GameManager.Instance.PlayerController.IncrementNumJumps();
         PostPurchase();
     }
 }
