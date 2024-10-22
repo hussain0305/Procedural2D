@@ -8,4 +8,5 @@ public class NPC : MonoBehaviour
     public string npcName;
     public string description;
 
+    
 }

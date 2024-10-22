@@ -108,6 +108,33 @@ public struct RoomOpening
     }
 }
 
+[System.Serializable]
+public enum MovementType
+{
+    Walking,
+    Flying
+}
+
+[System.Serializable]
+public enum AttackType
+{
+    Melee,
+    Ranged,
+    Both
+}
+
+[System.Serializable]
+public struct EnemyData
+{
+    public MovementType movementType;
+    public AttackType attackType;
+    public float patrolSpeed;
+    public float pursueSpeed;
+    public float attackRange;
+    public Transform pointA;
+    public Transform pointB;
+}
+
 public struct RoomSetupProgress
 {
     private bool platformsGenerated;

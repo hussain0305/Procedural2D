@@ -150,7 +150,7 @@ public class PopupManager : MonoBehaviour
             // currentAnimation = StartCoroutine(AnimatePopup(true));
             ShowPopupWithoutAnimation();
             popupTransform = npcInteractionMenu.GetComponent<RectTransform>();
-            PositionPopupInWorldSpace(npc.transform.position);
+            PositionPopupInWorldSpace(npc.transform.position + Global.GetPromptOffset());
         }    
     }
 
