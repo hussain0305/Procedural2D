@@ -15,7 +15,7 @@ public class PlatformBlock : Damageable
     [HideInInspector]
     public bool isDestructible = true;
 
-    public override void DealDamage(int damageAmount)
+    public override void TakeDamage(int damageAmount)
     {
         if (isDestructible)
         {

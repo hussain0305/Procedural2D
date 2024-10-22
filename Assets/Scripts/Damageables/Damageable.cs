@@ -6,7 +6,7 @@ public class Damageable : MonoBehaviour
 {
     public int health;
 
-    public virtual void DealDamage(int damageAmount)
+    public virtual void TakeDamage(int damageAmount)
     {
         
     }
