@@ -57,8 +57,11 @@ public class MazeGenerator : MonoBehaviour
     
     public static event Action OnMazeGenerationComplete;
     public static event Action OnAllRoomsAnalyzed;
+    public static event Action OnAllRoomsPlacedTraps;
     public void Start()
     {
+        OnAllRoomsAnalyzed += RoomsAnalyzed;
+        
         gridSize = Global.GRID_SIZE;
         cellSizeInterior_x = Global.CELL_SIZE_INTERIOR_X;
         cellSizeInterior_y = Global.CELL_SIZE_INTERIOR_Y;
@@ -117,6 +120,25 @@ public class MazeGenerator : MonoBehaviour
         }
 
         StartCoroutine(AnalyzeRoomsAfterDelay());
+    }
+
+    public void RoomsAnalyzed()
+    {
+        PlaceTraps();
+    }
+    private void PlaceTraps()
+    {
+        IEnumerator PlaceTrapsInRooms()
+        {
+            foreach (Room room in allRooms.Values)
+            {
+                room.PlaceTraps();
+                yield return null;
+            }
+            OnAllRoomsPlacedTraps?.Invoke();
+        }
+
+        StartCoroutine(PlaceTrapsInRooms());
     }
 
     private void GenerateMaze()

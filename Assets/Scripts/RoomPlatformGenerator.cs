@@ -44,7 +44,7 @@ public class RoomPlatformGenerator : MonoBehaviour
 
                 if (Random.value < platformChance && !grid[gridX, gridY])
                 {
-                    int platformLength = Random.Range(2, 6);
+                    int platformLength = Random.Range(Global.PLATFORM_MIN_LENGTH, Global.PLATFORM_MAX_LENGTH);
                     int platformHeight = Random.Range(Global.PLATFORM_MIN_HEIGHT, Global.PLATFORM_MAX_HEIGHT + 1);
 
                     if (CanPlacePlatform(gridX, gridY, platformLength, platformHeight))

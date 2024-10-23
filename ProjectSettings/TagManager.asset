@@ -48,9 +48,12 @@ TagManager:
   - name: Pickup
     uniqueID: 1734304501
     locked: 0
-  - name: Popups
-    uniqueID: 793583953
+  - name: NPC
+    uniqueID: 1977810403
     locked: 0
   - name: Player
     uniqueID: 48312479
+    locked: 0
+  - name: Popups
+    uniqueID: 793583953
     locked: 0

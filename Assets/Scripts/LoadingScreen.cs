@@ -5,12 +5,26 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
+public struct LoadingProgress
+{
+    public bool mazeGenerated;
+    public bool roomsAnalyzed;
+    public bool trapsPlaced;
+
+    public bool LoadingComplete()
+    {
+        return mazeGenerated && roomsAnalyzed && trapsPlaced;
+    }
+}
+
 public class LoadingScreen : MonoBehaviour
 {
     public Text loadingText;
     public GameObject loadingScreen;
 
     private List<List<string>> loadingScreenTexts;
+
+    private LoadingProgress loadingProgress;
     
     private void InitTexts()
     {
@@ -27,11 +41,17 @@ public class LoadingScreen : MonoBehaviour
         loadingScreenTexts.Add(new List<string> { "Venturing into the unknown.", "Venturing into the unknown..", "Venturing into the unknown..." });
     }
 
+    private void Start()
+    {
+        StartCoroutine(DisableLoadingScreen());
+    }
+
     private void OnEnable()
     {
         loadingScreen.SetActive(true);
         MazeGenerator.OnMazeGenerationComplete += OnMazeGenerationComplete;
         MazeGenerator.OnAllRoomsAnalyzed += OnAllRoomsAnalyzed;
+        MazeGenerator.OnAllRoomsPlacedTraps += OnTrapPlacementCompleted;
         InitTexts();
         StartCoroutine(LoadingScreenText());
     }
@@ -44,12 +64,13 @@ public class LoadingScreen : MonoBehaviour
 
     private void OnAllRoomsAnalyzed()
     {
-        StartCoroutine(DisableLoadingScreen());
+        loadingProgress.roomsAnalyzed = true;
     }
 
     IEnumerator DisableLoadingScreen()
     {
         yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => loadingProgress.LoadingComplete());
         loadingScreen.SetActive(false);
         StopAllCoroutines();
     }
@@ -69,7 +90,12 @@ public class LoadingScreen : MonoBehaviour
 
     private void OnMazeGenerationComplete()
     {
-        
+        loadingProgress.mazeGenerated = true;
+    }
+
+    private void OnTrapPlacementCompleted()
+    {
+        loadingProgress.trapsPlaced = true;
     }
 
 }

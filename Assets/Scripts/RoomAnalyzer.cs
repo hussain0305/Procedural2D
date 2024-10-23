@@ -1,10 +1,68 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class RoomAnalyzer : MonoBehaviour
 {
+    public struct PositionConstraints
+    {
+        public int? MinHorizontalPosition;
+        public int? MaxHorizontalPosition;
+        public int? MinVerticalPosition;
+        public int? MaxVerticalPosition;
+
+        public PositionConstraints(int? minX = null, int? maxX = null, int? minY = null, int? maxY = null)
+        {
+            MinHorizontalPosition = minX;
+            MaxHorizontalPosition = maxX;
+            MinVerticalPosition = minY;
+            MaxVerticalPosition = maxY;
+        }
+
+        public bool IsPositionValid(Vector2Int position)
+        {
+            if (MinHorizontalPosition.HasValue && position.x < MinHorizontalPosition) return false;
+            if (MaxHorizontalPosition.HasValue && position.x > MaxHorizontalPosition) return false;
+            if (MinVerticalPosition.HasValue && position.y < MinVerticalPosition) return false;
+            if (MaxVerticalPosition.HasValue && position.y > MaxVerticalPosition) return false;
+            return true;
+        }
+    }
+
+    public struct SearchCriteria
+    {
+        public bool ForceOnWall;
+        public bool ForceOnCeiling;
+        public bool FindBiggestHorizontalArea;
+        public bool FindBiggestVerticalHorizontalArea;
+
+        public SearchCriteria(bool forceOnWall = false, bool forceOnCeiling = false, bool findBiggestHorizontalArea = false, bool findBiggestVerticalHorizontalArea = false)
+        {
+            ForceOnWall = forceOnWall;
+            ForceOnCeiling = forceOnCeiling;
+            FindBiggestHorizontalArea = findBiggestHorizontalArea;
+            FindBiggestVerticalHorizontalArea = findBiggestVerticalHorizontalArea;
+        }
+    }
+
+    public struct SizeConstraints
+    {
+        public Vector2Int MinDimensions;
+
+        public SizeConstraints(Vector2Int? minDimensions = null)
+        {
+            MinDimensions = minDimensions ?? Vector2Int.zero;
+        }
+
+        public bool IsSizeValid(Vector2Int size)
+        {
+            return size.x >= MinDimensions.x && size.y >= MinDimensions.y;
+        }
+    }
+    
     // Gizmo visibility toggles
     public static bool showHorizontalLanes = false;
     public static bool showVerticalLanes = false;
@@ -361,6 +419,42 @@ public class RoomAnalyzer : MonoBehaviour
         }
 
         return true;
+    }
+
+    public List<Vector2Int> GetRandomHorizontalArea()
+    {
+        return horizontalLanes[Random.Range(0, horizontalLanes.Count)];
+    }
+    
+    public List<List<Vector2Int>> GetZones(Func<List<Vector2Int>, bool> filterPredicate)
+    {
+        List<List<Vector2Int>> matchingZones = new List<List<Vector2Int>>();
+
+        foreach (List<Vector2Int> horizontalLane in horizontalLanes)
+        {
+            if (filterPredicate(horizontalLane))
+            {
+                matchingZones.Add(horizontalLane);
+            }
+        }
+
+        foreach (List<Vector2Int> verticalLane in verticalLanes)
+        {
+            if (filterPredicate(verticalLane))
+            {
+                matchingZones.Add(verticalLane);
+            }
+        }
+
+        foreach (List<Vector2Int> spaciousArea in spaciousAreas)
+        {
+            if (filterPredicate(spaciousArea))
+            {
+                matchingZones.Add(spaciousArea);
+            }
+        }
+
+        return matchingZones;
     }
     
 #if UNITY_EDITOR

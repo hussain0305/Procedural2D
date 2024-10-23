@@ -193,6 +193,19 @@ public struct Abilities
     public int additionalJumps;
 }
 
+[System.Serializable]
+public enum BulletType
+{
+    TrapArrow,
+    Laser
+}
+
+[System.Serializable]
+public enum TrapType
+{
+    ArrowTrap,
+}
+
 public class Global : MonoBehaviour
 {
     public static Dictionary<RoomEdge, Vector2Int> Directions
@@ -229,6 +242,8 @@ public class Global : MonoBehaviour
     public const float PLATFORM_CHANCE_RANDOMIZATION = 0.075f;
     public const int PLATFORM_MIN_HEIGHT = 1;
     public const int PLATFORM_MAX_HEIGHT = 3;
+    public const int PLATFORM_MIN_LENGTH = 2;
+    public const int PLATFORM_MAX_LENGTH = 9;
     public const int PLATFORM_MIN_HORIZONTAL_GAP = 1;
     public const int PLATFORM_MIN_VERTICAL_GAP = 2;
 
