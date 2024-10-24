@@ -9,16 +9,21 @@ public class ArrowTrap : Trap
     public BoxCollider2D playerDetectionTrigger;
     public BulletType bulletType;
     public Bullet bullet;
+
+    private float arrowSpeed = 35;
+    private float fireCooldown = 1;
+    private float lastFireTime = 0;
+    private float direction;
     
     public override void Init()
     {
+        direction = transform.localScale.x;
         BulletManager.InitializeBulletManager(bulletType, bullet);
         DetectGround();
     }
 
     public void DetectGround()
     {
-        float direction = transform.localScale.x;
         RaycastHit2D groundHit = Physics2D.Raycast(transform.position + new Vector3(direction,0,0), transform.right * direction, Global.CELL_SIZE_INTERIOR_X, GlobalData.Instance.groundLayer);
         RaycastHit2D wallHit = Physics2D.Raycast(transform.position + new Vector3(direction,0,0), transform.right * direction, Global.CELL_SIZE_INTERIOR_X, GlobalData.Instance.wallLayer);
 
@@ -39,5 +44,16 @@ public class ArrowTrap : Trap
 
         playerDetectionTrigger.size = new Vector2(finalDistance, playerDetectionTrigger.size.y);
         playerDetectionTrigger.offset = new Vector2(finalDistance / 2, playerDetectionTrigger.offset.y);    
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        Debug.Log("FIRING");
+        if (Time.time > lastFireTime + fireCooldown)
+        {
+            lastFireTime = Time.time;
+            Bullet firedBullet = BulletManager.GetBullet(bulletType, lauchingPosition.position);
+            firedBullet.Fire(firedBullet.transform.right * direction, arrowSpeed, new Vector3(direction, 1, 1));
+        }
     }
 }
