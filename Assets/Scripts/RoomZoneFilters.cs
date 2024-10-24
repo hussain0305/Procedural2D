@@ -20,12 +20,12 @@ public static class RoomZoneFilters
 {
     public static Func<List<Vector2Int>, bool> AttachedToWall()
     {
-        return (area) => area.Exists(cell => cell.x == 0 || cell.x == Global.CELL_SIZE_INTERIOR_X);
+        return (area) => area.Exists(cell => cell.x == 0 || cell.x == Global.CELL_SIZE_INTERIOR_X - 1);
     }
 
     public static Func<List<Vector2Int>, bool> AttachedToCeiling()
     {
-        return (area) => area.Exists(cell => cell.y == Global.CELL_SIZE_INTERIOR_Y);
+        return (area) => area.Exists(cell => cell.y == Global.CELL_SIZE_INTERIOR_Y - 1);
     }
 
     public static Func<List<Vector2Int>, bool> AttachedToFloor()
@@ -79,7 +79,7 @@ public static class RoomZoneFilters
             {
                 return false;
             }
-            return area.All(cell => cell.y <= minDistanceFromCeiling);
+            return area.All(cell => cell.y <= Global.CELL_SIZE_INTERIOR_Y - 1 - minDistanceFromCeiling);
         };
     }
 

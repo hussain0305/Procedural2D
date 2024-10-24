@@ -386,14 +386,13 @@ public class Room : MonoBehaviour
 
         if (validAreas == null || validAreas.Count == 0)
         {
-            Debug.LogWarning("No valid area found for trap placement.");
             return;
         }
 
         List<Vector2Int> horizontalLane = validAreas[0];
 
         bool isLeftWall = horizontalLane.Exists(cell => cell.x == 0);
-        bool isRightWall = horizontalLane.Exists(cell => cell.x == Global.CELL_SIZE_INTERIOR_X);
+        bool isRightWall = horizontalLane.Exists(cell => cell.x == Global.CELL_SIZE_INTERIOR_X - 1);
 
         Vector2Int spawnPosition;
 
@@ -404,6 +403,7 @@ public class Room : MonoBehaviour
         else if (isRightWall)
         {
             spawnPosition = horizontalLane.OrderByDescending(cell => cell.x).First();
+            spawnPosition.x += 1;
         }
         else
         {

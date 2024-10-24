@@ -1,68 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class RoomAnalyzer : MonoBehaviour
 {
-    public struct PositionConstraints
-    {
-        public int? MinHorizontalPosition;
-        public int? MaxHorizontalPosition;
-        public int? MinVerticalPosition;
-        public int? MaxVerticalPosition;
-
-        public PositionConstraints(int? minX = null, int? maxX = null, int? minY = null, int? maxY = null)
-        {
-            MinHorizontalPosition = minX;
-            MaxHorizontalPosition = maxX;
-            MinVerticalPosition = minY;
-            MaxVerticalPosition = maxY;
-        }
-
-        public bool IsPositionValid(Vector2Int position)
-        {
-            if (MinHorizontalPosition.HasValue && position.x < MinHorizontalPosition) return false;
-            if (MaxHorizontalPosition.HasValue && position.x > MaxHorizontalPosition) return false;
-            if (MinVerticalPosition.HasValue && position.y < MinVerticalPosition) return false;
-            if (MaxVerticalPosition.HasValue && position.y > MaxVerticalPosition) return false;
-            return true;
-        }
-    }
-
-    public struct SearchCriteria
-    {
-        public bool ForceOnWall;
-        public bool ForceOnCeiling;
-        public bool FindBiggestHorizontalArea;
-        public bool FindBiggestVerticalHorizontalArea;
-
-        public SearchCriteria(bool forceOnWall = false, bool forceOnCeiling = false, bool findBiggestHorizontalArea = false, bool findBiggestVerticalHorizontalArea = false)
-        {
-            ForceOnWall = forceOnWall;
-            ForceOnCeiling = forceOnCeiling;
-            FindBiggestHorizontalArea = findBiggestHorizontalArea;
-            FindBiggestVerticalHorizontalArea = findBiggestVerticalHorizontalArea;
-        }
-    }
-
-    public struct SizeConstraints
-    {
-        public Vector2Int MinDimensions;
-
-        public SizeConstraints(Vector2Int? minDimensions = null)
-        {
-            MinDimensions = minDimensions ?? Vector2Int.zero;
-        }
-
-        public bool IsSizeValid(Vector2Int size)
-        {
-            return size.x >= MinDimensions.x && size.y >= MinDimensions.y;
-        }
-    }
-    
     // Gizmo visibility toggles
     public static bool showHorizontalLanes = false;
     public static bool showVerticalLanes = false;
@@ -282,13 +227,8 @@ public class RoomAnalyzer : MonoBehaviour
 
     bool RaycastForOpenPath(Vector2Int cell, Vector2 direction)
     {
-        // Convert grid coordinates to world space (depending on your coordinate system)
-        Vector3 worldPosition = new Vector3(cell.x, cell.y, 0); 
-
-        // Perform the raycast
+        Vector3 worldPosition = new Vector3(cell.x, cell.y, 0);
         RaycastHit2D hit = Physics2D.Raycast(worldPosition, direction, 1.0f); // 1 unit ray
-
-        // Return true if the raycast hits a collider (indicating a closed path)
         return hit.collider != null;
     }
 
@@ -419,11 +359,6 @@ public class RoomAnalyzer : MonoBehaviour
         }
 
         return true;
-    }
-
-    public List<Vector2Int> GetRandomHorizontalArea()
-    {
-        return horizontalLanes[Random.Range(0, horizontalLanes.Count)];
     }
     
     public List<List<Vector2Int>> GetZones(Func<List<Vector2Int>, bool> filterPredicate)
