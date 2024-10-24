@@ -18,20 +18,21 @@ public class ArrowTrap : Trap
 
     public void DetectGround()
     {
-        RaycastHit2D groundHit = Physics2D.Raycast(transform.position + new Vector3(1,0,0), transform.right, Global.CELL_SIZE_INTERIOR_X, GlobalData.Instance.groundLayer);
-        RaycastHit2D wallHit = Physics2D.Raycast(transform.position + new Vector3(1,0,0), transform.right, Global.CELL_SIZE_INTERIOR_X, GlobalData.Instance.wallLayer);
+        float direction = transform.localScale.x;
+        RaycastHit2D groundHit = Physics2D.Raycast(transform.position + new Vector3(direction,0,0), transform.right * direction, Global.CELL_SIZE_INTERIOR_X, GlobalData.Instance.groundLayer);
+        RaycastHit2D wallHit = Physics2D.Raycast(transform.position + new Vector3(direction,0,0), transform.right * direction, Global.CELL_SIZE_INTERIOR_X, GlobalData.Instance.wallLayer);
 
         float distanceToGround = Global.CELL_SIZE_INTERIOR_X;
         float distanceToWall = Global.CELL_SIZE_INTERIOR_X;
 
         if (groundHit.collider != null)
         {
-            distanceToGround = groundHit.point.x - transform.position.x;
+            distanceToGround = Mathf.Abs(groundHit.point.x - transform.position.x);
         }
 
         if (wallHit.collider != null)
         {
-            distanceToWall = wallHit.point.x - transform.position.x;
+            distanceToWall = Mathf.Abs(wallHit.point.x - transform.position.x);
         }
 
         float finalDistance = Mathf.Min(distanceToGround, distanceToWall);

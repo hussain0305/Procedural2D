@@ -93,7 +93,8 @@ public static class RoomZoneFilters
             }
         
             Vector2Int areaDimensions = GetAreaDimensions(area);
-            return areaDimensions.x >= minDimensions.x && areaDimensions.y >= minDimensions.y;        };
+            return areaDimensions.x >= minDimensions.x && areaDimensions.y >= minDimensions.y;
+        };
     }
 
     public static Func<List<Vector2Int>, bool> Combine(params Func<List<Vector2Int>, bool>[] filters)

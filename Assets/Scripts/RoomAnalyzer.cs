@@ -17,8 +17,9 @@ public class RoomAnalyzer : MonoBehaviour
     public static bool showOccupiedAreas = false;
     public static bool showPathways = false;
     
+    public Room room;
+    
     private bool[,] grid; // false = empty, true = occupied
-
     private int roomWidth;
     private int roomHeight;
 
@@ -359,6 +360,57 @@ public class RoomAnalyzer : MonoBehaviour
         }
 
         return true;
+    }
+
+    public bool GetSpawnCell(Func<List<Vector2Int>, bool> filterPredicate, out Vector2Int spawnCell, out Vector2Int flipAxis)
+    {
+        flipAxis = Vector2Int.one;
+        spawnCell = Vector2Int.zero;
+        List<List<Vector2Int>> validAreas = GetZones(filterPredicate);
+
+        if (validAreas == null || validAreas.Count == 0)
+        {
+            return false;
+        }
+
+        int[] shuffledAreas = ListShuffler.GenerateRandomIndexArray(validAreas.Count);
+        for (int i = 0; i < validAreas.Count; i++)
+        {
+            List<Vector2Int> validArea = validAreas[shuffledAreas[i]];
+            bool isLeftWall = validArea.Exists(cell => cell.x == 0);
+            bool isRightWall = validArea.Exists(cell => cell.x == Global.CELL_SIZE_INTERIOR_X - 1);
+            if (isLeftWall && isRightWall)
+            {
+                //If both are available, choose one randomly
+                isLeftWall = Random.Range(1, 10) < 5;
+            }
+            if (isLeftWall)
+            {
+                spawnCell = validArea.OrderBy(cell => cell.x).First();
+                if (room.pathwayCells.Contains(spawnCell))
+                {
+                    continue;
+                }
+                return true;
+            }
+            if (isRightWall)
+            {
+                spawnCell = validArea.OrderByDescending(cell => cell.x).First();
+                if (room.pathwayCells.Contains(spawnCell))
+                {
+                    continue;
+                }
+                spawnCell.x += 1;
+                if (room.pathwayCells.Contains(spawnCell))
+                {
+                    continue;
+                }
+                flipAxis = new Vector2Int(-1, 1);
+                return true;
+            }
+        }
+
+        return false;
     }
     
     public List<List<Vector2Int>> GetZones(Func<List<Vector2Int>, bool> filterPredicate)

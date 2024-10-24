@@ -382,35 +382,11 @@ public class Room : MonoBehaviour
     
         List<Func<List<Vector2Int>, bool>> filters = TrapData.Instance.GetFiltersForTrap(TrapType.ArrowTrap);
         Func<List<Vector2Int>, bool> combinedFilter = RoomZoneFilters.Combine(filters.ToArray());
-        List<List<Vector2Int>> validAreas = roomAnalyzer.GetZones(combinedFilter);
-
-        if (validAreas == null || validAreas.Count == 0)
+        if (roomAnalyzer.GetSpawnCell(combinedFilter, out Vector2Int spawnPosition, out Vector2Int flipAxis))
         {
-            return;
+            GameObject trap = Instantiate(trapInfo.trapPrefab, GetCellLocation(spawnPosition) + new Vector3(0, 0.5f, 0), Quaternion.identity, transform);
+            trap.transform.localScale = new Vector3(flipAxis.x, flipAxis.y, trap.transform.localScale.z);
+            trap.GetComponent<Trap>().Init();
         }
-
-        List<Vector2Int> horizontalLane = validAreas[0];
-
-        bool isLeftWall = horizontalLane.Exists(cell => cell.x == 0);
-        bool isRightWall = horizontalLane.Exists(cell => cell.x == Global.CELL_SIZE_INTERIOR_X - 1);
-
-        Vector2Int spawnPosition;
-
-        if (isLeftWall)
-        {
-            spawnPosition = horizontalLane.OrderBy(cell => cell.x).First();
-        }
-        else if (isRightWall)
-        {
-            spawnPosition = horizontalLane.OrderByDescending(cell => cell.x).First();
-            spawnPosition.x += 1;
-        }
-        else
-        {
-            return;
-        }
-
-        GameObject trap = Instantiate(trapInfo.trapPrefab, GetCellLocation(spawnPosition), Quaternion.identity, transform);
-        trap.GetComponent<Trap>().Init();
     }
 }
