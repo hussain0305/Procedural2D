@@ -38,6 +38,7 @@ public class PlayerAttributes : MonoBehaviour
     {
         maxHealth = SaveManager.GetHealthLevel();
         CurrentHealth = maxHealth - 50;
+        TriggerHealthChanged();
     }
 
     public void TakeDamage(int amount)
@@ -45,7 +46,7 @@ public class PlayerAttributes : MonoBehaviour
         CurrentHealth -= amount;
         if (CurrentHealth <= 0)
         {
-            //Death
+            GameManager.Instance.PlayerDied();
         }
     }
     
@@ -58,7 +59,7 @@ public class PlayerAttributes : MonoBehaviour
     {
         if (OnHealthChanged != null)
         {
-            OnHealthChanged.Invoke(currentHealth, maxHealth);
+            OnHealthChanged.Invoke(CurrentHealth, maxHealth);
         }
     }
 }

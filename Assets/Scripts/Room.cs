@@ -386,7 +386,7 @@ public class Room : MonoBehaviour
         {
             GameObject trap = Instantiate(trapInfo.trapPrefab, GetCellLocation(spawnPosition) + new Vector3(0, 0.5f, 0), Quaternion.identity, transform);
             trap.transform.localScale = new Vector3(flipAxis.x, flipAxis.y, trap.transform.localScale.z);
-            trap.GetComponent<Trap>().Init();
+            trap.GetComponent<Trap>().Init(trapInfo.damage);
         }
     }
 }

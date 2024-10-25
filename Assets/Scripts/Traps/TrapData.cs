@@ -20,7 +20,8 @@ public class TrapData : ScriptableObject
         public GameObject trapPrefab;
         public BulletType bulletType;
         public GameObject bulletPrefab;
-        public List<TrapFilter> filters;  // List of filter structs to group type and params
+        public List<TrapFilter> filters;
+        public int damage;
     }
 
     public List<TrapInfo> traps;

@@ -35,6 +35,7 @@ public class Healthbar : MonoBehaviour
 
     public void UpdateHealthbar(int currentHealth, int maxHealth)
     {
+        Debug.Log("HERERERERER");
         if (damageIndicatorCoroutine != null)
         {
             StopCoroutine(damageIndicatorCoroutine);

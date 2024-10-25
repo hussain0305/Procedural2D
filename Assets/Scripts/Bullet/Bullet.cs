@@ -6,16 +6,25 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public BulletType bulletType;
-
+    
+    [HideInInspector]
+    public int damage;
+    
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collided with " + collision.gameObject.name);
+        if (collision.transform && collision.transform.CompareTag("Player"))
+        {
+            DamagePlayer(collision.transform.GetComponent<PlayerAttributes>());
+        }
         BulletManager.ReturnBullet(bulletType, this);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Collided with " + other.gameObject.name);
+        if (other.transform && other.transform.CompareTag("Player"))
+        {
+            DamagePlayer(other.transform.GetComponent<PlayerAttributes>());
+        }
         BulletManager.ReturnBullet(bulletType, this);
     }
 
@@ -23,5 +32,10 @@ public class Bullet : MonoBehaviour
     {
         transform.localScale = facingDirection;
         GetComponent<Rigidbody2D>().velocity = direction * speed;
+    }
+
+    public void DamagePlayer(PlayerAttributes playerAttributes)
+    {
+        playerAttributes?.TakeDamage(damage);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Trap : MonoBehaviour
 {
-    public virtual void Init()
+    public virtual void Init(int _damage)
     {
         
     }

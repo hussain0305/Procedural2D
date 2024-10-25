@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -135,6 +136,11 @@ public class GameManager : MonoBehaviour
     public void EnablePlayerControls()
     {
         player.enabled = true;
+    }
+
+    public void PlayerDied()
+    {
+        SceneManager.LoadScene(1);
     }
 
     #region Player Abilities

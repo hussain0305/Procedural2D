@@ -24,3 +24,4 @@ MonoBehaviour:
       filterParam: 1
     - filterType: 6
       filterParam: 1
+    damage: 25

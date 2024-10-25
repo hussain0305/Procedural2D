@@ -14,12 +14,14 @@ public class ArrowTrap : Trap
     private float fireCooldown = 1;
     private float lastFireTime = 0;
     private float direction;
+    private int damage;
     
-    public override void Init()
+    public override void Init(int _damage)
     {
         direction = transform.localScale.x;
         BulletManager.InitializeBulletManager(bulletType, bullet);
         DetectGround();
+        damage = _damage;
     }
 
     public void DetectGround()
@@ -48,11 +50,11 @@ public class ArrowTrap : Trap
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log("FIRING");
         if (Time.time > lastFireTime + fireCooldown)
         {
             lastFireTime = Time.time;
             Bullet firedBullet = BulletManager.GetBullet(bulletType, lauchingPosition.position);
+            firedBullet.damage = damage;
             firedBullet.Fire(firedBullet.transform.right * direction, arrowSpeed, new Vector3(direction, 1, 1));
         }
     }
