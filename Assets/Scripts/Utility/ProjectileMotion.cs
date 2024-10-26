@@ -2,9 +2,9 @@ using UnityEngine;
 
 public static class ProjectileMotion
 {
-    public static float CalculateLaunchAngle(Vector2 startPos, Vector2 targetPos, float speed, bool highAngle = true)
+    public static float CalculateLaunchAngle(Vector2 startPos, Vector2 targetPos, float speed, float gravityScale = 1, bool highAngle = true)
     {
-        float gravity = Mathf.Abs(Physics2D.gravity.y);
+        float gravity = Mathf.Abs(Physics2D.gravity.y * gravityScale);
         float distanceX = Mathf.Abs(targetPos.x - startPos.x);
         float distanceY = targetPos.y - startPos.y;
 
@@ -13,7 +13,6 @@ public static class ProjectileMotion
 
         if (insideSqrt < 0)
         {
-            Debug.LogWarning("Target out of range.");
             return float.NaN;
         }
 
@@ -23,22 +22,25 @@ public static class ProjectileMotion
         return angleRad * Mathf.Rad2Deg;
     }
 
-    public static Vector2[] CalculateTrajectoryPoints(Vector2 startPos, float speed, float angle, int numPoints, bool isTargetLeft)
+    public static Vector2[] CalculateTrajectoryPoints(Vector2 startPoint, Vector2 targetPoint, float velocity, int numPoints)
     {
         Vector2[] trajectoryPoints = new Vector2[numPoints];
-        float gravity = Mathf.Abs(Physics2D.gravity.y);
-        float radAngle = angle * Mathf.Deg2Rad;
+        Vector2 direction = (targetPoint - startPoint).normalized;
 
-        float vx = speed * Mathf.Cos(radAngle) * (isTargetLeft ? -1 : 1);
-        float vy = speed * Mathf.Sin(radAngle);
+        float totalDistance = Vector2.Distance(startPoint, targetPoint);
+        float totalTime = totalDistance / velocity;
+        float timeStep = totalTime / (numPoints - 1);
+
+        float gravity = Mathf.Abs(Physics2D.gravity.y);
 
         for (int i = 0; i < numPoints; i++)
         {
-            float t = i * 0.1f;
-            float x = startPos.x + vx * t;
-            float y = startPos.y + vy * t - 0.5f * gravity * t * t;
+            float t = i * timeStep;
+            float x = startPoint.x + velocity * t * direction.x;
+            float y = startPoint.y + velocity * t * direction.y - 0.5f * gravity * t * t;
             trajectoryPoints[i] = new Vector2(x, y);
         }
+
         return trajectoryPoints;
     }
 }

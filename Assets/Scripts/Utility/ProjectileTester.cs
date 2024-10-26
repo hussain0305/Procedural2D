@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ProjectileTester : MonoBehaviour
 {
-    public Transform bulletPrefab;
+    public GameObject bulletPrefab;
     public float speed = 15f;
     public bool useHighAngle = true;
     
@@ -23,18 +23,14 @@ public class ProjectileTester : MonoBehaviour
             Vector2 targetPos = GameManager.Instance.player.transform.position;
 
             bool isTargetLeft = targetPos.x < startPos.x;
-            float angle = ProjectileMotion.CalculateLaunchAngle(startPos, targetPos, speed, useHighAngle);
+            float angle = ProjectileMotion.CalculateLaunchAngle(startPos, targetPos, speed, 1, useHighAngle);
             if (!float.IsNaN(angle))
             {
                 yield return new WaitForSeconds(1);
                 CalculateAndShoot(angle, isTargetLeft);
 
-                Vector2[] trajectoryPoints = ProjectileMotion.CalculateTrajectoryPoints(startPos, speed, angle, 10, isTargetLeft);
+                Vector2[] trajectoryPoints = ProjectileMotion.CalculateTrajectoryPoints(startPos, targetPos, speed, 10);
                 DrawTrajectory(trajectoryPoints);
-            }
-            else
-            {
-                Debug.LogWarning("Target is out of range.");
             }
             yield return null;
         }
@@ -44,7 +40,8 @@ public class ProjectileTester : MonoBehaviour
     {
         float radAngle = angle * Mathf.Deg2Rad;
         Vector2 launchVelocity = new Vector2(speed * Mathf.Cos(radAngle) * (isTargetLeft ? -1 : 1), speed * Mathf.Sin(radAngle));
-        bulletRb.velocity = launchVelocity;
+        GameObject go = Instantiate(bulletPrefab, transform.position, Quaternion.identity, transform);
+        go.GetComponent<Rigidbody2D>().velocity = launchVelocity;
     }
 
     private void DrawTrajectory(Vector2[] points)
