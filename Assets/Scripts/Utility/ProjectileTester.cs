@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class ProjectileTester : MonoBehaviour
 {
+    public Transform arm;
     public GameObject bulletPrefab;
     public float speed = 15f;
-    public bool useHighAngle = true;
     
     private Rigidbody2D bulletRb;
 
@@ -19,18 +19,17 @@ public class ProjectileTester : MonoBehaviour
     {
         while (true)
         {
-            Vector2 startPos = transform.position;
+            Vector2 startPos = arm.position;
             Vector2 targetPos = GameManager.Instance.player.transform.position;
 
             bool isTargetLeft = targetPos.x < startPos.x;
-            float angle = ProjectileMotion.CalculateLaunchAngle(startPos, targetPos, speed, 1, useHighAngle);
-            if (!float.IsNaN(angle))
+            if (ProjectileMotion.CalculateLaunchAngle(startPos, targetPos, speed, out float angle, 1))
             {
                 yield return new WaitForSeconds(1);
                 CalculateAndShoot(angle, isTargetLeft);
 
-                Vector2[] trajectoryPoints = ProjectileMotion.CalculateTrajectoryPoints(startPos, targetPos, speed, 10);
-                DrawTrajectory(trajectoryPoints);
+                // Vector2[] trajectoryPoints = ProjectileMotion.CalculateTrajectoryPoints(startPos, targetPos, speed, angle, 10);
+                // DrawTrajectory(trajectoryPoints);
             }
             yield return null;
         }
@@ -39,16 +38,9 @@ public class ProjectileTester : MonoBehaviour
     private void CalculateAndShoot(float angle, bool isTargetLeft)
     {
         float radAngle = angle * Mathf.Deg2Rad;
+        arm.localRotation = Quaternion.Euler(0, 0, radAngle);
         Vector2 launchVelocity = new Vector2(speed * Mathf.Cos(radAngle) * (isTargetLeft ? -1 : 1), speed * Mathf.Sin(radAngle));
-        GameObject go = Instantiate(bulletPrefab, transform.position, Quaternion.identity, transform);
+        GameObject go = Instantiate(bulletPrefab, arm.position, Quaternion.identity, transform);
         go.GetComponent<Rigidbody2D>().velocity = launchVelocity;
-    }
-
-    private void DrawTrajectory(Vector2[] points)
-    {
-        for (int i = 0; i < points.Length - 1; i++)
-        {
-            Debug.DrawLine(points[i], points[i + 1], Color.red, 1f);
-        }
     }
 }

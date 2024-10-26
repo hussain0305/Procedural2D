@@ -27,6 +27,8 @@ public class GlobalData : ScriptableObject
     [Header("Collision Layers")] 
     public LayerMask groundLayer;
     public LayerMask wallLayer;
+    public LayerMask ceilingLayer;
+    public LayerMask roomVolumeLayer;
     public LayerMask playerLayer;
 
     [Header("Materials")]
