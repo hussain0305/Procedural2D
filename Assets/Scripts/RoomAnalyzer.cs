@@ -364,10 +364,45 @@ public class RoomAnalyzer : MonoBehaviour
         return true;
     }
 
-    public bool GetSpawnCell(Func<List<Vector2Int>, bool> filterPredicate, out Vector2Int spawnCell, out Vector2Int flipAxis)
+    public bool GetPatrolPoints(List<Func<List<Vector2Int>, bool>> enemyFilters, out (Vector2Int topLeft, Vector2Int topRight) patrolPoints)
+    {
+        patrolPoints = (Vector2Int.zero, Vector2Int.zero);
+        Func<List<Vector2Int>, bool> filterPredicate = RoomZoneFilters.Combine(enemyFilters.ToArray());
+        List<(Vector2Int topLeft, Vector2Int topRight)> validPatrolPoints = new List<(Vector2Int topLeft, Vector2Int topRight)>();
+        foreach (var platform in platforms)
+        {
+            if (platform.Count > 0 && filterPredicate(platform))
+            {
+                var topPositions = GetTopPlatformPositions(platform);
+                validPatrolPoints.Add(topPositions);
+            }
+        }
+
+        if (validPatrolPoints.Count > 0)
+        {
+            patrolPoints = validPatrolPoints[Random.Range(0, validPatrolPoints.Count)];
+        }
+
+        return validPatrolPoints.Count > 0;
+    }
+
+    public static (Vector2Int topLeft, Vector2Int topRight) GetTopPlatformPositions(List<Vector2Int> platform)
+    {
+        int topY = platform.Max(block => block.y);
+        int leftmostX = platform.Where(block => block.y == topY).Min(block => block.x);
+        int rightmostX = platform.Where(block => block.y == topY).Max(block => block.x);
+        Vector2Int topLeft = new Vector2Int(leftmostX, topY + 1);
+        Vector2Int topRight = new Vector2Int(rightmostX, topY + 1);
+
+        return (topLeft, topRight);
+    }
+    
+    public bool GetSpawnCell(List<Func<List<Vector2Int>, bool>> filters, out Vector2Int spawnCell, out Vector2Int flipAxis)
     {
         flipAxis = Vector2Int.one;
         spawnCell = Vector2Int.zero;
+        Func<List<Vector2Int>, bool> filterPredicate = RoomZoneFilters.Combine(filters.ToArray());
+
         List<List<Vector2Int>> validAreas = GetZones(filterPredicate);
 
         if (validAreas == null || validAreas.Count == 0)
@@ -375,15 +410,34 @@ public class RoomAnalyzer : MonoBehaviour
             return false;
         }
 
+        bool hasAttachedToWallFilter = filters.Any(f => f == RoomZoneFilters.AttachedToWall());
+        if (hasAttachedToWallFilter)
+        {
+            // Call the separate function for wall-based logic
+            return GetSpawnPointAlongWall(validAreas, out spawnCell, out flipAxis);
+        }
+        else
+        {
+            List<Vector2Int> randomArea = validAreas[Random.Range(0, validAreas.Count)];
+            spawnCell = randomArea[Random.Range(0, randomArea.Count)];
+            return true;
+        }
+    }
+
+    private bool GetSpawnPointAlongWall(List<List<Vector2Int>> validAreas, out Vector2Int spawnCell, out Vector2Int flipAxis)
+    {
+        flipAxis = Vector2Int.one;
+        spawnCell = Vector2Int.zero;
+
         int[] shuffledAreas = ListShuffler.GenerateRandomIndexArray(validAreas.Count);
         for (int i = 0; i < validAreas.Count; i++)
         {
             List<Vector2Int> validArea = validAreas[shuffledAreas[i]];
             bool isLeftWall = validArea.Exists(cell => cell.x == 0);
             bool isRightWall = validArea.Exists(cell => cell.x == Global.CELL_SIZE_INTERIOR_X - 1);
+
             if (isLeftWall && isRightWall)
             {
-                //If both are available, choose one randomly
                 isLeftWall = Random.Range(1, 10) < 5;
             }
             if (isLeftWall)
@@ -411,68 +465,19 @@ public class RoomAnalyzer : MonoBehaviour
                 return true;
             }
         }
-
         return false;
     }
     
-    public static (Vector2Int topLeft, Vector2Int topRight) GetTopPlatformPositions(List<Vector2Int> platform)
-    {
-        int topY = platform.Max(block => block.y);
-        int leftmostX = platform.Where(block => block.y == topY).Min(block => block.x);
-        int rightmostX = platform.Where(block => block.y == topY).Max(block => block.x);
-        Vector2Int topLeft = new Vector2Int(leftmostX, topY + 1);
-        Vector2Int topRight = new Vector2Int(rightmostX, topY + 1);
-
-        return (topLeft, topRight);
-    }
-    
-    public bool GetPatrolPoints(Func<List<Vector2Int>, bool> filterPredicate, out (Vector2Int topLeft, Vector2Int topRight) patrolPoints)
-    {
-        patrolPoints = (Vector2Int.zero, Vector2Int.zero);
-
-        List<(Vector2Int topLeft, Vector2Int topRight)> validPatrolPoints = new List<(Vector2Int topLeft, Vector2Int topRight)>();
-        foreach (var platform in platforms)
-        {
-            if (platform.Count > 0 && filterPredicate(platform))
-            {
-                var topPositions = GetTopPlatformPositions(platform);
-                validPatrolPoints.Add(topPositions);
-            }
-        }
-
-        if (validPatrolPoints.Count > 0)
-        {
-            patrolPoints = validPatrolPoints[Random.Range(0, validPatrolPoints.Count)];
-        }
-
-        return validPatrolPoints.Count > 0;
-    }
-
     public List<List<Vector2Int>> GetZones(Func<List<Vector2Int>, bool> filterPredicate)
     {
         List<List<Vector2Int>> matchingZones = new List<List<Vector2Int>>();
 
-        foreach (List<Vector2Int> horizontalLane in horizontalLanes)
+        var allZones = horizontalLanes.Concat(verticalLanes).Concat(spaciousAreas);
+        foreach (var zone in allZones)
         {
-            if (filterPredicate(horizontalLane))
+            if (filterPredicate(zone))
             {
-                matchingZones.Add(horizontalLane);
-            }
-        }
-
-        foreach (List<Vector2Int> verticalLane in verticalLanes)
-        {
-            if (filterPredicate(verticalLane))
-            {
-                matchingZones.Add(verticalLane);
-            }
-        }
-
-        foreach (List<Vector2Int> spaciousArea in spaciousAreas)
-        {
-            if (filterPredicate(spaciousArea))
-            {
-                matchingZones.Add(spaciousArea);
+                matchingZones.Add(zone);
             }
         }
 

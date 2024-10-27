@@ -24,3 +24,4 @@ MonoBehaviour:
     attackRange: 20
     bulletType: 1
     bulletPrefab: {fileID: 8031002308547459425, guid: 0fbf66246014b7043a0453f0702f5cf6, type: 3}
+    spawnRequirement: 1

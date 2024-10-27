@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "TrapData", menuName = "ScriptableObjects/TrapData", order = 1)]
 public class TrapData : ScriptableObject
@@ -15,6 +16,7 @@ public class TrapData : ScriptableObject
         public GameObject bulletPrefab;
         public List<PositioningFilters> filters;
         public int damage;
+        public SpawnRequirement spawnRequirement;
     }
 
     public List<TrapInfo> traps;

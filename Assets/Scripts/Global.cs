@@ -9,6 +9,9 @@ public enum RoomType {MainPath, Optional, StartingRoom, DestinationRoom, Wall, G
 public enum Ability { MultiJump, WallGrab}
 
 [System.Serializable]
+public enum SpawnRequirement { SpawnPointOnly, PatrolPoints}
+
+[System.Serializable]
 public enum PickupType { MultiJump, WallGrab}
 
 [System.Serializable]

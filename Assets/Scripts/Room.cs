@@ -377,25 +377,41 @@ public class Room : MonoBehaviour
         {
             return;
         }
+        Vector2Int spawnCell;
+        Vector2Int flipAxis;
 
         TrapData.Instance.GetTrapInfo(TrapType.ArrowTrap, out TrapData.TrapInfo trapInfo);
-        List<Func<List<Vector2Int>, bool>> filters = TrapData.Instance.GetFiltersForTrap(TrapType.ArrowTrap);
-        Func<List<Vector2Int>, bool> combinedFilter = RoomZoneFilters.Combine(filters.ToArray());
-        if (roomAnalyzer.GetSpawnCell(combinedFilter, out Vector2Int spawnPosition, out Vector2Int flipAxis))
-        {
-            GameObject trap = Instantiate(trapInfo.trapPrefab, GetCellLocation(spawnPosition) + new Vector3(0, 0.5f, 0), Quaternion.identity, transform);
-            trap.transform.localScale = new Vector3(flipAxis.x, flipAxis.y, trap.transform.localScale.z);
-            trap.GetComponent<Trap>().Init(trapInfo.damage);
-        }
+        List<Func<List<Vector2Int>, bool>> trapFilters = TrapData.Instance.GetFiltersForTrap(TrapType.ArrowTrap);
 
+        switch (trapInfo.spawnRequirement)
+        {
+            case SpawnRequirement.SpawnPointOnly:
+                if (roomAnalyzer.GetSpawnCell(trapFilters, out spawnCell, out flipAxis))
+                {
+                    GameObject trap = Instantiate(trapInfo.trapPrefab, GetCellLocation(spawnCell) + new Vector3(0, 0.5f, 0), Quaternion.identity, transform);
+                    trap.transform.localScale = new Vector3(flipAxis.x, flipAxis.y, trap.transform.localScale.z);
+                    trap.GetComponent<Trap>().Init(trapInfo.damage);
+                }
+                break;
+            case SpawnRequirement.PatrolPoints:
+                break;
+        }
+        
         EnemyData.Instance.GetEnemyInfo(EnemyType.Patroller, out EnemyData.EnemyInfo enemyInfo);
         List<Func<List<Vector2Int>, bool>> enemyFilters = EnemyData.Instance.GetFiltersForEnemy(EnemyType.Patroller);
-        Func<List<Vector2Int>, bool> enemyCombinedFilter = RoomZoneFilters.Combine(enemyFilters.ToArray());
-        if (roomAnalyzer.GetPatrolPoints(enemyCombinedFilter, out (Vector2Int topLeft, Vector2Int topRight) patrolPoints))
+        
+        switch (enemyInfo.spawnRequirement)
         {
-            GameObject enemy = Instantiate(enemyInfo.enemyPrefab, GetCellLocation(patrolPoints.topRight), Quaternion.identity, transform);
-            enemy.GetComponent<Enemy>().Init(GetCellLocation(patrolPoints.topRight), GetCellLocation(patrolPoints.topLeft), enemyInfo.patrolSpeed, enemyInfo.pursueSpeed,
-                enemyInfo.attackRange, enemyInfo.bulletPrefab);
+            case SpawnRequirement.SpawnPointOnly:
+                break;
+            case SpawnRequirement.PatrolPoints:
+                if (roomAnalyzer.GetPatrolPoints(enemyFilters, out (Vector2Int topLeft, Vector2Int topRight) patrolPoints))
+                {
+                    GameObject enemy = Instantiate(enemyInfo.enemyPrefab, GetCellLocation(patrolPoints.topRight), Quaternion.identity, transform);
+                    enemy.GetComponent<Enemy>().Init(GetCellLocation(patrolPoints.topRight), GetCellLocation(patrolPoints.topLeft), enemyInfo.patrolSpeed, enemyInfo.pursueSpeed,
+                        enemyInfo.attackRange, enemyInfo.bulletPrefab);
+                }
+                break;
         }
     }
 }

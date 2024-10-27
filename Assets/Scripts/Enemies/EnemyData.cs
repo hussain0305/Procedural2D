@@ -18,6 +18,7 @@ public class EnemyData : ScriptableObject
         public float attackRange;
         public BulletType bulletType;
         public GameObject bulletPrefab;
+        public SpawnRequirement spawnRequirement;
     }
 
     public List<EnemyInfo> enemies;
