@@ -9,7 +9,6 @@ public class PatrolBehavior : IMovementBehavior
     private float speed;
     private float pauseDuration;
     private bool isPaused;
-
     private Vector2 targetPoint;
 
     public PatrolBehavior(Transform enemy, Vector2 pointA, Vector2 pointB, float speed, float pauseDuration)
@@ -19,7 +18,7 @@ public class PatrolBehavior : IMovementBehavior
         this.pointB = pointB;
         this.speed = speed;
         this.pauseDuration = pauseDuration;
-        this.targetPoint = pointA;
+        this.targetPoint = pointB;
     }
 
     public void Execute()
@@ -29,11 +28,22 @@ public class PatrolBehavior : IMovementBehavior
             float step = speed * Time.deltaTime;
             enemy.position = Vector2.MoveTowards(enemy.position, targetPoint, step);
 
+            FaceDirection(targetPoint);
+
             if (Vector2.Distance(enemy.position, targetPoint) < 0.1f)
             {
                 targetPoint = targetPoint == pointA ? pointB : pointA;
                 enemy.GetComponent<MonoBehaviour>().StartCoroutine(PauseAtPoint());
             }
+        }
+    }
+
+    private void FaceDirection(Vector2 target)
+    {
+        Vector2 direction = (target - (Vector2)enemy.position).normalized;
+        if (direction.x != 0)
+        {
+            enemy.localScale = new Vector3(Mathf.Sign(direction.x) * Mathf.Abs(enemy.localScale.x), enemy.localScale.y, enemy.localScale.z);
         }
     }
 
