@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Damageable : MonoBehaviour
 {
+    [HideInInspector]
     public int health;
 
     public virtual void TakeDamage(int damageAmount)

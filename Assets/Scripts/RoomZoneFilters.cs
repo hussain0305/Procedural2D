@@ -13,7 +13,8 @@ public enum RoomZoneFilterType
     MinHeight,
     MinDistanceFromGround,
     MinDistanceFromCeiling,
-    MinDimensions
+    MinDimensions,
+    OnAPlatform
 }
 
 public static class RoomZoneFilters
@@ -97,21 +98,17 @@ public static class RoomZoneFilters
         };
     }
 
-    public static Func<List<Vector2Int>, bool> Combine(params Func<List<Vector2Int>, bool>[] filters)
+    public static Func<List<Vector2Int>, bool> FindSuitablePlatform(int minWidth)
     {
-        return (area) =>
+        return (platform) =>
         {
-            foreach (var filter in filters)
-            {
-                if (!filter(area))
-                {
-                    return false;
-                }
-            }
-            return true;
+            int topY = platform.Max(block => block.y);
+            var topRow = platform.Where(block => block.y == topY).ToList();
+            int topRowWidth = topRow.Max(block => block.x) - topRow.Min(block => block.x) + 1;
+            return topRowWidth >= minWidth && topY < Global.CELL_SIZE_INTERIOR_Y - 2;
         };
     }
-
+    
     public static Vector2Int GetAreaDimensions(List<Vector2Int> area)
     {
         if (area == null || area.Count == 0)
@@ -126,4 +123,60 @@ public static class RoomZoneFilters
 
         return new Vector2Int(maxX - minX + 1, maxY - minY + 1);
     }
+
+    public static Func<List<Vector2Int>, bool> Combine(params Func<List<Vector2Int>, bool>[] filters)
+    {
+        return (area) =>
+        {
+            foreach (var filter in filters)
+            {
+                if (!filter(area))
+                {
+                    return false;
+                }
+            }
+            return true;
+        };
+    }
+    
+    public static Func<List<Vector2Int>, bool> CreateFilter(PositioningFilters positionalFilter)
+    {
+        int minWidth;
+        switch (positionalFilter.filterType)
+        {
+            case RoomZoneFilterType.AttachedToWall:
+                return RoomZoneFilters.AttachedToWall();
+            case RoomZoneFilterType.AttachedToCeiling:
+                return RoomZoneFilters.AttachedToCeiling();
+            case RoomZoneFilterType.MinWidth:
+                minWidth = int.Parse(positionalFilter.filterParam);
+                return RoomZoneFilters.MinWidth(minWidth);
+            case RoomZoneFilterType.MinHeight:
+                int minHeight = int.Parse(positionalFilter.filterParam);
+                return RoomZoneFilters.MinHeight(minHeight);
+            case RoomZoneFilterType.MinDistanceFromGround:
+                int minDistanceFromGround = int.Parse(positionalFilter.filterParam);
+                return RoomZoneFilters.MinDistanceFromGround(minDistanceFromGround);
+            case RoomZoneFilterType.MinDistanceFromCeiling:
+                int minDistanceFromCeiling = int.Parse(positionalFilter.filterParam);
+                return RoomZoneFilters.MinDistanceFromCeiling(minDistanceFromCeiling);
+            case RoomZoneFilterType.MinDimensions:
+                Vector2Int minDimensions = ParseVector2Int(positionalFilter.filterParam);
+                return RoomZoneFilters.MinDimensions(minDimensions);
+            case RoomZoneFilterType.OnAPlatform:
+                minWidth = int.Parse(positionalFilter.filterParam);
+                return RoomZoneFilters.FindSuitablePlatform(minWidth);
+            default:
+                throw new ArgumentException("Invalid filter type");
+        }
+    }
+
+    private static Vector2Int ParseVector2Int(string param)
+    {
+        string[] parts = param.Trim('(', ')').Split(',');
+        int x = int.Parse(parts[0]);
+        int y = int.Parse(parts[1]);
+        return new Vector2Int(x, y);
+    }
+
 }

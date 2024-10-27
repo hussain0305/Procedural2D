@@ -54,6 +54,13 @@ public struct RoomProperties
     private Vector2Int exitToRoom;
 }
 
+[System.Serializable]
+public struct PositioningFilters
+{
+    public RoomZoneFilterType filterType;
+    public string filterParam;
+}
+
 public struct MapProperties
 {
     public int numRooms_MainPath;
@@ -123,18 +130,6 @@ public enum AttackType
     Both
 }
 
-[System.Serializable]
-public struct EnemyData
-{
-    public MovementType movementType;
-    public AttackType attackType;
-    public float patrolSpeed;
-    public float pursueSpeed;
-    public float attackRange;
-    public Transform pointA;
-    public Transform pointB;
-}
-
 public struct RoomSetupProgress
 {
     private bool platformsGenerated;
@@ -197,6 +192,7 @@ public struct Abilities
 public enum BulletType
 {
     TrapArrow,
+    Projectile,
     Laser
 }
 
@@ -204,6 +200,12 @@ public enum BulletType
 public enum TrapType
 {
     ArrowTrap,
+}
+
+[System.Serializable]
+public enum EnemyType
+{
+    Patroller,
 }
 
 public class Global : MonoBehaviour

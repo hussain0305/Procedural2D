@@ -51,7 +51,7 @@ public class LoadingScreen : MonoBehaviour
         loadingScreen.SetActive(true);
         MazeGenerator.OnMazeGenerationComplete += OnMazeGenerationComplete;
         MazeGenerator.OnAllRoomsAnalyzed += OnAllRoomsAnalyzed;
-        MazeGenerator.OnAllRoomsPlacedTraps += OnTrapPlacementCompleted;
+        MazeGenerator.OnAllRoomsPlacedHazards += OnTrapAndEnemiesPlacementCompleted;
         InitTexts();
         StartCoroutine(LoadingScreenText());
     }
@@ -93,7 +93,7 @@ public class LoadingScreen : MonoBehaviour
         loadingProgress.mazeGenerated = true;
     }
 
-    private void OnTrapPlacementCompleted()
+    private void OnTrapAndEnemiesPlacementCompleted()
     {
         loadingProgress.trapsPlaced = true;
     }

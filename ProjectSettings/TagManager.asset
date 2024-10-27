@@ -45,15 +45,21 @@ TagManager:
   - name: RoomBackground
     uniqueID: 600384171
     locked: 0
+  - name: RoomBuildings
+    uniqueID: 2171590181
+    locked: 0
   - name: Pickup
     uniqueID: 1734304501
+    locked: 0
+  - name: Bullet
+    uniqueID: 605956125
+    locked: 0
+  - name: Enemy
+    uniqueID: 1619998889
     locked: 0
   - name: NPC
     uniqueID: 1977810403
     locked: 0
   - name: Player
     uniqueID: 48312479
-    locked: 0
-  - name: Popups
-    uniqueID: 793583953
     locked: 0

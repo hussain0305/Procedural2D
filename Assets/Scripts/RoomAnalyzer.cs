@@ -31,6 +31,8 @@ public class RoomAnalyzer : MonoBehaviour
     public List<List<Vector2Int>> spaciousAreas = new List<List<Vector2Int>>();
     [HideInInspector]
     public List<List<Vector2Int>> closedAreas = new List<List<Vector2Int>>();
+    [HideInInspector]
+    public List<List<Vector2Int>> platforms = new List<List<Vector2Int>>();
     
     public void AnalyzeRoom(bool[,] _grid)
     {
@@ -413,6 +415,39 @@ public class RoomAnalyzer : MonoBehaviour
         return false;
     }
     
+    public static (Vector2Int topLeft, Vector2Int topRight) GetTopPlatformPositions(List<Vector2Int> platform)
+    {
+        int topY = platform.Max(block => block.y);
+        int leftmostX = platform.Where(block => block.y == topY).Min(block => block.x);
+        int rightmostX = platform.Where(block => block.y == topY).Max(block => block.x);
+        Vector2Int topLeft = new Vector2Int(leftmostX, topY + 1);
+        Vector2Int topRight = new Vector2Int(rightmostX, topY + 1);
+
+        return (topLeft, topRight);
+    }
+    
+    public bool GetPatrolPoints(Func<List<Vector2Int>, bool> filterPredicate, out (Vector2Int topLeft, Vector2Int topRight) patrolPoints)
+    {
+        patrolPoints = (Vector2Int.zero, Vector2Int.zero);
+
+        List<(Vector2Int topLeft, Vector2Int topRight)> validPatrolPoints = new List<(Vector2Int topLeft, Vector2Int topRight)>();
+        foreach (var platform in platforms)
+        {
+            if (platform.Count > 0 && filterPredicate(platform))
+            {
+                var topPositions = GetTopPlatformPositions(platform);
+                validPatrolPoints.Add(topPositions);
+            }
+        }
+
+        if (validPatrolPoints.Count > 0)
+        {
+            patrolPoints = validPatrolPoints[Random.Range(0, validPatrolPoints.Count)];
+        }
+
+        return validPatrolPoints.Count > 0;
+    }
+
     public List<List<Vector2Int>> GetZones(Func<List<Vector2Int>, bool> filterPredicate)
     {
         List<List<Vector2Int>> matchingZones = new List<List<Vector2Int>>();

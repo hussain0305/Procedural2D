@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50840dd2287238341b0acb0a4e5a35c1, type: 3}
+  m_Name: EnemyData
+  m_EditorClassIdentifier: 
+  enemies:
+  - enemyType: 0
+    enemyPrefab: {fileID: 2575878735234591910, guid: 563a10e03e0cc844098026bdb46b7ee7, type: 3}
+    filters:
+    - filterType: 8
+      filterParam: 5
+    health: 30
+    patrolSpeed: 5
+    pursueSpeed: 10
+    attackRange: 20
+    bulletType: 1
+    bulletPrefab: {fileID: 8031002308547459425, guid: 0fbf66246014b7043a0453f0702f5cf6, type: 3}

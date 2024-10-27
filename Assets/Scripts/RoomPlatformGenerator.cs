@@ -112,6 +112,7 @@ public class RoomPlatformGenerator : MonoBehaviour
 
     void PlacePlatform(int x, int y, int length, int height)
     {
+        List<Vector2Int> currentPlatform = new List<Vector2Int>();
         for (int i = 0; i < length; i++)
         {
             for (int j = 0; j < height; j++)
@@ -123,10 +124,11 @@ public class RoomPlatformGenerator : MonoBehaviour
                 if (!pathwayCells.Contains(gridPos))
                 {
                     PlacePlatformBlockAt(gridX, gridY, true);
+                    currentPlatform.Add(new Vector2Int(gridX, gridY));
                 }
             }
         }
-
+        room.roomAnalyzer.platforms.Add(currentPlatform);
         room.setupProgress.SetPlatformTilesCompleted();
         room.roomGridBuildings = grid;
     }

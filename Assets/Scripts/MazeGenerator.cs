@@ -57,7 +57,7 @@ public class MazeGenerator : MonoBehaviour
     
     public static event Action OnMazeGenerationComplete;
     public static event Action OnAllRoomsAnalyzed;
-    public static event Action OnAllRoomsPlacedTraps;
+    public static event Action OnAllRoomsPlacedHazards;
     public void Start()
     {
         OnAllRoomsAnalyzed += RoomsAnalyzed;
@@ -128,17 +128,17 @@ public class MazeGenerator : MonoBehaviour
     }
     private void PlaceTraps()
     {
-        IEnumerator PlaceTrapsInRooms()
+        IEnumerator PlaceHazardsInRooms()
         {
             foreach (Room room in allRooms.Values)
             {
-                room.PlaceTraps();
+                room.PlaceHazards();
                 yield return null;
             }
-            OnAllRoomsPlacedTraps?.Invoke();
+            OnAllRoomsPlacedHazards?.Invoke();
         }
 
-        StartCoroutine(PlaceTrapsInRooms());
+        StartCoroutine(PlaceHazardsInRooms());
     }
 
     private void GenerateMaze()
