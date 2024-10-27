@@ -388,9 +388,14 @@ public class Room : MonoBehaviour
             case SpawnRequirement.SpawnPointOnly:
                 if (roomAnalyzer.GetSpawnCell(trapFilters, out spawnCell, out flipAxis))
                 {
-                    GameObject trap = Instantiate(trapInfo.trapPrefab, GetCellLocation(spawnCell) + new Vector3(0, 0.5f, 0), Quaternion.identity, transform);
-                    trap.transform.localScale = new Vector3(flipAxis.x, flipAxis.y, trap.transform.localScale.z);
-                    trap.GetComponent<Trap>().Init(trapInfo.damage);
+                    GameObject spawnedTrap = Instantiate(trapInfo.trapPrefab, GetCellLocation(spawnCell) + new Vector3(0, 0.5f, 0), Quaternion.identity, transform);
+                    spawnedTrap.transform.localScale = new Vector3(flipAxis.x, flipAxis.y, spawnedTrap.transform.localScale.z);
+                    Trap trap = spawnedTrap.GetComponent<Trap>();
+                    if (trap)
+                    {
+                        trap.locatedInRoom = gridIndex;
+                        trap.Init(trapInfo.damage);
+                    }
                 }
                 break;
             case SpawnRequirement.PatrolPoints:
@@ -407,9 +412,13 @@ public class Room : MonoBehaviour
             case SpawnRequirement.PatrolPoints:
                 if (roomAnalyzer.GetPatrolPoints(enemyFilters, out (Vector2Int topLeft, Vector2Int topRight) patrolPoints))
                 {
-                    GameObject enemy = Instantiate(enemyInfo.enemyPrefab, GetCellLocation(patrolPoints.topRight), Quaternion.identity, transform);
-                    enemy.GetComponent<Enemy>().Init(enemyInfo.patrolSpeed, enemyInfo.pursueSpeed,
-                        enemyInfo.attackRange, enemyInfo.bulletPrefab, enemyInfo);
+                    GameObject spawnedEnemy = Instantiate(enemyInfo.enemyPrefab, GetCellLocation(patrolPoints.topRight), Quaternion.identity, transform);
+                    Enemy enemy = spawnedEnemy.GetComponent<Enemy>();
+                    if (enemy)
+                    {
+                        enemy.locatedInRoom = gridIndex;
+                        enemy.Init(enemyInfo.patrolSpeed, enemyInfo.pursueSpeed, enemyInfo.attackRange, enemyInfo.bulletPrefab, enemyInfo);
+                    }
                 }
                 break;
         }

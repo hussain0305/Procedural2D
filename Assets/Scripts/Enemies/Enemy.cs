@@ -1,8 +1,12 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class Enemy : Damageable
 {
+    [HideInInspector] public Vector2Int locatedInRoom;
+    [HideInInspector] public bool simulate;
+
     public EnemyAI enemyAI;
     protected EnemyData.EnemyInfo enemyInfo;
     protected bool isPursuingPlayer;
@@ -14,12 +18,24 @@ public class Enemy : Damageable
 
     public void Init(float patrolSpeed, float pursuitSpeed, float attackRange, GameObject bulletPrefab, EnemyData.EnemyInfo _enemyInfo)
     {
+        EventManager.OnRoomEntered += HandleRoomEntered;
+
         enemyInfo = _enemyInfo;
         enemyAI.Init(this.transform, patrolSpeed, pursuitSpeed, attackRange, bulletPrefab, OnEdgeDetected);
     }
 
+    private void HandleRoomEntered(Vector2Int gridIndex)
+    {
+        simulate = GameManager.Instance.ShouldSimulate(locatedInRoom, gridIndex);
+    }
+
     private void Update()
     {
+        if (!simulate)
+        {
+            return;
+        }
+        
         if (!isPaused)
         {
             enemyAI.UpdateBehavior(isPursuingPlayer);
@@ -54,5 +70,10 @@ public class Enemy : Damageable
         isPaused = true;
         yield return new WaitForSeconds(pauseDuration);
         isPaused = false;
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.OnRoomEntered -= HandleRoomEntered;
     }
 }

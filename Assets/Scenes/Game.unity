@@ -342,6 +342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mazeGenerator: {fileID: 1547295262}
   player: {fileID: 1638385233}
+  currentPlayerRoom: {x: 0, y: 0}
   npcList: {fileID: 11400000, guid: 0ef95ac6764413b42b4c1f9e2c142053, type: 2}
 --- !u!4 &122693026
 Transform:
@@ -1201,7 +1202,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000ab22c9239f30e102f5625f6751214d2f
+  m_ApplyToSortingLayers: 00000000ab22c9239f30e102f5625f6751214d2f0dcdbb10
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0

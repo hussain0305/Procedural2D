@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     public PlayerInventory PlayerInventory => playerInventory;
     public PlayerAttributes PlayerAttributes => playerAttributes;
 
+    [HideInInspector]
+    public Vector2Int currentPlayerRoom;
+    
     [Header("Scriptable Objects")]
     public NPCList npcList;  
     
@@ -89,6 +92,7 @@ public class GameManager : MonoBehaviour
 
     private void HandleRoomEntered(Vector2Int gridIndex)
     {
+        currentPlayerRoom = gridIndex;
         MoveCameraToRoom(gridIndex);
     }
     public void SetCameraOnRoom(Vector2Int roomIndex)
@@ -141,6 +145,12 @@ public class GameManager : MonoBehaviour
     public void PlayerDied()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public bool ShouldSimulate(Vector2Int subjectGridIndex, Vector2Int playerGridIndex)
+    {
+        return Mathf.Abs(subjectGridIndex.x - playerGridIndex.x) <= 1 &&
+               Mathf.Abs(subjectGridIndex.y - playerGridIndex.y) <= 1;
     }
 
     #region Player Abilities

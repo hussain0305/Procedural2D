@@ -18,6 +18,7 @@ public class ArrowTrap : Trap
     
     public override void Init(int _damage)
     {
+        base.Init(_damage);
         direction = transform.localScale.x;
         BulletManager.InitializeBulletManager(bulletType, bullet);
         DetectGround();
@@ -50,6 +51,10 @@ public class ArrowTrap : Trap
 
     private void OnTriggerStay2D(Collider2D other)
     {
+        if (!simulate)
+        {
+            return;
+        }
         if (Time.time > lastFireTime + fireCooldown)
         {
             lastFireTime = Time.time;
