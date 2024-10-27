@@ -8,7 +8,7 @@ public class EnemyAI : MonoBehaviour
     private IPursuitBehavior pursuitBehavior;
     private IAttackBehavior attackBehavior;
 
-    public void Initialize(IMovementBehavior movement, IPursuitBehavior pursuit, IAttackBehavior attack)
+    public void Init(IMovementBehavior movement, IPursuitBehavior pursuit, IAttackBehavior attack)
     {
         movementBehavior = movement;
         pursuitBehavior = pursuit;

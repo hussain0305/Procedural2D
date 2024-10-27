@@ -19,7 +19,8 @@ MonoBehaviour:
     - filterType: 8
       filterParam: 5
     health: 30
-    patrolSpeed: 5
+    patrolSpeed: 2
+    patrolPause: 3
     pursueSpeed: 10
     attackRange: 20
     bulletType: 1

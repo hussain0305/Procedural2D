@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  EnemyAI: {fileID: 5879502979614909708}
+  enemyAI: {fileID: 5879502979614909708}
   enemyInfo:
     enemyType: 0
     enemyPrefab: {fileID: 0}
@@ -94,6 +94,7 @@ MonoBehaviour:
     attackRange: 0
     bulletType: 0
     bulletPrefab: {fileID: 0}
+    spawnRequirement: 0
   damage: 0
 --- !u!114 &5879502979614909708
 MonoBehaviour:

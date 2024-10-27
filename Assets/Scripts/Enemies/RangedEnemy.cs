@@ -8,7 +8,7 @@ public class RangedEnemy : Enemy
 
     public override void AttackPlayer()
     {
-        if (Vector3.Distance(transform.position, player.position) <= enemyInfo.attackRange)
+        if (Vector3.Distance(transform.position, Player.position) <= enemyInfo.attackRange)
         {
             // Perform ranged attack
             FireProjectile();

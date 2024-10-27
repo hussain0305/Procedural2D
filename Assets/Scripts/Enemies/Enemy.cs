@@ -1,14 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Enemy : Damageable
 {
-    public EnemyAI EnemyAI;
+    public EnemyAI enemyAI;
     public EnemyData.EnemyInfo enemyInfo;
     protected bool isPursuingPlayer;
-    protected Transform player;
+
+    protected Transform Player
+    {
+        get
+        {
+            return GameManager.Instance.player.transform;
+        }
+    }
     protected Vector3 targetPoint;
 
     [HideInInspector]
@@ -17,57 +23,49 @@ public class Enemy : Damageable
     private IMovementBehavior patrol;
     private IPursuitBehavior edgeBoundPursuit;
     private IAttackBehavior rangedAttack;
+
     public void Init(Vector3 pointA, Vector3 pointB, float patrolSpeed, float pursuitSpeed, float attackRange, GameObject bulletPrefab)
     {
-        // patrol = new PatrolBehavior(transform, pointA, pointB, patrolSpeed);
-        // edgeBoundPursuit = new EdgeBoundPursuit(transform, player.transform, pursuitSpeed);
-        // rangedAttack = new RangedAttack(transform, player.transform, attackRange, bulletPrefab);
+        patrol = new PatrolBehavior(transform, pointA, pointB, patrolSpeed, 3);
+        edgeBoundPursuit = new EdgeBoundPursuit(transform, Player.transform, pursuitSpeed);
+        rangedAttack = new RangedAttack(transform, Player.transform, attackRange, bulletPrefab);
 
-        // enemy.Initialize(patrol, edgeBoundPursuit, rangedAttack);
+        enemyAI.Init(patrol, edgeBoundPursuit, rangedAttack);
     }
     
     protected virtual void Update()
     {
-        // if (isPursuingPlayer)
-        // {
-        //     PursuePlayer();
-        //     return;
-        // }
-        // Patrol();
+        if (isPursuingPlayer)
+        {
+            PursuePlayer();
+            return;
+        }
+        Patrol();
     }
 
     protected virtual void Patrol()
     {
-        // float step = enemyInfo.patrolSpeed * Time.deltaTime;
-        // transform.position = Vector3.MoveTowards(transform.position, targetPoint, step);
-        //
-        // if (Vector3.Distance(transform.position, targetPoint) < 0.1f)
-        // {
-        //     // targetPoint = targetPoint == enemyInfo.pointA.position ? enemyInfo.pointB.position : enemyInfo.pointA.position;
-        // }
+        patrol.Execute();
     }
 
     protected virtual void PursuePlayer()
     {
-        // float step = enemyInfo.pursueSpeed * Time.deltaTime;
-        // transform.position = Vector3.MoveTowards(transform.position, player.position, step);
+        edgeBoundPursuit.Execute();
     }
 
     public virtual void SpotPlayer(Transform playerTransform)
     {
-        // player = playerTransform;
-        // isPursuingPlayer = true;
+        isPursuingPlayer = true;
     }
 
     public virtual void LosePlayer()
     {
-        // isPursuingPlayer = false;
-        // targetPoint = enemyInfo.pointA.position;
+        isPursuingPlayer = false;
     }
 
     public virtual void AttackPlayer()
     {
-        // To be overridden by specific enemy types for melee or ranged attacks
+        rangedAttack.Execute();
     }
     
     public override void TakeDamage(int damageAmount)

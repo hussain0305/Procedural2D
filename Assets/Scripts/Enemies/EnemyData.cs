@@ -14,6 +14,7 @@ public class EnemyData : ScriptableObject
         public List<PositioningFilters> filters;
         public int health;
         public float patrolSpeed;
+        public float patrolPause;
         public float pursueSpeed;
         public float attackRange;
         public BulletType bulletType;
