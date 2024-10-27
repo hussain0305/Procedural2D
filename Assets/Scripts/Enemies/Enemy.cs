@@ -1,56 +1,29 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : Damageable
 {
     public EnemyAI enemyAI;
-    public EnemyData.EnemyInfo enemyInfo;
+    protected EnemyData.EnemyInfo enemyInfo;
     protected bool isPursuingPlayer;
+    [HideInInspector] public int damage;
 
-    protected Transform Player
+    protected Transform Player => GameManager.Instance.player.transform;
+    private bool isPaused;
+    private float pauseDuration = 1.0f;
+
+    public void Init(float patrolSpeed, float pursuitSpeed, float attackRange, GameObject bulletPrefab, EnemyData.EnemyInfo _enemyInfo)
     {
-        get
+        enemyInfo = _enemyInfo;
+        enemyAI.Init(this.transform, patrolSpeed, pursuitSpeed, attackRange, bulletPrefab, OnEdgeDetected);
+    }
+
+    private void Update()
+    {
+        if (!isPaused)
         {
-            return GameManager.Instance.player.transform;
+            enemyAI.UpdateBehavior(isPursuingPlayer);
         }
-    }
-    protected Vector3 targetPoint;
-
-    [HideInInspector]
-    public int damage;
-
-    private IMovementBehavior patrol;
-    private IPursuitBehavior edgeBoundPursuit;
-    private IAttackBehavior rangedAttack;
-
-    public void Init(Vector3 pointA, Vector3 pointB, float patrolSpeed, float pursuitSpeed, float attackRange, GameObject bulletPrefab)
-    {
-        patrol = new PatrolBehavior(transform, pointA, pointB, patrolSpeed, 3);
-        edgeBoundPursuit = new EdgeBoundPursuit(transform, Player.transform, pursuitSpeed);
-        rangedAttack = new RangedAttack(transform, Player.transform, attackRange, bulletPrefab);
-
-        enemyAI.Init(patrol, edgeBoundPursuit, rangedAttack);
-    }
-    
-    protected virtual void Update()
-    {
-        if (isPursuingPlayer)
-        {
-            PursuePlayer();
-            return;
-        }
-        Patrol();
-    }
-
-    protected virtual void Patrol()
-    {
-        patrol.Execute();
-    }
-
-    protected virtual void PursuePlayer()
-    {
-        edgeBoundPursuit.Execute();
     }
 
     public virtual void SpotPlayer(Transform playerTransform)
@@ -63,13 +36,23 @@ public class Enemy : Damageable
         isPursuingPlayer = false;
     }
 
-    public virtual void AttackPlayer()
-    {
-        rangedAttack.Execute();
-    }
-    
     public override void TakeDamage(int damageAmount)
     {
-        // base.TakeDamage(damageAmount);
+        // Handle damage logic
+    }
+
+    private void OnEdgeDetected()
+    {
+        if (!isPaused)
+        {
+            StartCoroutine(PauseAtEdge());
+        }
+    }
+
+    private IEnumerator PauseAtEdge()
+    {
+        isPaused = true;
+        yield return new WaitForSeconds(pauseDuration);
+        isPaused = false;
     }
 }

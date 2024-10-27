@@ -1,56 +1,49 @@
-using System.Collections;
 using UnityEngine;
+using System;
 
 public class PatrolBehavior : IMovementBehavior
 {
     private Transform enemy;
-    private Vector2 pointA;
-    private Vector2 pointB;
     private float speed;
-    private float pauseDuration;
-    private bool isPaused;
-    private Vector2 targetPoint;
+    private Vector2 patrolDirection;
+    private Vector2 groundCheckDistance = new Vector2(0.5f, -0.5f);
+    private Action onEdgeDetected;
+    private LayerMask groundLayer;
 
-    public PatrolBehavior(Transform enemy, Vector2 pointA, Vector2 pointB, float speed, float pauseDuration)
+    public PatrolBehavior(Transform enemy, float speed, Action onEdgeDetected)
     {
         this.enemy = enemy;
-        this.pointA = pointA;
-        this.pointB = pointB;
         this.speed = speed;
-        this.pauseDuration = pauseDuration;
-        this.targetPoint = pointB;
+        this.onEdgeDetected = onEdgeDetected;
+        this.patrolDirection = Vector2.right;
+        this.groundLayer = GlobalData.Instance.groundLayer;
     }
 
     public void Execute()
     {
-        if (!isPaused)
+        if (onEdgeDetected == null) return;
+        
+        enemy.Translate(patrolDirection * (speed * Time.deltaTime));
+        FaceDirection();
+
+        if (!GroundAhead())
         {
-            float step = speed * Time.deltaTime;
-            enemy.position = Vector2.MoveTowards(enemy.position, targetPoint, step);
-
-            FaceDirection(targetPoint);
-
-            if (Vector2.Distance(enemy.position, targetPoint) < 0.1f)
-            {
-                targetPoint = targetPoint == pointA ? pointB : pointA;
-                enemy.GetComponent<MonoBehaviour>().StartCoroutine(PauseAtPoint());
-            }
+            patrolDirection = -patrolDirection;
+            onEdgeDetected.Invoke();
         }
     }
 
-    private void FaceDirection(Vector2 target)
+    private bool GroundAhead()
     {
-        Vector2 direction = (target - (Vector2)enemy.position).normalized;
-        if (direction.x != 0)
-        {
-            enemy.localScale = new Vector3(Mathf.Sign(direction.x) * Mathf.Abs(enemy.localScale.x), enemy.localScale.y, enemy.localScale.z);
-        }
+        Vector2 origin = (Vector2)enemy.position + new Vector2(patrolDirection.x * groundCheckDistance.x, groundCheckDistance.y);
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, Mathf.Abs(groundCheckDistance.y), groundLayer);
+
+        Debug.DrawRay(origin, Vector2.down * Mathf.Abs(groundCheckDistance.y), Color.red);
+        return hit.collider != null;
     }
 
-    private IEnumerator PauseAtPoint()
+    private void FaceDirection()
     {
-        isPaused = true;
-        yield return new WaitForSeconds(pauseDuration);
-        isPaused = false;
+        enemy.localScale = new Vector3(Mathf.Sign(patrolDirection.x) * Mathf.Abs(enemy.localScale.x), enemy.localScale.y, enemy.localScale.z);
     }
 }

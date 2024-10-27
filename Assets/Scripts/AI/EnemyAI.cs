@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
@@ -8,32 +6,27 @@ public class EnemyAI : MonoBehaviour
     private IPursuitBehavior pursuitBehavior;
     private IAttackBehavior attackBehavior;
 
-    public void Init(IMovementBehavior movement, IPursuitBehavior pursuit, IAttackBehavior attack)
+    public void Init(Transform enemyTransform, float patrolSpeed, float pursuitSpeed, float attackRange, GameObject bulletPrefab, System.Action onEdgeDetected)
     {
-        movementBehavior = movement;
-        pursuitBehavior = pursuit;
-        attackBehavior = attack;
+        movementBehavior = new PatrolBehavior(enemyTransform, patrolSpeed, onEdgeDetected);
+        pursuitBehavior = new EdgeBoundPursuit(enemyTransform, GameManager.Instance.player.transform, pursuitSpeed);
+        attackBehavior = new RangedAttack(enemyTransform, GameManager.Instance.player.transform, attackRange, bulletPrefab);
     }
 
-    private void Update()
+    public void UpdateBehavior(bool isPursuingPlayer)
     {
-        movementBehavior?.Execute();
-
-        if (ShouldPursue())
+        if (isPursuingPlayer)
         {
             pursuitBehavior?.Execute();
+            if (CanAttack())
+            {
+                attackBehavior?.Execute();
+            }
         }
-
-        if (CanAttack())
+        else
         {
-            attackBehavior?.Execute();
+            movementBehavior?.Execute();
         }
-    }
-
-    private bool ShouldPursue()
-    {
-        // Implement pursuit condition (e.g., player is in detection range)
-        return true;
     }
 
     private bool CanAttack()

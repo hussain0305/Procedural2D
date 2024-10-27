@@ -408,8 +408,8 @@ public class Room : MonoBehaviour
                 if (roomAnalyzer.GetPatrolPoints(enemyFilters, out (Vector2Int topLeft, Vector2Int topRight) patrolPoints))
                 {
                     GameObject enemy = Instantiate(enemyInfo.enemyPrefab, GetCellLocation(patrolPoints.topRight), Quaternion.identity, transform);
-                    enemy.GetComponent<Enemy>().Init(GetCellLocation(patrolPoints.topRight), GetCellLocation(patrolPoints.topLeft), enemyInfo.patrolSpeed, enemyInfo.pursueSpeed,
-                        enemyInfo.attackRange, enemyInfo.bulletPrefab);
+                    enemy.GetComponent<Enemy>().Init(enemyInfo.patrolSpeed, enemyInfo.pursueSpeed,
+                        enemyInfo.attackRange, enemyInfo.bulletPrefab, enemyInfo);
                 }
                 break;
         }

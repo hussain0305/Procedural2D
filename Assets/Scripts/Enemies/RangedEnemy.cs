@@ -6,14 +6,14 @@ public class RangedEnemy : Enemy
 {
     public GameObject projectilePrefab;
 
-    public override void AttackPlayer()
-    {
-        if (Vector3.Distance(transform.position, Player.position) <= enemyInfo.attackRange)
-        {
-            // Perform ranged attack
-            FireProjectile();
-        }
-    }
+    // public override void AttackPlayer()
+    // {
+    //     if (Vector3.Distance(transform.position, Player.position) <= enemyInfo.attackRange)
+    //     {
+    //         // Perform ranged attack
+    //         FireProjectile();
+    //     }
+    // }
 
     private void FireProjectile()
     {
