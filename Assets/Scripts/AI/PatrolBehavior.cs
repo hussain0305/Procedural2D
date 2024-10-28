@@ -36,9 +36,9 @@ public class PatrolBehavior : IMovementBehavior
     private bool GroundAhead()
     {
         Vector2 origin = (Vector2)enemy.position + new Vector2(patrolDirection.x * groundCheckDistance.x, groundCheckDistance.y);
-        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, Mathf.Abs(groundCheckDistance.y), groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, groundLayer);
 
-        Debug.DrawRay(origin, Vector2.down * Mathf.Abs(groundCheckDistance.y), Color.red);
+        Debug.DrawRay(origin, 0.1f * Vector2.down, Color.red);
         return hit.collider != null;
     }
 

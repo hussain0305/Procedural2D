@@ -9,11 +9,12 @@ public struct LoadingProgress
 {
     public bool mazeGenerated;
     public bool roomsAnalyzed;
-    public bool trapsPlaced;
+    public bool hazardsPlaced;
+    public bool startGameCalled;
 
     public bool LoadingComplete()
     {
-        return mazeGenerated && roomsAnalyzed && trapsPlaced;
+        return mazeGenerated && roomsAnalyzed && hazardsPlaced && startGameCalled;
     }
 }
 
@@ -51,11 +52,17 @@ public class LoadingScreen : MonoBehaviour
         loadingScreen.SetActive(true);
         MazeGenerator.OnMazeGenerationComplete += OnMazeGenerationComplete;
         MazeGenerator.OnAllRoomsAnalyzed += OnAllRoomsAnalyzed;
-        MazeGenerator.OnAllRoomsPlacedHazards += OnTrapAndEnemiesPlacementCompleted;
+        MazeGenerator.OnAllRoomsPlacedHazards += OnHazardsPlacementCompleted;
+        MazeGenerator.OnGameStart += OnGameStart;
         InitTexts();
         StartCoroutine(LoadingScreenText());
     }
-    
+
+    private void OnGameStart()
+    {
+        loadingProgress.startGameCalled = true;
+    }
+
     private void OnDisable()
     {
         MazeGenerator.OnMazeGenerationComplete -= OnMazeGenerationComplete;
@@ -93,9 +100,9 @@ public class LoadingScreen : MonoBehaviour
         loadingProgress.mazeGenerated = true;
     }
 
-    private void OnTrapAndEnemiesPlacementCompleted()
+    private void OnHazardsPlacementCompleted()
     {
-        loadingProgress.trapsPlaced = true;
+        loadingProgress.hazardsPlaced = true;
     }
 
 }

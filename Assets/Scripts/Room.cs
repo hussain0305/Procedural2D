@@ -10,6 +10,8 @@ using Random = UnityEngine.Random;
 public class Room : MonoBehaviour
 {
     public Transform roomInterior;
+    public Transform roomContentsSimulateConditionally;
+    public Transform roomContentsSimulateAlways;
     public Transform topLeftCorner;
     public Transform topRightCorner;
     public Transform bottomLeftCorner;
@@ -58,6 +60,21 @@ public class Room : MonoBehaviour
         SetScaleAndBorders();
     }
 
+    private void OnEnable()
+    {
+        EventManager.OnRoomEntered += EvaluateRoomSimulation;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnRoomEntered -= EvaluateRoomSimulation;
+    }
+
+    public void EvaluateRoomSimulation(Vector2Int playerCellPosition)
+    {
+        roomContentsSimulateConditionally?.gameObject.SetActive(GameManager.Instance.ShouldSimulate(gridIndex, playerCellPosition));
+    }
+    
     private void SetScaleAndBorders()
     {
         roomSprite.transform.localScale = new Vector3(Global.CELL_SIZE_INTERIOR_X + Global.CELL_WALL_SIZE, Global.CELL_SIZE_INTERIOR_Y + Global.CELL_WALL_SIZE, 1);
@@ -388,7 +405,7 @@ public class Room : MonoBehaviour
             case SpawnRequirement.SpawnPointOnly:
                 if (roomAnalyzer.GetSpawnCell(trapFilters, out spawnCell, out flipAxis))
                 {
-                    GameObject spawnedTrap = Instantiate(trapInfo.trapPrefab, GetCellLocation(spawnCell) + new Vector3(0, 0.5f, 0), Quaternion.identity, transform);
+                    GameObject spawnedTrap = Instantiate(trapInfo.trapPrefab, GetCellLocation(spawnCell) + new Vector3(0, 0.5f, 0), Quaternion.identity, roomContentsSimulateConditionally);
                     spawnedTrap.transform.localScale = new Vector3(flipAxis.x, flipAxis.y, spawnedTrap.transform.localScale.z);
                     Trap trap = spawnedTrap.GetComponent<Trap>();
                     if (trap)
@@ -412,7 +429,7 @@ public class Room : MonoBehaviour
             case SpawnRequirement.PatrolPoints:
                 if (roomAnalyzer.GetPatrolPoints(enemyFilters, out (Vector2Int topLeft, Vector2Int topRight) patrolPoints))
                 {
-                    GameObject spawnedEnemy = Instantiate(enemyInfo.enemyPrefab, GetCellLocation(patrolPoints.topRight), Quaternion.identity, transform);
+                    GameObject spawnedEnemy = Instantiate(enemyInfo.enemyPrefab, GetCellLocation(patrolPoints.topRight), Quaternion.identity, roomContentsSimulateConditionally);
                     Enemy enemy = spawnedEnemy.GetComponent<Enemy>();
                     if (enemy)
                     {
@@ -422,5 +439,10 @@ public class Room : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public void EvaluateSimulationState()
+    {
+        
     }
 }

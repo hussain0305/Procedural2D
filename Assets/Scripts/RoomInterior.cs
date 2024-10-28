@@ -9,7 +9,7 @@ public class RoomInterior : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other && other.gameObject && other.gameObject.GetComponent<PlayerController>())
+        if (GameManager.gameStarted && other && other.gameObject && other.gameObject.GetComponent<PlayerController>())
         {
             EventManager.OnRoomEntered?.Invoke(gridIndex);
         }

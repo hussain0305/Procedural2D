@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     public NPCList npcList;  
     
     private Coroutine cameraLerp;
+
+    public static bool gameStarted = false;
     
     private void Awake()
     {
@@ -51,6 +53,7 @@ public class GameManager : MonoBehaviour
     {
         MazeGenerator.OnMazeGenerationComplete += OnMazeGenerationComplete;
         MazeGenerator.OnAllRoomsAnalyzed += OnAllRoomsAnalyzed;
+        MazeGenerator.OnGameStart += OnGameStart;
         EventManager.OnRoomEntered += HandleRoomEntered;
     }
 
@@ -58,6 +61,7 @@ public class GameManager : MonoBehaviour
     {
         MazeGenerator.OnMazeGenerationComplete -= OnMazeGenerationComplete;
         MazeGenerator.OnAllRoomsAnalyzed -= OnAllRoomsAnalyzed;
+        MazeGenerator.OnGameStart -= OnGameStart;
         EventManager.OnRoomEntered -= HandleRoomEntered;
     }
     private void OnMazeGenerationComplete()
@@ -69,6 +73,17 @@ public class GameManager : MonoBehaviour
     {
         PlacePlayerInStartingRoom();
         PlaceShopkeeperInStartingRoom();
+    }
+
+    private void OnGameStart()
+    {
+        currentPlayerRoom = mazeGenerator.startNode;
+        foreach (Room room in mazeGenerator.allRooms.Values)
+        {
+            room.EvaluateRoomSimulation(currentPlayerRoom);
+        }
+        EnablePlayerControls();
+        gameStarted = true;
     }
 
     private void PlacePlayerInStartingRoom()

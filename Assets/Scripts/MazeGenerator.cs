@@ -58,6 +58,7 @@ public class MazeGenerator : MonoBehaviour
     public static event Action OnMazeGenerationComplete;
     public static event Action OnAllRoomsAnalyzed;
     public static event Action OnAllRoomsPlacedHazards;
+    public static event Action OnGameStart;
     public void Start()
     {
         OnAllRoomsAnalyzed += RoomsAnalyzed;
@@ -102,8 +103,16 @@ public class MazeGenerator : MonoBehaviour
         yield return null;
         MazeGenerated();
         
+        yield return new WaitForSeconds(0.5f);
+        StartGame();
+        
         yield return null;
         SetRoomNames(); //Primarily for in editor, can be removed in the final build
+    }
+
+    private void StartGame()
+    {
+        OnGameStart?.Invoke();
     }
 
     private void AnalyzeRooms()

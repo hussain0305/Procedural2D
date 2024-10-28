@@ -51,10 +51,6 @@ public class ArrowTrap : Trap
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (!simulate)
-        {
-            return;
-        }
         if (Time.time > lastFireTime + fireCooldown)
         {
             lastFireTime = Time.time;

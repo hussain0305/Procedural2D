@@ -5,7 +5,6 @@ using UnityEngine;
 public class Enemy : Damageable
 {
     [HideInInspector] public Vector2Int locatedInRoom;
-    [HideInInspector] public bool simulate;
 
     public EnemyAI enemyAI;
     protected EnemyData.EnemyInfo enemyInfo;
@@ -13,30 +12,20 @@ public class Enemy : Damageable
     [HideInInspector] public int damage;
 
     protected Transform Player => GameManager.Instance.player.transform;
-    private bool isPaused;
-    private float pauseDuration = 1.0f;
+
+    protected float pausePatrolUntil = 0;
+    protected bool PatrolPaused => Time.time < pausePatrolUntil;
+    private readonly float patrolPauseDuration = 3.0f;
 
     public void Init(float patrolSpeed, float pursuitSpeed, float attackRange, GameObject bulletPrefab, EnemyData.EnemyInfo _enemyInfo)
     {
-        EventManager.OnRoomEntered += HandleRoomEntered;
-
         enemyInfo = _enemyInfo;
         enemyAI.Init(this.transform, patrolSpeed, pursuitSpeed, attackRange, bulletPrefab, OnEdgeDetected);
     }
 
-    private void HandleRoomEntered(Vector2Int gridIndex)
-    {
-        simulate = GameManager.Instance.ShouldSimulate(locatedInRoom, gridIndex);
-    }
-
     private void Update()
     {
-        if (!simulate)
-        {
-            return;
-        }
-        
-        if (!isPaused)
+        if (!PatrolPaused)
         {
             enemyAI.UpdateBehavior(isPursuingPlayer);
         }
@@ -59,21 +48,9 @@ public class Enemy : Damageable
 
     private void OnEdgeDetected()
     {
-        if (!isPaused)
+        if (!PatrolPaused)
         {
-            StartCoroutine(PauseAtEdge());
+            pausePatrolUntil = Time.time + patrolPauseDuration;
         }
-    }
-
-    private IEnumerator PauseAtEdge()
-    {
-        isPaused = true;
-        yield return new WaitForSeconds(pauseDuration);
-        isPaused = false;
-    }
-
-    private void OnDestroy()
-    {
-        EventManager.OnRoomEntered -= HandleRoomEntered;
     }
 }
