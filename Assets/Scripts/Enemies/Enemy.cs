@@ -7,14 +7,14 @@ public class Enemy : Damageable
     [HideInInspector] public Vector2Int locatedInRoom;
 
     public EnemyAI enemyAI;
+    [HideInInspector] public int damage;
+    
     protected EnemyData.EnemyInfo enemyInfo;
     protected bool isPursuingPlayer;
-    [HideInInspector] public int damage;
-
     protected Transform Player => GameManager.Instance.player.transform;
-
     protected float pausePatrolUntil = 0;
     protected bool PatrolPaused => Time.time < pausePatrolUntil;
+    
     private readonly float patrolPauseDuration = 3.0f;
 
     public void Init(float patrolSpeed, float pursuitSpeed, float attackRange, GameObject bulletPrefab, EnemyData.EnemyInfo _enemyInfo)
