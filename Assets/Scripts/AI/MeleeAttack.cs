@@ -17,4 +17,9 @@ public class MeleeAttack : IAttackBehavior
     {
         // Implement melee attack logic
     }
+
+    public bool CanSeePlayer()
+    {
+        throw new System.NotImplementedException();
+    }
 }

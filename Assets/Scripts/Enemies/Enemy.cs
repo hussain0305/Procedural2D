@@ -1,26 +1,23 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 public class Enemy : Damageable
 {
+    public EnemyAI enemyAI;
+    public bool PatrolPaused => Time.time < pausePatrolUntil;
+    [HideInInspector] public int damage;
     [HideInInspector] public Vector2Int locatedInRoom;
 
-    public EnemyAI enemyAI;
-    [HideInInspector] public int damage;
-    
     protected EnemyData.EnemyInfo enemyInfo;
     protected bool isPursuingPlayer;
     protected Transform Player => GameManager.Instance.player.transform;
-    protected float pausePatrolUntil = 0;
-    protected bool PatrolPaused => Time.time < pausePatrolUntil;
-    
-    private readonly float patrolPauseDuration = 3.0f;
 
-    public void Init(float patrolSpeed, float pursuitSpeed, float attackRange, GameObject bulletPrefab, EnemyData.EnemyInfo _enemyInfo)
+    private float pausePatrolUntil = 0;
+
+    public void Init(EnemyType enemyType)
     {
-        enemyInfo = _enemyInfo;
-        enemyAI.Init(this.transform, patrolSpeed, pursuitSpeed, attackRange, bulletPrefab, OnEdgeDetected);
+        EnemyData.Instance.GetEnemyInfo(enemyType, out enemyInfo);
+        enemyAI.Init(this.transform, enemyType, OnEdgeDetected);
     }
 
     private void Update()
@@ -41,16 +38,11 @@ public class Enemy : Damageable
         isPursuingPlayer = false;
     }
 
-    public override void TakeDamage(int damageAmount)
-    {
-        // Handle damage logic
-    }
-
     private void OnEdgeDetected()
     {
         if (!PatrolPaused)
         {
-            pausePatrolUntil = Time.time + patrolPauseDuration;
+            pausePatrolUntil = Time.time + enemyInfo.patrolPause;
         }
     }
 }

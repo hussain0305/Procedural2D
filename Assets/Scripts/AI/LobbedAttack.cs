@@ -19,4 +19,9 @@ public class LobbedAttack : IAttackBehavior
     {
         // Implement lobbed attack logic with projectile motion
     }
+
+    public bool CanSeePlayer()
+    {
+        return true;
+    }
 }

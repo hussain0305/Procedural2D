@@ -434,7 +434,7 @@ public class Room : MonoBehaviour
                     if (enemy)
                     {
                         enemy.locatedInRoom = gridIndex;
-                        enemy.Init(enemyInfo.patrolSpeed, enemyInfo.pursueSpeed, enemyInfo.attackRange, enemyInfo.bulletPrefab, enemyInfo);
+                        enemy.Init(EnemyType.Patroller);
                     }
                 }
                 break;

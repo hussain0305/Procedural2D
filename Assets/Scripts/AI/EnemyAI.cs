@@ -6,9 +6,8 @@ public class EnemyAI : MonoBehaviour
     protected IPursuitBehavior pursuitBehavior;
     protected IAttackBehavior attackBehavior;
 
-    public virtual void Init(Transform enemyTransform, float patrolSpeed, float pursuitSpeed, float attackRange, GameObject bulletPrefab, System.Action onEdgeDetected)
+    public virtual void Init(Transform enemyTransform, EnemyType enemyType, System.Action onEdgeDetected)
     {
-        
     }
 
     public void UpdateBehavior(bool isPursuingPlayer)
@@ -16,10 +15,7 @@ public class EnemyAI : MonoBehaviour
         if (isPursuingPlayer)
         {
             pursuitBehavior?.Execute();
-            if (CanAttack())
-            {
-                attackBehavior?.Execute();
-            }
+            attackBehavior?.Execute();
         }
         else
         {
@@ -29,7 +25,6 @@ public class EnemyAI : MonoBehaviour
 
     protected bool CanAttack()
     {
-        // Implement attack condition (e.g., player is within attack range)
         return true;
     }
 }

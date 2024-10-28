@@ -1,24 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RangedAttack : IAttackBehavior
 {
     private Transform enemy;
-    private Transform target;
-    private float range;
-    private GameObject projectilePrefab;
+    private Transform player;
+    private float attackRange;
+    private GameObject bulletPrefab;
+    private float viewDistance;
+    private float viewAngle;
 
-    public RangedAttack(Transform enemy, Transform target, float range, GameObject projectilePrefab)
+    public RangedAttack(Transform enemy, Transform player, float attackRange, GameObject bulletPrefab, float viewDistance, float viewAngle)
     {
         this.enemy = enemy;
-        this.target = target;
-        this.range = range;
-        this.projectilePrefab = projectilePrefab;
+        this.player = player;
+        this.attackRange = attackRange;
+        this.bulletPrefab = bulletPrefab;
+        this.viewDistance = viewDistance;
+        this.viewAngle = viewAngle;
+    }
+
+    public bool CanSeePlayer()
+    {
+        Vector2 directionToPlayer = (player.position - enemy.position).normalized;
+        float distanceToPlayer = Vector2.Distance(enemy.position, player.position);
+
+        if (distanceToPlayer > viewDistance) return false;
+
+        float angleToPlayer = Vector2.Angle(enemy.right * Mathf.Sign(enemy.localScale.x), directionToPlayer);
+        return angleToPlayer < viewAngle / 2;
     }
 
     public void Execute()
     {
-        // Implement straight-line ranged attack logic
+        if (CanSeePlayer() && Vector2.Distance(enemy.position, player.position) <= attackRange)
+        {
+            Shoot();
+        }
+    }
+
+    private void Shoot()
+    {
+        GameObject bullet = GameObject.Instantiate(bulletPrefab, enemy.position, Quaternion.identity);
+        // Set bullet velocity or direction towards the player here
     }
 }

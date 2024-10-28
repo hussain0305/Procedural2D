@@ -17,6 +17,8 @@ public class EnemyData : ScriptableObject
         public float patrolPause;
         public float pursueSpeed;
         public float attackRange;
+        public float viewDistance;
+        public float viewAngle;
         public BulletType bulletType;
         public GameObject bulletPrefab;
         public SpawnRequirement spawnRequirement;

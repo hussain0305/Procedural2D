@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IAttackBehavior
 {
     void Execute();
+    bool CanSeePlayer();
 }
