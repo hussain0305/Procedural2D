@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MeleeAttack : IAttackBehavior
 {
+    public bool CanAttack { get; set; }
+    public bool PlayerInView { get; set; }
+
     private Transform enemy;
     private float attackRange;
 

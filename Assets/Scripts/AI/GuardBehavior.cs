@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GuardBehavior : IMovementBehavior
 {
+    public bool CanPatrol { get; set; }
+
     private Transform enemy;
 
     public GuardBehavior(Transform enemy)

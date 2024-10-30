@@ -1,11 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PatrollerAI : EnemyAI
 {
-    public override void Init(Transform enemyTransform, EnemyType enemyType, System.Action onEdgeDetected)
+    public override void Init(Transform enemyTransform, EnemyType enemyType, System.Action onEdgeDetected, System.Action onPlayerDetected, System.Action onPlayerLost)
     {
         EnemyData.Instance.GetEnemyInfo(enemyType, out EnemyData.EnemyInfo enemyInfo);
 
@@ -15,9 +12,12 @@ public class PatrollerAI : EnemyAI
             enemyTransform,
             GameManager.Instance.player.transform,
             enemyInfo.attackRange,
+            enemyInfo.attackCooldown,
             enemyInfo.bulletPrefab,
             enemyInfo.viewDistance,
-            enemyInfo.viewAngle
+            enemyInfo.viewAngle,
+            onPlayerDetected,
+            onPlayerLost
         );
     }
 }

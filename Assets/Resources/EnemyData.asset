@@ -23,6 +23,9 @@ MonoBehaviour:
     patrolPause: 3
     pursueSpeed: 10
     attackRange: 20
+    attackCooldown: 2
+    viewDistance: 5
+    viewAngle: 60
     bulletType: 1
     bulletPrefab: {fileID: 8031002308547459425, guid: 0fbf66246014b7043a0453f0702f5cf6, type: 3}
     spawnRequirement: 1

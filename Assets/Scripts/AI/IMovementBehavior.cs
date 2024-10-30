@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IMovementBehavior
 {
+    bool CanPatrol { get; set; }
     void Execute();
 }

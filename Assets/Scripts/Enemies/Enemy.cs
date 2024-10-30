@@ -17,15 +17,12 @@ public class Enemy : Damageable
     public void Init(EnemyType enemyType)
     {
         EnemyData.Instance.GetEnemyInfo(enemyType, out enemyInfo);
-        enemyAI.Init(this.transform, enemyType, OnEdgeDetected);
+        enemyAI.Init(this.transform, enemyType, OnEdgeDetected, OnPlayerDetected, OnPlayerLost);
     }
 
     private void Update()
     {
-        if (!PatrolPaused)
-        {
-            enemyAI.UpdateBehavior(isPursuingPlayer);
-        }
+        enemyAI.UpdateBehavior(isPursuingPlayer);
     }
 
     public virtual void SpotPlayer(Transform playerTransform)
@@ -44,5 +41,15 @@ public class Enemy : Damageable
         {
             pausePatrolUntil = Time.time + enemyInfo.patrolPause;
         }
+    }
+    
+    private void OnPlayerDetected()
+    {
+        enemyAI.movementBehavior.CanPatrol = false;
+    }
+
+    private void OnPlayerLost()
+    {
+        enemyAI.movementBehavior.CanPatrol = true;
     }
 }

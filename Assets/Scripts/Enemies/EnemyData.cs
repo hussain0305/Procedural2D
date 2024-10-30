@@ -17,6 +17,7 @@ public class EnemyData : ScriptableObject
         public float patrolPause;
         public float pursueSpeed;
         public float attackRange;
+        public float attackCooldown;
         public float viewDistance;
         public float viewAngle;
         public BulletType bulletType;

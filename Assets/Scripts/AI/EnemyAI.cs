@@ -2,25 +2,18 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    protected IMovementBehavior movementBehavior;
-    protected IPursuitBehavior pursuitBehavior;
-    protected IAttackBehavior attackBehavior;
+    public IMovementBehavior movementBehavior;
+    public IPursuitBehavior pursuitBehavior;
+    public IAttackBehavior attackBehavior;
 
-    public virtual void Init(Transform enemyTransform, EnemyType enemyType, System.Action onEdgeDetected)
+    public virtual void Init(Transform enemyTransform, EnemyType enemyType, System.Action onEdgeDetected, System.Action onPlayerDetected, System.Action onPlayerLost)
     {
     }
 
     public void UpdateBehavior(bool isPursuingPlayer)
     {
-        if (isPursuingPlayer)
-        {
-            pursuitBehavior?.Execute();
-            attackBehavior?.Execute();
-        }
-        else
-        {
-            movementBehavior?.Execute();
-        }
+        movementBehavior?.Execute();
+        attackBehavior?.Execute();
     }
 
     protected bool CanAttack()

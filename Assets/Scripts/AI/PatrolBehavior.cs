@@ -3,6 +3,8 @@ using System;
 
 public class PatrolBehavior : IMovementBehavior
 {
+    public bool CanPatrol { get; set; }
+    
     private Transform enemy;
     private float speed;
     private Vector2 patrolDirection;
@@ -12,6 +14,7 @@ public class PatrolBehavior : IMovementBehavior
 
     public PatrolBehavior(Transform enemy, float speed, Action onEdgeDetected)
     {
+        CanPatrol = true;
         this.enemy = enemy;
         this.speed = speed;
         this.onEdgeDetected = onEdgeDetected;
@@ -21,6 +24,7 @@ public class PatrolBehavior : IMovementBehavior
 
     public void Execute()
     {
+        if (!CanPatrol) return;
         if (onEdgeDetected == null) return;
         
         enemy.Translate(patrolDirection * (speed * Time.deltaTime));
