@@ -1,0 +1,282 @@
+Shader "Abyss/PlatformShader"
+{
+    Properties
+    {
+        [PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
+        _FillColor("Fill Color", Color) = (1,1,1,1)
+        _OutlineColor("Outline Color", Color) = (0,0,0,1)
+        _OutlineThickness("Outline Thickness", Range(0, 0.1)) = 0.05
+        _RoundedCorner("Rounded Corner", Range(0, 0.5)) = 0.2
+        [Toggle] _LeftEdgeDraw("Left Edge Draw", Float) = 0
+        [Toggle] _RightEdgeDraw("Right Edge Draw", Float) = 0
+        [Toggle] _TopEdgeDraw("Top Edge Draw", Float) = 0
+        [Toggle] _BottomEdgeDraw("Bottom Edge Draw", Float) = 0
+        [Toggle] _TopLeftCurved("Top Left Curved", Float) = 0
+        [Toggle] _BottomLeftCurved("Bottom Left Curved", Float) = 0
+        [Toggle] _TopRightCurved("Top Right Curved", Float) = 0
+        [Toggle] _BottomRightCurved("Bottom Right Curved", Float) = 0
+    }
+
+    SubShader
+    {
+        Tags
+        {
+            "Queue" = "Transparent"
+            "RenderType" = "Transparent"
+            "PreviewType" = "Plane"
+            "CanUseSpriteAtlas" = "True"
+        }
+
+        Cull Off
+        ZWrite Off
+        Blend SrcAlpha OneMinusSrcAlpha
+        LOD 200
+        Pass
+        {
+            Name "Default"
+            CGPROGRAM
+            
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma target 2.0
+
+            #include "UnityCG.cginc"
+
+            struct appdata_t
+            {
+                float4 vertex : POSITION;
+                float2 texcoord : TEXCOORD0;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
+            };
+
+            struct v2f
+            {
+                float4 vertex : SV_POSITION;
+                float2 uv : TEXCOORD0;
+                UNITY_VERTEX_OUTPUT_STEREO
+            };
+            
+            sampler2D _MainTex;
+            float4 _FillColor;
+            float4 _OutlineColor;
+            float _OutlineThickness;
+            float _RoundedCorner;
+            float _LeftEdgeDraw;
+            float _RightEdgeDraw;
+            float _TopEdgeDraw;
+            float _BottomEdgeDraw;
+            float _TopLeftCurved;
+            float _BottomLeftCurved;
+            float _TopRightCurved;
+            float _BottomRightCurved;
+
+            v2f vert(appdata_t v)
+            {
+                v2f o;
+                UNITY_SETUP_INSTANCE_ID(v);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                o.uv = v.texcoord;
+
+                return o;
+            }
+
+            fixed4 frag(v2f i) : SV_Target
+            {
+                //Corners will only be curved if both the edges extending from it are drawn
+                _TopRightCurved = _TopRightCurved * _RightEdgeDraw * _TopEdgeDraw;
+                _TopLeftCurved = _TopLeftCurved * _LeftEdgeDraw * _TopEdgeDraw;
+                _BottomRightCurved = _BottomRightCurved * _RightEdgeDraw * _BottomEdgeDraw;
+                _BottomLeftCurved = _BottomLeftCurved * _LeftEdgeDraw * _BottomEdgeDraw;
+                
+                fixed4 texColor = tex2D(_MainTex, i.uv);
+                float px = (i.uv.x * 2.0) - 1.0;
+                float py = (i.uv.y * 2.0) - 1.0;
+                float roundedCornerCenter = 1 - _RoundedCorner;
+
+                float2 bottomLeftRoundedCornerCenter = float2(-roundedCornerCenter, -roundedCornerCenter);
+                float2 bottomRightRoundedCornerCenter = float2(roundedCornerCenter, -roundedCornerCenter);
+                float2 topLeftRoundedCornerCenter = float2(-roundedCornerCenter, roundedCornerCenter);
+                float2 topRightRoundedCornerCenter = float2(roundedCornerCenter, roundedCornerCenter);
+
+                fixed4 finalColor = _FillColor;
+                if((px > -roundedCornerCenter && px < roundedCornerCenter) || (py > -roundedCornerCenter && py < roundedCornerCenter))
+                {
+                    //This if-block is for the (+)Shape formed inside
+                    if(px < -1 + _OutlineThickness || px > 1 - _OutlineThickness || py < -1 + _OutlineThickness || py > 1 - _OutlineThickness)
+                    {
+                        finalColor = _OutlineColor;
+                    }
+                    if(px < -1 + _OutlineThickness && _LeftEdgeDraw == 0)
+                    {
+                        finalColor = _FillColor;
+                    }
+                    else if(px > 1 - _OutlineThickness && _RightEdgeDraw == 0)
+                    {
+                        finalColor = _FillColor;
+                    }
+                    else if(py < -1 + _OutlineThickness && _BottomEdgeDraw == 0)
+                    {
+                        finalColor = _FillColor;
+                    }
+                    else if(py > 1 - _OutlineThickness && _TopEdgeDraw == 0)
+                    {
+                        finalColor = _FillColor;
+                    }
+                }
+                else
+                {
+                    //This else block is for the corners
+                    //on the corner segments, how should they be colored?
+                    //if draw edge is false, then it just returns the fill color
+                    //if rounded edges is turned off, then each edge of this corner segment is evaluated for the outline to be drawn based on the draw outline rule of that edge
+                    //if rounded edge is on, then rounded edge algo is evaluated
+                    finalColor = float4(0.0, 0.0, 0.0, 0.0);
+                    float sqrDist_outlineInnerEdgeToCenter = (_RoundedCorner - _OutlineThickness) * (_RoundedCorner - _OutlineThickness);
+                    float sqrDist_outlineOuterEdgeToCenter = _RoundedCorner * _RoundedCorner;
+                    float2 p = float2(px,py);
+                    if(px < bottomLeftRoundedCornerCenter.x && py < bottomLeftRoundedCornerCenter.y)
+                    {
+                        if(_BottomLeftCurved != 0)
+                        {
+                            float sqrDist_pointToCenter = length(p - bottomLeftRoundedCornerCenter);
+                            sqrDist_pointToCenter = sqrDist_pointToCenter * sqrDist_pointToCenter;
+                            if(sqrDist_pointToCenter < sqrDist_outlineInnerEdgeToCenter)
+                            {
+                                finalColor = _FillColor;
+                            }
+                            else if(sqrDist_pointToCenter > sqrDist_outlineInnerEdgeToCenter && sqrDist_pointToCenter < sqrDist_outlineOuterEdgeToCenter)
+                            {
+                                finalColor = _OutlineColor;
+                            }
+                        }
+                        else
+                        {
+                            finalColor = _FillColor;
+                            if(px < -1 + _OutlineThickness)
+                            {
+                                if(_LeftEdgeDraw != 0)
+                                {
+                                    finalColor = _OutlineColor;
+                                }
+                            }
+                            else if(py < -1 + _OutlineThickness)
+                            {
+                                if(_BottomEdgeDraw != 0 )
+                                {
+                                    finalColor = _OutlineColor;
+                                }
+                            }
+                        }
+                    }
+                    else if(px > bottomRightRoundedCornerCenter.x && py < bottomRightRoundedCornerCenter.y)
+                    {
+                        if(_BottomRightCurved != 0)
+                        {
+                            float sqrDist_pointToCenter = length(p - bottomRightRoundedCornerCenter);
+                            sqrDist_pointToCenter = sqrDist_pointToCenter * sqrDist_pointToCenter;
+                            if(sqrDist_pointToCenter < sqrDist_outlineInnerEdgeToCenter)
+                            {
+                                finalColor = _FillColor;
+                            }
+                            else if(sqrDist_pointToCenter > sqrDist_outlineInnerEdgeToCenter && sqrDist_pointToCenter < sqrDist_outlineOuterEdgeToCenter)
+                            {
+                                finalColor = _OutlineColor;
+                            }
+                        }
+                        else
+                        {
+                            finalColor = _FillColor;
+                            if(px > 1 - _OutlineThickness)
+                            {
+                                if(_RightEdgeDraw != 0)
+                                {
+                                    finalColor = _OutlineColor;
+                                }
+                            }
+                            else if(py < -1 + _OutlineThickness)
+                            {
+                                if(_BottomEdgeDraw != 0 )
+                                {
+                                    finalColor = _OutlineColor;
+                                }
+                            }
+                        }
+                    }
+                    else if(px < topLeftRoundedCornerCenter.x && py > topLeftRoundedCornerCenter.y)
+                    {
+                        if(_TopLeftCurved != 0)
+                        {
+                            float sqrDist_pointToCenter = length(p - topLeftRoundedCornerCenter);
+                            sqrDist_pointToCenter = sqrDist_pointToCenter * sqrDist_pointToCenter;
+                            if(sqrDist_pointToCenter < sqrDist_outlineInnerEdgeToCenter)
+                            {
+                                finalColor = _FillColor;
+                            }
+                            else if(sqrDist_pointToCenter > sqrDist_outlineInnerEdgeToCenter && sqrDist_pointToCenter < sqrDist_outlineOuterEdgeToCenter)
+                            {
+                                finalColor = _OutlineColor;
+                            }
+                        }
+                        else
+                        {
+                            finalColor = _FillColor;
+                            if(px < -1 + _OutlineThickness)
+                            {
+                                if(_LeftEdgeDraw != 0)
+                                {
+                                    finalColor = _OutlineColor;
+                                }
+                            }
+                            else if(py > 1 - _OutlineThickness)
+                            {
+                                if(_TopEdgeDraw != 0 )
+                                {
+                                    finalColor = _OutlineColor;
+                                }
+                            }
+                        }
+                    }
+                    else if(px > topRightRoundedCornerCenter.x && py> topRightRoundedCornerCenter.y)
+                    {
+                        if(_TopRightCurved != 0)
+                        {
+                            float sqrDist_pointToCenter = length(p - topRightRoundedCornerCenter);
+                            sqrDist_pointToCenter = sqrDist_pointToCenter * sqrDist_pointToCenter;
+                            if(sqrDist_pointToCenter < sqrDist_outlineInnerEdgeToCenter)
+                            {
+                                finalColor = _FillColor;
+                            }
+                            else if(sqrDist_pointToCenter > sqrDist_outlineInnerEdgeToCenter && sqrDist_pointToCenter < sqrDist_outlineOuterEdgeToCenter)
+                            {
+                                finalColor = _OutlineColor;
+                            }
+                        }
+                        else
+                        {
+                            finalColor = _FillColor;
+                            if(px > 1 - _OutlineThickness)
+                            {
+                                if(_RightEdgeDraw != 0)
+                                {
+                                    finalColor = _OutlineColor;
+                                }
+                            }
+                            else if(py > 1 - _OutlineThickness)
+                            {
+                                if(_TopEdgeDraw != 0 )
+                                {
+                                    finalColor = _OutlineColor;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return finalColor;
+            }
+            ENDCG
+        }
+    }
+}

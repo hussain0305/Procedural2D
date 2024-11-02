@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Abyss_PlatformShader
+  m_Shader: {fileID: 4800000, guid: 85452058d1533114487800729e411194, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _BOTTOMEDGEDRAW_ON
+  - _BOTTOMLEFTCURVED_ON
+  - _BOTTOMRIGHTCURVED_ON
+  - _LEFTEDGEDRAW_ON
+  - _RIGHTEDGEDRAW_ON
+  - _TOPEDGEDRAW_ON
+  - _TOPLEFTCURVED_ON
+  - _TOPRIGHTCURVED_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _BottomEdgeDraw: 1
+    - _BottomEdgeLeftCurved: 0
+    - _BottomEdgeRightCurved: 0
+    - _BottomLeftCurved: 1
+    - _BottomRightCurved: 1
+    - _CornerRadius: 0.362
+    - _Emission: 0.15
+    - _Glossiness: 0.5
+    - _GridSize: 1
+    - _LeftBottomCurved: 0
+    - _LeftEdgeBottomCurved: 0
+    - _LeftEdgeDraw: 1
+    - _LeftEdgeTopCurved: 0
+    - _LeftTopCurved: 0
+    - _LineSize: 0
+    - _Metallic: 0
+    - _OutlineThickness: 0.013
+    - _RightBottomCurved: 0
+    - _RightEdgeBottomCurved: 0
+    - _RightEdgeDraw: 1
+    - _RightEdgeTopCurved: 0
+    - _RightTopCurved: 0
+    - _Rounded: 0.336
+    - _RoundedCorner: 0.164
+    - _TopEdgeDraw: 1
+    - _TopEdgeLeftCurved: 0
+    - _TopEdgeRightCurved: 0
+    - _TopLeftCurved: 1
+    - _TopRightCurved: 1
+    m_Colors:
+    - _CellColor: {r: 0, g: 0, b: 0, a: 0}
+    - _FillColor: {r: 1, g: 0.4198113, b: 0.4198113, a: 1}
+    - _LineColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 1, g: 0.6650944, b: 0.6650944, a: 1}
+  m_BuildTextureStacks: []
