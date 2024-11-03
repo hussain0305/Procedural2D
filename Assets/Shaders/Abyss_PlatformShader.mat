@@ -53,14 +53,14 @@ Material:
     - _LeftTopCurved: 0
     - _LineSize: 0
     - _Metallic: 0
-    - _OutlineThickness: 0.013
+    - _OutlineThickness: 0.0074
     - _RightBottomCurved: 0
     - _RightEdgeBottomCurved: 0
     - _RightEdgeDraw: 1
     - _RightEdgeTopCurved: 0
     - _RightTopCurved: 0
     - _Rounded: 0.336
-    - _RoundedCorner: 0.164
+    - _RoundedCorner: 0.098
     - _TopEdgeDraw: 1
     - _TopEdgeLeftCurved: 0
     - _TopEdgeRightCurved: 0
