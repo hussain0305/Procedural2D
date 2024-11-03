@@ -19,6 +19,10 @@ Shader "Abyss/PlatformShader"
         [Toggle] _BottomLeftConvexConnector("Bottom Left Convex Connector", Float) = 0
         [Toggle] _TopRightConvexConnector("Top Right Convex Connector", Float) = 0
         [Toggle] _BottomRightConvexConnector("Bottom Right Convex Connector", Float) = 0
+        [Toggle] _TopLeftConvexConnectorInverse("Top Left Convex Connector Inverse", Float) = 0
+        [Toggle] _BottomLeftConvexConnectorInverse("Bottom Left Convex Connector Inverse", Float) = 0
+        [Toggle] _TopRightConvexConnectorInverse("Top Right Convex Connector Inverse", Float) = 0
+        [Toggle] _BottomRightConvexConnectorInverse("Bottom Right Convex Connector Inverse", Float) = 0
     }
 
     SubShader
@@ -77,6 +81,10 @@ Shader "Abyss/PlatformShader"
             float _BottomLeftConvexConnector;
             float _TopRightConvexConnector;
             float _BottomRightConvexConnector;
+            float _TopLeftConvexConnectorInverse;
+            float _BottomLeftConvexConnectorInverse;
+            float _TopRightConvexConnectorInverse;
+            float _BottomRightConvexConnectorInverse;
 
             v2f vert(appdata_t v)
             {
@@ -194,6 +202,18 @@ Shader "Abyss/PlatformShader"
                                     finalColor = _OutlineColor;
                                 }
                             }
+                            else if(_BottomLeftConvexConnectorInverse == 1 && px < -1 + _OutlineThickness && py < -1 + _OutlineThickness)
+                            {
+                                float inverseCenterX = -1;
+                                float inverseCenterY = -1 + _OutlineThickness;
+                                float xDist = px - inverseCenterX;
+                                float yDist = py - inverseCenterY;
+                                float sqrDist_pointToCorner = (xDist * xDist) + (yDist * yDist);
+                                if(sqrDist_pointToCorner < _OutlineThickness * _OutlineThickness)
+                                {
+                                    finalColor = _OutlineColor;
+                                }
+                            }
                         }
                     }
                     else if(px > bottomRightRoundedCornerCenter.x && py < bottomRightRoundedCornerCenter.y)
@@ -236,6 +256,18 @@ Shader "Abyss/PlatformShader"
                             {
                                 float xDist = px - 1;
                                 float yDist = py - (-1);
+                                float sqrDist_pointToCorner = (xDist * xDist) + (yDist * yDist);
+                                if(sqrDist_pointToCorner < _OutlineThickness * _OutlineThickness)
+                                {
+                                    finalColor = _OutlineColor;
+                                }
+                            }
+                            else if(_BottomRightConvexConnectorInverse == 1 && px > 1 - _OutlineThickness && py < -1 + _OutlineThickness)
+                            {
+                                float inverseCenterX = 1;
+                                float inverseCenterY = -1 + _OutlineThickness;
+                                float xDist = px - inverseCenterX;
+                                float yDist = py - inverseCenterY;
                                 float sqrDist_pointToCorner = (xDist * xDist) + (yDist * yDist);
                                 if(sqrDist_pointToCorner < _OutlineThickness * _OutlineThickness)
                                 {
@@ -290,6 +322,18 @@ Shader "Abyss/PlatformShader"
                                     finalColor = _OutlineColor;
                                 }
                             }
+                            else if(_TopLeftConvexConnectorInverse == 1 && px < -1 + _OutlineThickness && py > 1 - _OutlineThickness)
+                            {
+                                float inverseCenterX = -1 + _OutlineThickness;
+                                float inverseCenterY = 1;
+                                float xDist = px - inverseCenterX;
+                                float yDist = py - inverseCenterY;
+                                float sqrDist_pointToCorner = (xDist * xDist) + (yDist * yDist);
+                                if(sqrDist_pointToCorner < _OutlineThickness * _OutlineThickness)
+                                {
+                                    finalColor = _OutlineColor;
+                                }
+                            }
                         }
                     }
                     else if(px > topRightRoundedCornerCenter.x && py> topRightRoundedCornerCenter.y)
@@ -332,6 +376,18 @@ Shader "Abyss/PlatformShader"
                             {
                                 float xDist = px - 1;
                                 float yDist = py - 1;
+                                float sqrDist_pointToCorner = (xDist * xDist) + (yDist * yDist);
+                                if(sqrDist_pointToCorner < _OutlineThickness * _OutlineThickness)
+                                {
+                                    finalColor = _OutlineColor;
+                                }
+                            }
+                            else if(_TopRightConvexConnectorInverse == 1 && px >1 - _OutlineThickness && py > 1 - _OutlineThickness)
+                            {
+                                float inverseCenterX = 1 - _OutlineThickness;
+                                float inverseCenterY = 1;
+                                float xDist = px - inverseCenterX;
+                                float yDist = py - inverseCenterY;
                                 float sqrDist_pointToCorner = (xDist * xDist) + (yDist * yDist);
                                 if(sqrDist_pointToCorner < _OutlineThickness * _OutlineThickness)
                                 {
