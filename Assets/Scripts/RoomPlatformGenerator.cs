@@ -6,7 +6,6 @@ using UnityEngine.Tilemaps;
 public class RoomPlatformGenerator : MonoBehaviour
 {
     public PlatformBlock platformPrefab;
-    public Tile platformTile;
 
     public Room room;
 
@@ -143,7 +142,7 @@ public class RoomPlatformGenerator : MonoBehaviour
         
         grid[gridX, gridY] = true;
         Vector3Int tilePosition = new Vector3Int(gridXWithPositionalOffset + roomWorldPosition.x, gridYWithPositionalOffset + roomWorldPosition.y, 0);
-        platformTilemap.SetTile(tilePosition, platformTile);
+        platformTilemap.SetTile(tilePosition, GlobalData.Instance.platformTile);
 
         PlatformBlock block = Instantiate(platformPrefab, transform);
         block.isDestructible = isDamageable;

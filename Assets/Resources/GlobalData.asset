@@ -47,3 +47,5 @@ MonoBehaviour:
     prefab: {fileID: 2753899333968211182, guid: aacf8cc348f83fb4fb17296e7e5ac82e, type: 3}
   - pickupType: 1
     prefab: {fileID: 7998897779178623796, guid: 26232a2e25424864a8fcba770664b161, type: 3}
+  wallTile: {fileID: 11400000, guid: bf43ee930675e3040913d49afc28b507, type: 2}
+  platformTile: {fileID: 11400000, guid: 247cdde7e1b22f84ca09a57fe5a4bac5, type: 2}

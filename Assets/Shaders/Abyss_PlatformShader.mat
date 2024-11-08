@@ -13,11 +13,8 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords:
-  - _BOTTOMEDGEDRAW_ON
-  - _BOTTOMLEFTCURVED_ON
-  - _BOTTOMRIGHTCURVED_ON
+  - _BOTTOMRIGHTCONVEXCONNECTOR_ON
   - _LEFTEDGEDRAW_ON
-  - _RIGHTEDGEDRAW_ON
   - _TOPEDGEDRAW_ON
   - _TOPLEFTCURVED_ON
   - _TOPRIGHTCURVED_ON
@@ -37,11 +34,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BottomEdgeDraw: 1
+    - _BottomEdgeDraw: 0
     - _BottomEdgeLeftCurved: 0
     - _BottomEdgeRightCurved: 0
-    - _BottomLeftCurved: 1
-    - _BottomRightCurved: 1
+    - _BottomLeftConvexConnector: 0
+    - _BottomLeftConvexConnectorInverse: 0
+    - _BottomLeftCurved: 0
+    - _BottomRightConvexConnector: 1
+    - _BottomRightConvexConnectorInverse: 0
+    - _BottomRightCurved: 0
     - _CornerRadius: 0.362
     - _Emission: 0.15
     - _Glossiness: 0.5
@@ -53,10 +54,10 @@ Material:
     - _LeftTopCurved: 0
     - _LineSize: 0
     - _Metallic: 0
-    - _OutlineThickness: 0.0074
+    - _OutlineThickness: 0.0688
     - _RightBottomCurved: 0
     - _RightEdgeBottomCurved: 0
-    - _RightEdgeDraw: 1
+    - _RightEdgeDraw: 0
     - _RightEdgeTopCurved: 0
     - _RightTopCurved: 0
     - _Rounded: 0.336
@@ -64,7 +65,11 @@ Material:
     - _TopEdgeDraw: 1
     - _TopEdgeLeftCurved: 0
     - _TopEdgeRightCurved: 0
+    - _TopLeftConvexConnector: 0
+    - _TopLeftConvexConnectorInverse: 0
     - _TopLeftCurved: 1
+    - _TopRightConvexConnector: 0
+    - _TopRightConvexConnectorInverse: 0
     - _TopRightCurved: 1
     m_Colors:
     - _CellColor: {r: 0, g: 0, b: 0, a: 0}

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2ab487fddbc62a640aaf2dcc566112dc
+guid: 83a93b89200414546b00d9d370d8bdb9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 500
+  spritePixelsToUnits: 1000
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -149,232 +149,316 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Platforms3_0
+      name: TileSheet 1_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 2486
-        width: 511
-        height: 512
+        y: 5717
+        width: 312
+        height: 292
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 070326e7e8f0c8d438a3ee958f5e782b
-      internalID: 1072056857
+      spriteID: 53f8057163e4e674aa9154556692eb9a
+      internalID: 273495643
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Platforms3_1
+      name: TileSheet 1_1
       rect:
         serializedVersion: 2
-        x: 844
-        y: 2458
-        width: 512
-        height: 511
+        x: 742
+        y: 4753
+        width: 1048
+        height: 1000
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0aa7d4ce96727347a74fb14eb6bf539
-      internalID: 416809528
+      spriteID: b7664c8757a4eb8429c778463f2577a2
+      internalID: 1733210979
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Platforms3_2
+      name: TileSheet 1_2
       rect:
         serializedVersion: 2
-        x: 1662
-        y: 2474
-        width: 510
-        height: 511
+        x: 2521
+        y: 4719
+        width: 1002
+        height: 996
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 222cc5c7f4e3a014991685cb5106b0ee
-      internalID: -572275875
+      spriteID: 5c48b6740d4ca0c4bb89509e592398c3
+      internalID: -356977029
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Platforms3_3
+      name: TileSheet 1_3
       rect:
         serializedVersion: 2
-        x: 2487
-        y: 2487
-        width: 511
-        height: 511
+        x: 5711
+        y: 5717
+        width: 298
+        height: 292
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4a03cfaf8d1769489fc097dc7f712ba
-      internalID: -1728181944
+      spriteID: f0da6e36551af4b4195d9a68d9f0d1bd
+      internalID: 617562206
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Platforms3_4
+      name: TileSheet 1_4
       rect:
         serializedVersion: 2
-        x: 17
-        y: 1712
-        width: 522
-        height: 510
+        x: 4529
+        y: 4693
+        width: 1009
+        height: 1009
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cb15498a0c0aa7847aeb94229aacf050
-      internalID: 1611589398
+      spriteID: 145a28a7ed53d0a46966241d75603e21
+      internalID: 104828346
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Platforms3_5
+      name: TileSheet 1_5
       rect:
         serializedVersion: 2
-        x: 851
-        y: 1748
-        width: 512
-        height: 511
+        x: 719
+        y: 3261
+        width: 1048
+        height: 996
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 621a83d3fcbca074da6414b212049a66
-      internalID: 1255349153
+      spriteID: 246f64f1d41a17942a85727cdc17dcf7
+      internalID: -1526781896
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Platforms3_6
+      name: TileSheet 1_6
       rect:
         serializedVersion: 2
-        x: 1677
-        y: 1749
-        width: 511
-        height: 510
+        x: 2525
+        y: 3258
+        width: 1009
+        height: 1010
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d4ac2f9b580d63842b04f1c3b1b8bf6e
-      internalID: -163702291
+      spriteID: 68388cbf91d533e40ada5942ed2421db
+      internalID: -2138434287
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Platforms3_7
+      name: TileSheet 1_7
+      rect:
+        serializedVersion: 2
+        x: 4523
+        y: 3305
+        width: 1009
+        height: 1010
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efdf7729b53da0c4d8cc09298f3b690f
+      internalID: 231622780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileSheet 1_8
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 1770
+        width: 1002
+        height: 1000
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59dbeb7a952e1c646a5a6f0a6a92ecf2
+      internalID: 192731152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileSheet 1_9
+      rect:
+        serializedVersion: 2
+        x: 2481
+        y: 1785
+        width: 1009
+        height: 1010
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4609a674018a8cd4fa399a77650a4a6c
+      internalID: -23988727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileSheet 1_10
+      rect:
+        serializedVersion: 2
+        x: 4538
+        y: 1850
+        width: 1009
+        height: 1012
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d407adc225f81a74da86d5bf901e126a
+      internalID: -1238026845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileSheet 1_11
       rect:
         serializedVersion: 2
         x: 2472
-        y: 1823
-        width: 512
-        height: 511
+        y: 418
+        width: 1009
+        height: 1012
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 01f57d9946a6cb541bb69fa71a304d64
-      internalID: 1995893168
+      spriteID: 7841a9cbc513f35479fa8f016e1f93d3
+      internalID: 1830191930
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Platforms3_8
+      name: TileSheet 1_12
       rect:
         serializedVersion: 2
-        x: 22
-        y: 914
-        width: 523
-        height: 511
+        x: 4529
+        y: 442
+        width: 1012
+        height: 1009
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4983c64d8b49fff4b992ac2e56f9185a
-      internalID: 1615861326
+      spriteID: d5e53267b5ad0b840b94ef7838d8df3b
+      internalID: 1986636097
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Platforms3_9
+      name: TileSheet 1_13
       rect:
         serializedVersion: 2
-        x: 1
-        y: 2
-        width: 511
-        height: 511
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8f0f769060dd776448a032ffc7989956
-      internalID: -1859148570
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Platforms3_10
-      rect:
-        serializedVersion: 2
-        x: 2489
+        x: 0
         y: 0
-        width: 509
-        height: 512
+        width: 312
+        height: 307
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0455c79e3deb2f646a1c7be69145ab32
-      internalID: -183958140
+      spriteID: 3fbbe6f7f1fb7764b948daa4c80ec5a5
+      internalID: -1861236965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileSheet 1_14
+      rect:
+        serializedVersion: 2
+        x: 5711
+        y: 0
+        width: 298
+        height: 307
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec2eae99727b7594db512d1403be4405
+      internalID: -206703472
       vertices: []
       indices: 
       edges: []
@@ -390,17 +474,21 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Platforms3_0: 1072056857
-      Platforms3_1: 416809528
-      Platforms3_10: -183958140
-      Platforms3_2: -572275875
-      Platforms3_3: -1728181944
-      Platforms3_4: 1611589398
-      Platforms3_5: 1255349153
-      Platforms3_6: -163702291
-      Platforms3_7: 1995893168
-      Platforms3_8: 1615861326
-      Platforms3_9: -1859148570
+      TileSheet 1_0: 273495643
+      TileSheet 1_1: 1733210979
+      TileSheet 1_10: -1238026845
+      TileSheet 1_11: 1830191930
+      TileSheet 1_12: 1986636097
+      TileSheet 1_13: -1861236965
+      TileSheet 1_14: -206703472
+      TileSheet 1_2: -356977029
+      TileSheet 1_3: 617562206
+      TileSheet 1_4: 104828346
+      TileSheet 1_5: -1526781896
+      TileSheet 1_6: -2138434287
+      TileSheet 1_7: 231622780
+      TileSheet 1_8: 192731152
+      TileSheet 1_9: -23988727
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -23,8 +23,6 @@ public class Room : MonoBehaviour
 
     public SpriteRenderer roomSprite;
 
-    public Tile wallTile;
-
     public RoomPlatformGenerator platformGenerator;
     public RoomAnalyzer roomAnalyzer;
     
@@ -120,16 +118,16 @@ public class Room : MonoBehaviour
         for (int x = topLeftGridPosition.x; x <= topRightGridPosition.x; x++)
         {
             tilePosition = new Vector3Int(x + roomWorldPosition.x, topLeftGridPosition.y + roomWorldPosition.y, 0);
-            wallTilemap.SetTile(tilePosition, wallTile);
+            wallTilemap.SetTile(tilePosition, GlobalData.Instance.wallTile);
             tilePosition = new Vector3Int(x + roomWorldPosition.x, bottomLeftGridPosition.y + roomWorldPosition.y, 0);
-            wallTilemap.SetTile(tilePosition, wallTile);
+            wallTilemap.SetTile(tilePosition, GlobalData.Instance.wallTile);
         }
         for (int y = bottomLeftGridPosition.y; y <= topLeftGridPosition.y; y++)
         {
             tilePosition = new Vector3Int(bottomLeftGridPosition.x + roomWorldPosition.x, y + roomWorldPosition.y, 0);
-            wallTilemap.SetTile(tilePosition, wallTile);
+            wallTilemap.SetTile(tilePosition, GlobalData.Instance.wallTile);
             tilePosition = new Vector3Int(topRightGridPosition.x + roomWorldPosition.x, y + roomWorldPosition.y, 0);
-            wallTilemap.SetTile(tilePosition, wallTile);
+            wallTilemap.SetTile(tilePosition, GlobalData.Instance.wallTile);
         }
 
         setupProgress.SetBorderTilesPlacementCompleted();

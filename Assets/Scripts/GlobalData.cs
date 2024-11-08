@@ -38,6 +38,10 @@ public class GlobalData : ScriptableObject
     [Header("Pickups")]
     public PickupPrefabs[] pickupPrefabs;
 
+    [Header("Tiles")]
+    public RuleTile wallTile;
+    public RuleTile platformTile;
+    
     public Color GetRoomColor(RoomType roomType)
     {
         foreach (RoomColors roomColor in roomColors)
