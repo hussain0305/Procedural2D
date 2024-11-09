@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomColors:
   - roomtype: 2
-    color: {r: 0.16509432, g: 0.58490556, b: 1, a: 1}
+    material: {fileID: 2100000, guid: 8181836de7e2312488e4fb057f6a7e77, type: 2}
   - roomtype: 0
-    color: {r: 0.30588233, g: 0.65675837, b: 1, a: 1}
+    material: {fileID: 2100000, guid: 24048c5f43bc9c248b0e0a4ddc1810e6, type: 2}
   - roomtype: 1
-    color: {r: 0.504717, g: 0.75375754, b: 1, a: 1}
+    material: {fileID: 2100000, guid: 91456c8d64218e548af29917ea0f8f7e, type: 2}
   - roomtype: 3
-    color: {r: 0.4431693, g: 0.9056604, b: 0.3033108, a: 1}
+    material: {fileID: 2100000, guid: f095eba85dd36df42a3c82b127abd0c2, type: 2}
   - roomtype: 4
-    color: {r: 0, g: 0, b: 0, a: 1}
+    material: {fileID: 2100000, guid: f83a821e48c016d49bd994ee268cb3cd, type: 2}
   - roomtype: 5
-    color: {r: 0, g: 0, b: 0, a: 1}
+    material: {fileID: 2100000, guid: f83a821e48c016d49bd994ee268cb3cd, type: 2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64

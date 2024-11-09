@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WallColorSwap
-  m_Shader: {fileID: 4800000, guid: 01223c90c9e0b0c45bd783ac8e01a2ec, type: 3}
+  m_Name: Background_StartingRoom
+  m_Shader: {fileID: 4800000, guid: d12d43d723cef904ea417df1a3c77f90, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -23,34 +23,22 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _AlphaTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MaskTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NormalMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 2aa8ffc039a484f409ea6f7fa3d21be7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaThreshold: 0.399
-    - _EnableExternalAlpha: 0
-    - _ReplacementThreshold: 0.414
+    - _AlphaThreshold: 0.043
+    - _BlockSize: 0.012
+    - _BottomPadding: 0.009
+    - _ReplacementThreshold: 0.015
+    - _Spacing: 0.002
+    - _TopPadding: 0
     - _UseAbsoluteColors: 0
     m_Colors:
     - _AbsoluteBlack: {r: 0, g: 0, b: 0, a: 1}
     - _AbsoluteWhite: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorFill: {r: 0.27843142, g: 0.42686525, b: 1, a: 1}
-    - _ColorLining: {r: 0.1342115, g: 0.30911902, b: 0.9811321, a: 1}
-    - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorFill: {r: 0.45490196, g: 0.36078432, b: 0.5921569, a: 1}
+    - _ColorLining: {r: 0.45490196, g: 0.36078432, b: 0.5921569, a: 1}
   m_BuildTextureStacks: []

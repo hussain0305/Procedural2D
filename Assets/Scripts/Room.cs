@@ -133,11 +133,11 @@ public class Room : MonoBehaviour
         setupProgress.SetBorderTilesPlacementCompleted();
     }
     
-    public void InitRoom(RoomType _roomType, Vector2Int _gridIndex, Color _color, Tilemap _wallsTilemap, Tilemap _platformTilemap)
+    public void InitRoom(RoomType _roomType, Vector2Int _gridIndex, Material _material, Tilemap _wallsTilemap, Tilemap _platformTilemap)
     {
         roomType = _roomType;
         gridIndex = _gridIndex;
-        roomSprite.color = _color;
+        roomSprite.sharedMaterial = _material;
         
         roomVolume = GetComponentInChildren<RoomInterior>();
         roomVolume.gridIndex = gridIndex;

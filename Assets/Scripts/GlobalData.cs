@@ -41,17 +41,19 @@ public class GlobalData : ScriptableObject
     [Header("Tiles")]
     public RuleTile wallTile;
     public RuleTile platformTile;
-    
-    public Color GetRoomColor(RoomType roomType)
+
+    private Dictionary<RoomType, Material> roomBackgroundDictionary;
+    public Material GetRoomColor(RoomType roomType)
     {
-        foreach (RoomColors roomColor in roomColors)
+        if (roomBackgroundDictionary == null)
         {
-            if (roomColor.roomtype == roomType)
+            roomBackgroundDictionary = new Dictionary<RoomType, Material>();
+            foreach (RoomColors roomColor in roomColors)
             {
-                return roomColor.color;
+                roomBackgroundDictionary.TryAdd(roomColor.roomtype, roomColor.material);
             }
         }
-        return Color.black;
+        return roomBackgroundDictionary[roomType];
     }
 
     private Dictionary<PickupType, GameObject> pickupPrefabDictionary;

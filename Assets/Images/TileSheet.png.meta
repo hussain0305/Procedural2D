@@ -174,9 +174,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 742
-        y: 4753
+        y: 4751
         width: 1048
-        height: 1000
+        height: 1002
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,10 +194,10 @@ TextureImporter:
       name: TileSheet 1_2
       rect:
         serializedVersion: 2
-        x: 2521
+        x: 2522
         y: 4719
-        width: 1002
-        height: 996
+        width: 1000
+        height: 1000
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,10 +236,10 @@ TextureImporter:
       name: TileSheet 1_4
       rect:
         serializedVersion: 2
-        x: 4529
-        y: 4693
-        width: 1009
-        height: 1009
+        x: 4533
+        y: 4698
+        width: 1000
+        height: 1000
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,10 +257,10 @@ TextureImporter:
       name: TileSheet 1_5
       rect:
         serializedVersion: 2
-        x: 719
-        y: 3261
-        width: 1048
-        height: 996
+        x: 718
+        y: 3259
+        width: 1049
+        height: 998
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -278,10 +278,10 @@ TextureImporter:
       name: TileSheet 1_6
       rect:
         serializedVersion: 2
-        x: 2525
-        y: 3258
-        width: 1009
-        height: 1010
+        x: 2528
+        y: 3261
+        width: 1000
+        height: 1002
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -299,10 +299,10 @@ TextureImporter:
       name: TileSheet 1_7
       rect:
         serializedVersion: 2
-        x: 4523
-        y: 3305
-        width: 1009
-        height: 1010
+        x: 4527
+        y: 3310
+        width: 1000
+        height: 1000
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -320,10 +320,10 @@ TextureImporter:
       name: TileSheet 1_8
       rect:
         serializedVersion: 2
-        x: 732
-        y: 1770
+        x: 733
+        y: 1769
         width: 1002
-        height: 1000
+        height: 1002
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -341,10 +341,10 @@ TextureImporter:
       name: TileSheet 1_9
       rect:
         serializedVersion: 2
-        x: 2481
-        y: 1785
-        width: 1009
-        height: 1010
+        x: 2488
+        y: 1790
+        width: 1000
+        height: 1000
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -362,10 +362,10 @@ TextureImporter:
       name: TileSheet 1_10
       rect:
         serializedVersion: 2
-        x: 4538
-        y: 1850
-        width: 1009
-        height: 1012
+        x: 4543
+        y: 1856
+        width: 1000
+        height: 1000
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -383,10 +383,10 @@ TextureImporter:
       name: TileSheet 1_11
       rect:
         serializedVersion: 2
-        x: 2472
-        y: 418
-        width: 1009
-        height: 1012
+        x: 2477
+        y: 424
+        width: 1000
+        height: 1000
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -404,10 +404,10 @@ TextureImporter:
       name: TileSheet 1_12
       rect:
         serializedVersion: 2
-        x: 4529
-        y: 442
-        width: 1012
-        height: 1009
+        x: 4536
+        y: 448
+        width: 1000
+        height: 1000
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

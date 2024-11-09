@@ -46,7 +46,7 @@ public struct PickupPrefabs
 public struct RoomColors
 {
     public RoomType roomtype;
-    public Color color;
+    public Material material;
 }
 
 public struct RoomProperties
