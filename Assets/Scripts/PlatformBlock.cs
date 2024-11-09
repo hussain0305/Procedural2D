@@ -19,6 +19,7 @@ public class PlatformBlock : Damageable
     {
         if (isDestructible)
         {
+            PFXManager.Instance.PlayPFX(PFXDatabase.PFXType.PlatformBlockBreak, transform.position);
             platformTilemap.SetTile(tilePosition, null);
             Destroy(this.gameObject);
         }

@@ -30,8 +30,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaThreshold: 0.043
-    - _BlockSize: 0.012
-    - _BottomPadding: 0.009
+    - _BlockSize: 0.005
+    - _BottomPadding: 0
     - _ReplacementThreshold: 0.015
     - _Spacing: 0.002
     - _TopPadding: 0

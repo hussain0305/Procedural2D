@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Background_Destination
+  m_Name: ArrowTrap_1
   m_Shader: {fileID: 4800000, guid: d12d43d723cef904ea417df1a3c77f90, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -30,7 +30,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaThreshold: 0.043
-    - _BlockSize: 0.012
+    - _BlockSize: 0.046
     - _BottomPadding: 0
     - _ReplacementThreshold: 0.015
     - _Spacing: 0.002
@@ -39,6 +39,6 @@ Material:
     m_Colors:
     - _AbsoluteBlack: {r: 0, g: 0, b: 0, a: 1}
     - _AbsoluteWhite: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorFill: {r: 0.101960786, g: 0.15686275, b: 0.12156863, a: 1}
-    - _ColorLining: {r: 0.101960786, g: 0.15686275, b: 0.12156863, a: 1}
+    - _ColorFill: {r: 1, g: 0.30588236, b: 0.30588236, a: 1}
+    - _ColorLining: {r: 1, g: 0.30588236, b: 0.30588236, a: 1}
   m_BuildTextureStacks: []

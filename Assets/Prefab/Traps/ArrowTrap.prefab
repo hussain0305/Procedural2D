@@ -53,7 +53,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: dda93b43f70bbc941abd241039e353f2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 48312479
-  m_SortingLayer: 4
+  m_SortingLayer: 7
   m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 0.3066038, b: 0.3066038, a: 1}
@@ -168,7 +168,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 9267d60785db3f847883797e4563fc7c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -187,7 +187,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 48312479
-  m_SortingLayer: 4
+  m_SortingLayer: 7
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.30588233, g: 0.46700045, b: 1, a: 1}
@@ -292,9 +292,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4693933cea3627a4ca4b4351e19773a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  locatedInRoom: {x: 0, y: 0}
   lauchingPosition: {fileID: 256349439586868820}
   playerDetectionTrigger: {fileID: 2833481509384773178}
   bulletType: 0
   bullet: {fileID: 6754873619114681145, guid: 5061968eb0917ca48a3f214609cd11d6, type: 3}
-  arrowSpeed: 50
-  fireCooldown: 1
