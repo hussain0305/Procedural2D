@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomColors:
   - roomtype: 2
-    material: {fileID: 2100000, guid: 8181836de7e2312488e4fb057f6a7e77, type: 2}
+    material: {fileID: 2100000, guid: c008e2ed9445f134eb8aa429a08fb407, type: 2}
   - roomtype: 0
-    material: {fileID: 2100000, guid: 24048c5f43bc9c248b0e0a4ddc1810e6, type: 2}
+    material: {fileID: 2100000, guid: c008e2ed9445f134eb8aa429a08fb407, type: 2}
   - roomtype: 1
-    material: {fileID: 2100000, guid: 91456c8d64218e548af29917ea0f8f7e, type: 2}
+    material: {fileID: 2100000, guid: c008e2ed9445f134eb8aa429a08fb407, type: 2}
   - roomtype: 3
-    material: {fileID: 2100000, guid: f095eba85dd36df42a3c82b127abd0c2, type: 2}
+    material: {fileID: 2100000, guid: c008e2ed9445f134eb8aa429a08fb407, type: 2}
   - roomtype: 4
-    material: {fileID: 2100000, guid: f83a821e48c016d49bd994ee268cb3cd, type: 2}
+    material: {fileID: 2100000, guid: c008e2ed9445f134eb8aa429a08fb407, type: 2}
   - roomtype: 5
-    material: {fileID: 2100000, guid: f83a821e48c016d49bd994ee268cb3cd, type: 2}
+    material: {fileID: 2100000, guid: c008e2ed9445f134eb8aa429a08fb407, type: 2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -48,4 +48,4 @@ MonoBehaviour:
   - pickupType: 1
     prefab: {fileID: 7998897779178623796, guid: 26232a2e25424864a8fcba770664b161, type: 3}
   wallTile: {fileID: 11400000, guid: bf43ee930675e3040913d49afc28b507, type: 2}
-  platformTile: {fileID: 11400000, guid: 247cdde7e1b22f84ca09a57fe5a4bac5, type: 2}
+  platformTile: {fileID: 11400000, guid: 5eb0c409ba09f284396c1cf7e39947e6, type: 2}
