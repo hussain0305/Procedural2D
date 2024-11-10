@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(fileName = "NewGlobalData", menuName = "ScriptableObjects/GlobalData", order = 1)]
 public class GlobalData : ScriptableObject
@@ -39,8 +40,8 @@ public class GlobalData : ScriptableObject
     public PickupPrefabs[] pickupPrefabs;
 
     [Header("Tiles")]
-    public RuleTile wallTile;
-    public RuleTile platformTile;
+    public Tile wallTile;
+    public Tile platformTile;
 
     private Dictionary<RoomType, Material> roomBackgroundDictionary;
     public Material GetRoomColor(RoomType roomType)
