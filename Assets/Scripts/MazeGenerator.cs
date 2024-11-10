@@ -1,10 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 public class MazeGenerator : MonoBehaviour
@@ -29,10 +26,6 @@ public class MazeGenerator : MonoBehaviour
     public Transform optionalRooms;
     public Transform levelWalls;
     public Transform borderWalls;
-
-    [Header("Maze Tilemaps")]
-    public Tilemap platformTilemap;
-    public Tilemap wallTilemap;
     
     private Vector2Int[] directions = new Vector2Int[]
     {
@@ -235,7 +228,7 @@ public class MazeGenerator : MonoBehaviour
 
     private void CreateMaze()
     {
-        platformTilemap.ClearAllTiles();
+        TilemapManager.Instance.ClearPlatformTiles();
 
         for (int x = 0; x < gridSize; x++)
         {
@@ -280,7 +273,7 @@ public class MazeGenerator : MonoBehaviour
                 }
                 GameObject spawnedNode = Instantiate(currentNodePrefab, position, Quaternion.identity, parentTransform);
                 Room spawnedRoom = spawnedNode.GetComponent<Room>();
-                spawnedRoom.InitRoom(nodeType, currentPosition, GlobalData.Instance.GetRoomColor(nodeType), wallTilemap, platformTilemap);
+                spawnedRoom.InitRoom(nodeType, currentPosition, GlobalData.Instance.GetRoomColor(nodeType));
                 allRooms.Add(currentPosition, spawnedRoom);
             }
         }
@@ -449,7 +442,7 @@ public class MazeGenerator : MonoBehaviour
     {
         foreach (Room room in allRooms.Values)
         {
-            room.GeneratePlatforms(platformTilemap);
+            room.GeneratePlatforms();
         }
     }
 

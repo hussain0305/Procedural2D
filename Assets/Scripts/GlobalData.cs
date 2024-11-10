@@ -38,11 +38,7 @@ public class GlobalData : ScriptableObject
     
     [Header("Pickups")]
     public PickupPrefabs[] pickupPrefabs;
-
-    [Header("Tiles")]
-    public Tile wallTile;
-    public Tile platformTile;
-
+    
     private Dictionary<RoomType, Material> roomBackgroundDictionary;
     public Material GetRoomColor(RoomType roomType)
     {

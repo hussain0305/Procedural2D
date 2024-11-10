@@ -13,11 +13,10 @@ public class RoomPlatformGenerator : MonoBehaviour
     private int roomHeight;
     private bool[,] grid;
     private Vector2Int roomWorldPosition;
-    private Tilemap platformTilemap;
     private float platformChance;
     private List<Vector2Int> pathwayCells;
     
-    public void Init(Tilemap _platformTilemap, List<Vector2Int> roomPathways)
+    public void Init(List<Vector2Int> roomPathways)
     {
         pathwayCells = roomPathways;
         platformChance = Random.Range(Global.PLATFORM_CHANCE - Global.PLATFORM_CHANCE_RANDOMIZATION, Global.PLATFORM_CHANCE + Global.PLATFORM_CHANCE_RANDOMIZATION);
@@ -25,8 +24,6 @@ public class RoomPlatformGenerator : MonoBehaviour
         roomHeight = Global.CELL_SIZE_INTERIOR_Y;
         grid = room.roomGridBuildings;
         roomWorldPosition = new Vector2Int((int)room.gameObject.transform.position.x, (int)room.gameObject.transform.position.y);
-
-        platformTilemap = _platformTilemap;
     }
 
     public void GeneratePlatforms()
@@ -142,12 +139,11 @@ public class RoomPlatformGenerator : MonoBehaviour
         
         grid[gridX, gridY] = true;
         Vector3Int tilePosition = new Vector3Int(gridXWithPositionalOffset + roomWorldPosition.x, gridYWithPositionalOffset + roomWorldPosition.y, 0);
-        platformTilemap.SetTile(tilePosition, GlobalData.Instance.platformTile);
+        TilemapManager.Instance.PlacePlatformTileAt(tilePosition);
 
         PlatformBlock block = Instantiate(platformPrefab, transform);
         block.isDestructible = isDamageable;
         block.tilePosition = tilePosition;
-        block.platformTilemap = platformTilemap;
         // 0.5f needs to be added because the blocks are 1x1 and the anchor is at the center
         float localX = gridXWithPositionalOffset + 0.5f;
         float localY = gridYWithPositionalOffset + 0.5f;

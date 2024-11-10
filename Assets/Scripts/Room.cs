@@ -1,11 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using Random = UnityEngine.Random;
 
 public class Room : MonoBehaviour
 {
@@ -50,7 +45,6 @@ public class Room : MonoBehaviour
     [HideInInspector]
     public List<Vector2Int> pathwayCells = new List<Vector2Int>();
 
-    private Tilemap wallTilemap;
     private Dictionary<Room, RoomOpening> neighbours = new Dictionary<Room, RoomOpening>();
     
     private void Awake()
@@ -118,22 +112,22 @@ public class Room : MonoBehaviour
         for (int x = topLeftGridPosition.x; x <= topRightGridPosition.x; x++)
         {
             tilePosition = new Vector3Int(x + roomWorldPosition.x, topLeftGridPosition.y + roomWorldPosition.y, 0);
-            wallTilemap.SetTile(tilePosition, GlobalData.Instance.wallTile);
+            TilemapManager.Instance.PlaceWallTileAt(tilePosition);
             tilePosition = new Vector3Int(x + roomWorldPosition.x, bottomLeftGridPosition.y + roomWorldPosition.y, 0);
-            wallTilemap.SetTile(tilePosition, GlobalData.Instance.wallTile);
+            TilemapManager.Instance.PlaceWallTileAt(tilePosition);
         }
         for (int y = bottomLeftGridPosition.y; y <= topLeftGridPosition.y; y++)
         {
             tilePosition = new Vector3Int(bottomLeftGridPosition.x + roomWorldPosition.x, y + roomWorldPosition.y, 0);
-            wallTilemap.SetTile(tilePosition, GlobalData.Instance.wallTile);
+            TilemapManager.Instance.PlaceWallTileAt(tilePosition);
             tilePosition = new Vector3Int(topRightGridPosition.x + roomWorldPosition.x, y + roomWorldPosition.y, 0);
-            wallTilemap.SetTile(tilePosition, GlobalData.Instance.wallTile);
+            TilemapManager.Instance.PlaceWallTileAt(tilePosition);
         }
 
         setupProgress.SetBorderTilesPlacementCompleted();
     }
     
-    public void InitRoom(RoomType _roomType, Vector2Int _gridIndex, Material _material, Tilemap _wallsTilemap, Tilemap _platformTilemap)
+    public void InitRoom(RoomType _roomType, Vector2Int _gridIndex, Material _material)
     {
         roomType = _roomType;
         gridIndex = _gridIndex;
@@ -141,13 +135,11 @@ public class Room : MonoBehaviour
         
         roomVolume = GetComponentInChildren<RoomInterior>();
         roomVolume.gridIndex = gridIndex;
-
-        wallTilemap = _wallsTilemap;
-
+        
         roomGridBuildings = new bool[Global.CELL_SIZE_INTERIOR_X, Global.CELL_SIZE_INTERIOR_Y];
         roomGridNPCAreas = new AreaType[Global.CELL_SIZE_INTERIOR_X, Global.CELL_SIZE_INTERIOR_Y];
         
-        platformGenerator?.Init(_platformTilemap, pathwayCells);
+        platformGenerator?.Init(pathwayCells);
     }
 
     public void CreateOpening(RoomEdge _edge, int[] path, Room neighbour)
@@ -224,13 +216,13 @@ public class Room : MonoBehaviour
         {
             foreach (Vector3Int blockPosition in opening.blockPositions)
             {
-                wallTilemap.SetTile(blockPosition, null);  
+                TilemapManager.Instance.RemoveWallTileFrom(blockPosition);
             }
         }
         setupProgress.SetPathTilesRemovalCompleted();
     }
 
-    public void GeneratePlatforms(Tilemap _platformTilemap)
+    public void GeneratePlatforms()
     {
         platformGenerator?.GeneratePlatforms();
     }
