@@ -2258,7 +2258,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9e5886f6207d2054ea587a7651aeca66, type: 2}
+  - {fileID: 2100000, guid: 7060978d924da1843855ff62c31c3eb9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2278,7 +2278,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 600384171
   m_SortingLayer: 1
-  m_SortingOrder: 9
+  m_SortingOrder: 4
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -2926,7 +2926,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallTile: {fileID: 11400000, guid: ae7571a188b4ba54f8cfc50379bb71a9, type: 2}
+  wallOutlineTile: {fileID: 11400000, guid: 46ca9ceb3c291c445bf231ddb0b42120, type: 2}
   platformTile: {fileID: 11400000, guid: 91b7f30aa11ecd74abffc97f5cb26f41, type: 2}
+  platformOutlineTile: {fileID: 11400000, guid: e4034aad63c51f14a8acd2ffb7cb337a, type: 2}
   wallOutlineTilemap: {fileID: 1756822155}
   wallTilemap: {fileID: 1906300621}
   platformOutlineTilemap: {fileID: 1100052160}
@@ -3643,7 +3645,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1e011f6556ae2f14599c652556b6cefc, type: 2}
+  - {fileID: 2100000, guid: c99cf994ea08a20448b32743638892d7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

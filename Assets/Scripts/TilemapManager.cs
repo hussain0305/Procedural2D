@@ -7,7 +7,9 @@ public class TilemapManager : MonoBehaviour
 {
     [Header("Tiles")]
     public Tile wallTile;
+    public Tile wallOutlineTile;
     public Tile platformTile;
+    public Tile platformOutlineTile;
 
     [Header("Tilemaps")]
     public Tilemap wallOutlineTilemap;
@@ -32,7 +34,7 @@ public class TilemapManager : MonoBehaviour
     public void PlaceWallTileAt(Vector3Int position)
     {
         wallTilemap.SetTile(position, wallTile);
-        wallOutlineTilemap.SetTile(position, wallTile);
+        wallOutlineTilemap.SetTile(position, wallOutlineTile);
     }
 
     public void RemoveWallTileFrom(Vector3Int position)
@@ -44,7 +46,7 @@ public class TilemapManager : MonoBehaviour
     public void PlacePlatformTileAt(Vector3Int position)
     {
         platformTilemap.SetTile(position, platformTile);
-        platformOutlineTilemap.SetTile(position, platformTile);
+        platformOutlineTilemap.SetTile(position, platformOutlineTile);
     }
 
     public void RemovePlatformileFrom(Vector3Int position)
