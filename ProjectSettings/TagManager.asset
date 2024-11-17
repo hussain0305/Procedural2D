@@ -19,8 +19,8 @@ TagManager:
   - NPC
   - Bullet
   - RoomVolume
-  - 
-  - 
+  - PostProcess
+  - Trap
   - 
   - 
   - 

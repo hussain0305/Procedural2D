@@ -640,6 +640,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 276229900}
   m_CullTransparentMesh: 1
+--- !u!1 &294962135
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 294962137}
+  - component: {fileID: 294962136}
+  m_Layer: 13
+  m_Name: PostProcessingVolume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &294962136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294962135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: a9b23e9e536749c41b2d2515b52d717d, type: 2}
+--- !u!4 &294962137
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294962135}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 109.23816, y: 96.4853, z: -0.047867186}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &299011452
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,7 +1128,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -2193,7 +2242,7 @@ GameObject:
   - component: {fileID: 1100052162}
   - component: {fileID: 1100052160}
   - component: {fileID: 1100052161}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlatformsOutline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3005,7 +3054,7 @@ GameObject:
   - component: {fileID: 1588524053}
   - component: {fileID: 1588524055}
   - component: {fileID: 1588524054}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Platforms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3548,7 +3597,7 @@ GameObject:
   - component: {fileID: 1756822157}
   - component: {fileID: 1756822155}
   - component: {fileID: 1756822156}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallsOutline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3711,7 +3760,7 @@ GameObject:
   - component: {fileID: 1906300619}
   - component: {fileID: 1906300621}
   - component: {fileID: 1906300620}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4558,3 +4607,4 @@ SceneRoots:
   - {fileID: 265529344}
   - {fileID: 2088716177}
   - {fileID: 1017860128}
+  - {fileID: 294962137}
