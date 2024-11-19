@@ -42,9 +42,29 @@ Material:
     m_Ints: []
     m_Floats:
     - PixelSnap: 0
+    - _BottomEdgeDraw: 0
+    - _BottomLeftConvexConnector: 0
+    - _BottomLeftConvexConnectorInverse: 0
+    - _BottomLeftCurved: 0
+    - _BottomRightConvexConnector: 0
+    - _BottomRightConvexConnectorInverse: 0
+    - _BottomRightCurved: 0
     - _EnableExternalAlpha: 0
+    - _LeftEdgeDraw: 0
+    - _OutlineThickness: 1
+    - _RightEdgeDraw: 0
+    - _RoundedCorner: 0.2
+    - _TopEdgeDraw: 0
+    - _TopLeftConvexConnector: 0
+    - _TopLeftConvexConnectorInverse: 0
+    - _TopLeftCurved: 0
+    - _TopRightConvexConnector: 0
+    - _TopRightConvexConnectorInverse: 0
+    - _TopRightCurved: 0
     m_Colors:
     - _Color: {r: 0, g: 0, b: 0, a: 1}
+    - _FillColor: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
