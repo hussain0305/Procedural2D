@@ -121,6 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 577827470699303473}
   - component: {fileID: 5445176684035312890}
+  - component: {fileID: 8124118558804435850}
   m_Layer: 11
   m_Name: Square (2)
   m_TagString: Untagged
@@ -138,7 +139,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.26, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.05, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.08, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3046785180936841692}
@@ -181,8 +182,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 48312479
-  m_SortingLayer: 7
+  m_SortingLayerID: 605956125
+  m_SortingLayer: 4
   m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.3046733, g: 1, b: 0, a: 1}
@@ -195,3 +196,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8124118558804435850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4993454624279809461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd1a67f1f79172c419a90ccd5303510b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectRoot: {fileID: 3046785180936841692}

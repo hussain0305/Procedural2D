@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class ArrowTrap : Trap
 {
+    public Transform firingHammer;
+    public Transform hammerStartingPosition;
+    public Transform hammerFiringPosition;
+    
     public Transform lauchingPosition;
     public BoxCollider2D playerDetectionTrigger;
     public BulletType bulletType;
@@ -24,7 +28,7 @@ public class ArrowTrap : Trap
         DetectGround();
         damage = _damage;
     }
-
+    
     public void DetectGround()
     {
         RaycastHit2D groundHit = Physics2D.Raycast(transform.position + new Vector3(direction,0,0), transform.right * direction, Global.CELL_SIZE_INTERIOR_X, GlobalData.Instance.groundLayer);
@@ -55,6 +59,7 @@ public class ArrowTrap : Trap
         {
             lastFireTime = Time.time;
             Bullet firedBullet = BulletManager.GetBullet(bulletType, lauchingPosition.position);
+            firedBullet.GetComponentInChildren<SpriteFlipper>()?.SetSpriteFlip(direction < 0 ? -1 : 1);
             firedBullet.damage = damage;
             firedBullet.Fire(firedBullet.transform.right * direction, arrowSpeed, new Vector3(direction, 1, 1));
         }

@@ -10,4 +10,9 @@ public class Trap : MonoBehaviour
     {
         
     }
+    
+    public virtual void SetupTrap()
+    {
+        
+    }
 }
