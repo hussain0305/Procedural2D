@@ -58,10 +58,12 @@ Shader "Abyss/BrickWallShaderWorldSpace"
 
                 // Calculate row and column based on world position
                 float row = floor(worldPos.y / (brickHeight + _MortarHeight)); // Determine the row by dividing world Y by brick + mortar height
+
+                // Adjust for interlacing effect
                 float column = worldPos.x / (brickWidth + _MortarHeight); // Determine the column (pre-offset)
 
-                // Determine if row is odd or even to apply offset for staggering
-                bool isOddRow = (int(row) % 2 == 1);
+                // Fix for negative rows: Ensure staggered effect works for all quadrants
+                bool isOddRow = ((int(abs(row)) % 2) == 1); // Use absolute value of row index
                 float offset = isOddRow ? 0.5 * brickWidth : 0.0; // Apply half-brick offset to odd rows
 
                 // Calculate position within the brick/mortar unit
