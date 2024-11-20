@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BWWS_BrickWallShaderWorldSpace
+  m_Name: HomeSideWalls
   m_Shader: {fileID: 4800000, guid: 3f24740ccf80afc4484d0f02669eb48d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -29,10 +29,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BrickLength: 0.5
-    - _MortarHeight: 0.05
-    - _TileCount: 4
+    - _BrickLength: 0.56
+    - _MortarHeight: 0.06
+    - _TileCount: 2.37
     m_Colors:
-    - _BrickColor: {r: 0.8, g: 0.29999998, b: 0.19999996, a: 1}
-    - _MortarColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+    - _BrickColor: {r: 0.5849056, g: 0.102497324, b: 0.0082769515, a: 1}
+    - _MortarColor: {r: 0.3490566, g: 0.031283367, b: 0.031283367, a: 1}
   m_BuildTextureStacks: []
