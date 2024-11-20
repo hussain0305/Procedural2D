@@ -630,7 +630,7 @@ GameObject:
   m_Component:
   - component: {fileID: 928891205}
   - component: {fileID: 928891204}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: PostProcessing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -679,7 +679,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1187757750}
   - component: {fileID: 1187757751}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
