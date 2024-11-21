@@ -1,13 +1,10 @@
-using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
-
 public class ShopItem : MenuItem<PurchasableItemInfo>
 {
     public override void UpdateVisibleSections()
     {
-        var purchasableItem = (PurchasableItemInfo)(object)itemData; 
+        var purchasableItem = (PurchasableItemInfo)(object)itemData;
         int playerCoins = GameManager.Instance.PlayerInventory.GetCoinsBalance();
+        gameObject.name = "processed";
         //Inventory section will be active if it's both available and player has enough coins to buy it
         inventorySection.SetActive(purchasableItem.inventoryCount > 0 && playerCoins >= purchasableItem.price);
         //sold out section will be active if it's out of stock

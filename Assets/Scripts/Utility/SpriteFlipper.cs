@@ -17,7 +17,7 @@ public class SpriteFlipper : MonoBehaviour
     {
         yield return null;
         direction = objectRoot.transform.localScale.x < 0 ? -1 : 1;
-        transform.localScale = new Vector3(direction * transform.localScale.x, transform.localScale.y,
+        transform.localScale = new Vector3(direction * Mathf.Abs(transform.localScale.x), transform.localScale.y,
             transform.localScale.z);
     }
 
@@ -25,7 +25,7 @@ public class SpriteFlipper : MonoBehaviour
     {
         StopAllCoroutines();
         direction = _direction;
-        transform.localScale = new Vector3(direction * transform.localScale.x, transform.localScale.y,
+        transform.localScale = new Vector3(direction * Mathf.Abs(transform.localScale.x), transform.localScale.y,
             transform.localScale.z);
     }
 }

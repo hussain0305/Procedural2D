@@ -18,6 +18,11 @@ public class Shop : Menu<PurchasableItemInfo>
         PlayerInventory.OnCoinAmountChanged += UpdateCoinBalance;
     }
 
+    private void OnDestroy()
+    {
+        PlayerInventory.OnCoinAmountChanged -= UpdateCoinBalance;
+    }
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -26,7 +31,6 @@ public class Shop : Menu<PurchasableItemInfo>
     
     private void InitShop()
     {
-        
         itemActions = new Dictionary<PurchableItemType, Action>
         {
             { PurchableItemType.WallGrab, () => GameManager.Instance.GivePlayerWallGrab() },
@@ -99,6 +103,7 @@ public class Shop : Menu<PurchasableItemInfo>
         {
             itemAffordability = new Dictionary<int, bool>();
         }
+        Debug.Log("Num menu items - " + menuItems.Count);
         int playerCoinBalance = GameManager.Instance.PlayerInventory.GetCoinsBalance();
         for (int i = 0; i < availableItems.Count; i++)
         {

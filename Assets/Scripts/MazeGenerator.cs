@@ -66,6 +66,11 @@ public class MazeGenerator : MonoBehaviour
         StartCoroutine(SetupMaze());
     }
 
+    private void OnDestroy()
+    {
+        OnAllRoomsAnalyzed -= RoomsAnalyzed;
+    }
+
     public IEnumerator SetupMaze()
     {
         yield return null;

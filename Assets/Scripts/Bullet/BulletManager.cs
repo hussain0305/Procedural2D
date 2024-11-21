@@ -6,6 +6,29 @@ public static class BulletManager
     private static Dictionary<BulletType, Queue<Bullet>> bulletPools = new Dictionary<BulletType, Queue<Bullet>>();
     private static Dictionary<BulletType, Bullet> bulletPrefabs = new Dictionary<BulletType, Bullet>();
 
+    public static void Sanitize()
+    {
+        if (bulletPools != null)
+        {
+            foreach (var pool in bulletPools)
+            {
+                var bulletQueue = pool.Value;
+
+                while (bulletQueue.Count > 0)
+                {
+                    var bullet = bulletQueue.Dequeue();
+                    if (bullet != null && bullet.gameObject != null)
+                    {
+                        GameObject.Destroy(bullet.gameObject);
+                    }
+                }
+            }
+
+            bulletPools.Clear();
+        }
+        
+    }
+    
     public static void InitializeBulletManager(BulletType type, Bullet prefab, int initialSize = 3)
     {
         if (!bulletPools.ContainsKey(type))

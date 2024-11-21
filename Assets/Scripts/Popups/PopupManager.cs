@@ -22,14 +22,11 @@ public class PopupManager : MonoBehaviour
     
     private void Awake()
     {
-        if (Instance == null)
+        if (Instance != null)
         {
-            Instance = this;
+            Destroy(Instance.gameObject);
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+        Instance = this;
         
         NPCInteraction.OnNPCInteraction += ShowInteractionMenu;
     }
