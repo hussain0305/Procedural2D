@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpForce: 12
+  jumpForce: 8
   gravityScale: 3
   equippedWeapon: {fileID: 8243453516919002304}
   dashDistance: 5
