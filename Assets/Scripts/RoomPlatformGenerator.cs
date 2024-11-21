@@ -139,7 +139,7 @@ public class RoomPlatformGenerator : MonoBehaviour
         
         grid[gridX, gridY] = true;
         Vector3Int tilePosition = new Vector3Int(gridXWithPositionalOffset + roomWorldPosition.x, gridYWithPositionalOffset + roomWorldPosition.y, 0);
-        TilemapManager.Instance.PlacePlatformTileAt(tilePosition);
+        TilemapManager.Instance.PlacePlatformTileAt(tilePosition, isDamageable);
 
         PlatformBlock block = Instantiate(platformPrefab, transform);
         block.isDestructible = isDamageable;

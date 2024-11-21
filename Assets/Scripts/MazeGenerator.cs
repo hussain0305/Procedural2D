@@ -233,7 +233,7 @@ public class MazeGenerator : MonoBehaviour
 
     private void CreateMaze()
     {
-        TilemapManager.Instance.ClearPlatformTiles();
+        TilemapManager.Instance.ClearAllTilemaps();
 
         for (int x = 0; x < gridSize; x++)
         {

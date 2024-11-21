@@ -10,12 +10,16 @@ public class TilemapManager : MonoBehaviour
     public Tile wallOutlineTile;
     public Tile platformTile;
     public Tile platformOutlineTile;
+    public Tile unbreakablePlatformTile;
+    public Tile unbreakablePlatformOutlineTile;
 
     [Header("Tilemaps")]
     public Tilemap wallOutlineTilemap;
     public Tilemap wallTilemap;
     public Tilemap platformOutlineTilemap;
     public Tilemap platformTilemap;
+    public Tilemap unbreakablePlatformOutlineTilemap;
+    public Tilemap unbreakablePlatformTilemap;
 
     public static TilemapManager Instance { get; private set; }
     private void Awake()
@@ -43,6 +47,18 @@ public class TilemapManager : MonoBehaviour
         wallOutlineTilemap.SetTile(position, null);
     }
     
+    public void PlacePlatformTileAt(Vector3Int position, bool isDamageable)
+    {
+        if (isDamageable)
+        {
+            PlacePlatformTileAt(position);
+        }
+        else
+        {
+            PlaceUnbreakablePlatformTileAt(position);
+        }
+    }
+    
     public void PlacePlatformTileAt(Vector3Int position)
     {
         platformTilemap.SetTile(position, platformTile);
@@ -55,9 +71,19 @@ public class TilemapManager : MonoBehaviour
         platformOutlineTilemap.SetTile(position, null);
     }
 
-    public void ClearPlatformTiles()
+    public void PlaceUnbreakablePlatformTileAt(Vector3Int position)
+    {
+        unbreakablePlatformTilemap.SetTile(position, platformTile);
+        unbreakablePlatformOutlineTilemap.SetTile(position, platformOutlineTile);
+    }
+
+    public void ClearAllTilemaps()
     {
         platformTilemap.ClearAllTiles();
         platformOutlineTilemap.ClearAllTiles();
+        unbreakablePlatformTilemap.ClearAllTiles();
+        unbreakablePlatformOutlineTilemap.ClearAllTiles();
+        wallTilemap.ClearAllTiles();
+        wallOutlineTilemap.ClearAllTiles();
     }
 }
