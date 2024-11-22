@@ -103,7 +103,6 @@ public class Shop : Menu<PurchasableItemInfo>
         {
             itemAffordability = new Dictionary<int, bool>();
         }
-        Debug.Log("Num menu items - " + menuItems.Count);
         int playerCoinBalance = GameManager.Instance.PlayerInventory.GetCoinsBalance();
         for (int i = 0; i < availableItems.Count; i++)
         {

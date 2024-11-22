@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6973827249091584860}
   - component: {fileID: 6206798149659395788}
   m_Layer: 0
-  m_Name: BlocksDestructionPFX
+  m_Name: BlocksDestructionPFX_FromBelow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -15,4 +15,13 @@ MonoBehaviour:
   effects:
   - effectType: 0
     prefab: {fileID: 6973827249091584860, guid: f47049490bf0659429eb957bb7bf93bd, type: 3}
-    poolSize: 5
+    poolSize: 3
+  - effectType: 1
+    prefab: {fileID: 6973827249091584860, guid: a27e593381f3d2641a42dbfadd1c0c97, type: 3}
+    poolSize: 3
+  - effectType: 2
+    prefab: {fileID: 6973827249091584860, guid: 2d44edb99202a17429461d792cf9c68e, type: 3}
+    poolSize: 3
+  - effectType: 3
+    prefab: {fileID: 6973827249091584860, guid: 01a25cde61059ac42925641c410f4543, type: 3}
+    poolSize: 3
