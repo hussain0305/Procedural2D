@@ -39,6 +39,10 @@ public class GlobalData : ScriptableObject
     [Header("Pickups")]
     public PickupPrefabs[] pickupPrefabs;
     
+    [Header("Currencies")]
+    public CurrencyInfo[] currencies;
+
+    
     private Dictionary<RoomType, Material> roomBackgroundDictionary;
     public Material GetRoomColor(RoomType roomType)
     {
@@ -69,6 +73,26 @@ public class GlobalData : ScriptableObject
         {
             return pickupPrefabDictionary[pickupType];
         }
+        return null;
+    }
+    
+    private Dictionary<CurrencyType, Sprite> currencyDictionary;
+    public Sprite GetCurrencyIcon(CurrencyType _currency)
+    {
+        if (currencyDictionary == null)
+        {
+            currencyDictionary = new Dictionary<CurrencyType, Sprite>();
+            foreach (CurrencyInfo currency in currencies)
+            {
+                currencyDictionary.Add(currency.currency, currency.currencyIcon);
+            }
+        }
+
+        if (currencyDictionary.ContainsKey(_currency))
+        {
+            return currencyDictionary[_currency];
+        }
+
         return null;
     }
 }

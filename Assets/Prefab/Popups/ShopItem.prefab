@@ -53,6 +53,7 @@ MonoBehaviour:
   itemIcon: {fileID: 8204331459892986056}
   itemNameText: {fileID: 2879196475415940562}
   itemDescriptionText: {fileID: 3625694833070890529}
+  itemCurrecyImage: {fileID: 2142040263721261943}
   itemCostText: {fileID: 6956129887857718112}
   highlight: {fileID: 3236698105803213555}
   inventorySection: {fileID: 1460566808163133317}

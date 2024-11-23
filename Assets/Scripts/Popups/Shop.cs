@@ -48,7 +48,8 @@ public class Shop : Menu<PurchasableItemInfo>
 
     protected override void SetupMenuItem(MenuItem<PurchasableItemInfo> menuItem, PurchasableItemInfo item)
     {
-        menuItem.Setup(item, item.itemName, item.description, item.itemIcon, item.price, item.inventoryCount);
+        menuItem.Setup(item, item.itemName, item.description, item.itemIcon, item.price, item.inventoryCount, 
+            GlobalData.Instance.GetCurrencyIcon(item.currrency));
     }
 
     protected override void PurchaseSelectedItem()
@@ -69,7 +70,8 @@ public class Shop : Menu<PurchasableItemInfo>
                 selectedItem.description, 
                 selectedItem.itemIcon, 
                 selectedItem.price, 
-                selectedItem.inventoryCount
+                selectedItem.inventoryCount,
+                GlobalData.Instance.GetCurrencyIcon(selectedItem.currrency)
             );
             EvaluateMenu();
             // if (selectedItem.inventoryCount == 0)

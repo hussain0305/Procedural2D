@@ -18,6 +18,9 @@ public enum PickupType { MultiJump, WallGrab}
 public enum PurchableItemType { MultiJump, WallGrab, Dash}
 
 [System.Serializable]
+public enum CurrencyType { Cash}
+
+[System.Serializable]
 public struct PurchasableItemInfo
 {
     public PurchableItemType itemType;
@@ -26,6 +29,7 @@ public struct PurchasableItemInfo
     public Sprite itemIcon;
     public int price;
     public int inventoryCount;
+    public CurrencyType currrency;
     public Action OnPurchaseAction; 
 }
 
@@ -211,6 +215,13 @@ public enum EnemyType
     Patroller,
 }
 
+[System.Serializable]
+public struct CurrencyInfo
+{
+    public CurrencyType currency;
+    public Sprite currencyIcon;
+}
+
 public class Global : MonoBehaviour
 {
     public static Dictionary<RoomEdge, Vector2Int> Directions
@@ -279,5 +290,4 @@ public class Global : MonoBehaviour
     {
         return new Vector3(POPUP_HORIZONTAL_OFFSET + additionalOffset.x, POPUP_VERTICAL_OFFSET + additionalOffset.y, 0);
     }
-
 }

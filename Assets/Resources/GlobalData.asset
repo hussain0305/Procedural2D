@@ -47,3 +47,6 @@ MonoBehaviour:
     prefab: {fileID: 2753899333968211182, guid: aacf8cc348f83fb4fb17296e7e5ac82e, type: 3}
   - pickupType: 1
     prefab: {fileID: 7998897779178623796, guid: 26232a2e25424864a8fcba770664b161, type: 3}
+  currencies:
+  - currency: 0
+    currencyIcon: {fileID: 21300000, guid: 6df6f97419f4c6147b3d8aeb8e96ea68, type: 3}

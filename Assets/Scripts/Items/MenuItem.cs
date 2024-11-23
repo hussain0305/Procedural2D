@@ -8,6 +8,7 @@ public class MenuItem<T> : MonoBehaviour
     public Image itemIcon;
     public TextMeshProUGUI itemNameText;
     public TextMeshProUGUI itemDescriptionText;
+    public Image itemCurrecyImage;
     public TextMeshProUGUI itemCostText;
     public Image highlight;
     public GameObject inventorySection;
@@ -17,7 +18,7 @@ public class MenuItem<T> : MonoBehaviour
 
     protected T itemData;
     
-    public virtual void Setup(T item, string name, string description, Sprite icon, int cost, int count)
+    public virtual void Setup(T item, string name, string description, Sprite icon, int cost, int count, Sprite currencyImage)
     {
         itemData = item;
         itemNameText.text = name;
@@ -25,6 +26,7 @@ public class MenuItem<T> : MonoBehaviour
         itemIcon.sprite = icon;
         itemCostText.text = cost.ToString();
         inventoryCountText.text = count.ToString();
+        itemCurrecyImage.sprite = currencyImage;
         
         UpdateVisibleSections();
     }
