@@ -20,14 +20,17 @@ public class NPCInteraction : MonoBehaviour
     public static event OnInteractionDelegate OnNPCInteraction;
     
     private bool isInteracting = false;
+    private bool isInRange = false;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        isInRange = true;
         PopupManager.Instance.ShowActionPrompt(transform.position + Global.GetPromptOffset(), "E", "Interact");
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        isInRange = false;
         PopupManager.Instance.HideCurrentPopup();
         GameManager.Instance.EnablePlayerControls();
         EndInteraction();
@@ -35,7 +38,7 @@ public class NPCInteraction : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Action") && !isInteracting)
+        if (Input.GetButtonDown("Action") && !isInteracting && isInRange)
         {
             StartInteraction();
         }

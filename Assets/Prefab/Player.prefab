@@ -252,7 +252,7 @@ CapsuleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 131392
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -265,7 +265,7 @@ CapsuleCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 131392
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295

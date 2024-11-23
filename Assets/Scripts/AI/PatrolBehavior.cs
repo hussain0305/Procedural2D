@@ -11,6 +11,7 @@ public class PatrolBehavior : IMovementBehavior
     private Vector2 groundCheckDistance = new Vector2(0.5f, -0.5f);
     private Action onEdgeDetected;
     private LayerMask groundLayer;
+    private LayerMask platformLayer;
 
     public PatrolBehavior(Transform enemy, float speed, Action onEdgeDetected)
     {
@@ -20,6 +21,7 @@ public class PatrolBehavior : IMovementBehavior
         this.onEdgeDetected = onEdgeDetected;
         this.patrolDirection = Vector2.right;
         this.groundLayer = GlobalData.Instance.groundLayer;
+        this.platformLayer = GlobalData.Instance.platformLayer;
     }
 
     public void Execute()
@@ -40,7 +42,7 @@ public class PatrolBehavior : IMovementBehavior
     private bool GroundAhead()
     {
         Vector2 origin = (Vector2)enemy.position + new Vector2(patrolDirection.x * groundCheckDistance.x, groundCheckDistance.y);
-        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, groundLayer | platformLayer);
 
         Debug.DrawRay(origin, 0.1f * Vector2.down, Color.red);
         return hit.collider != null;

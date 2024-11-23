@@ -12,7 +12,7 @@ public class DetectGround : MonoBehaviour
 
     public void PlaceOnGround()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, raycastDistance, GlobalData.Instance.groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, raycastDistance, GlobalData.Instance.GetStandableGround());
 
         if (hit.collider != null)
         {

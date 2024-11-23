@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6480685470262132614}
   - component: {fileID: 5322747073050675889}
   - component: {fileID: 8269579894436021940}
-  m_Layer: 6
+  m_Layer: 17
   m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,5 +92,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   tilePosition: {x: 0, y: 0, z: 0}
-  platformTilemap: {fileID: 0}
   isDestructible: 1

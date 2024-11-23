@@ -27,6 +27,7 @@ public class GlobalData : ScriptableObject
 
     [Header("Collision Layers")] 
     public LayerMask groundLayer;
+    public LayerMask platformLayer;
     public LayerMask wallLayer;
     public LayerMask ceilingLayer;
     public LayerMask roomVolumeLayer;
@@ -42,6 +43,10 @@ public class GlobalData : ScriptableObject
     [Header("Currencies")]
     public CurrencyInfo[] currencies;
 
+    public int GetStandableGround()
+    {
+        return groundLayer | platformLayer;
+    }
     
     private Dictionary<RoomType, Material> roomBackgroundDictionary;
     public Material GetRoomColor(RoomType roomType)

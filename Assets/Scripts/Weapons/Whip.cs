@@ -16,7 +16,7 @@ public class Whip : Weapon
         lastUsedAt = Time.time;
         
         Vector2 rayOrigin = transform.position;
-        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, lastDirection, hitDistance, GlobalData.Instance.groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, lastDirection, hitDistance, GlobalData.Instance.GetStandableGround());
         Debug.DrawRay(rayOrigin, lastDirection * hitDistance, Color.red, 1f);
 
         if (hit.collider != null)
