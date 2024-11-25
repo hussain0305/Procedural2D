@@ -3,7 +3,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PFXDatabase", menuName = "ScriptableObjects/PFXDatabase", order = 1)]
 public class PFXDatabase : ScriptableObject
 {
-    public enum PFXType {blockBreakFromBelow, blockBreakFromAbove, blockBreakFromLeft, blockBreakFromRight}
+    public enum PFXType
+    {
+        blockBreakFromBelow, blockBreakFromAbove, blockBreakFromLeft, blockBreakFromRight,
+        ArrowHitEffect
+    }
     
     [System.Serializable]
     public class PFXEntry

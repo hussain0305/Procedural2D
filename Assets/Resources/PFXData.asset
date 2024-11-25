@@ -25,3 +25,6 @@ MonoBehaviour:
   - effectType: 3
     prefab: {fileID: 6973827249091584860, guid: 01a25cde61059ac42925641c410f4543, type: 3}
     poolSize: 3
+  - effectType: 4
+    prefab: {fileID: 7912973285319667237, guid: 1e5063af038ab85429d6a619a7ac0e9a, type: 3}
+    poolSize: 3

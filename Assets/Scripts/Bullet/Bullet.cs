@@ -6,6 +6,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public BulletType bulletType;
+    public PFXDatabase.PFXType hitEffect;
+    public Transform head;
     
     [HideInInspector]
     public int damage;
@@ -16,7 +18,16 @@ public class Bullet : MonoBehaviour
         {
             DamagePlayer(collision.transform.GetComponent<PlayerAttributes>());
         }
-        BulletManager.ReturnBullet(bulletType, this);
+
+        if (collision.contactCount > 0)
+        {
+            ContactPoint2D point = collision.GetContact(0);
+            BulletHitSomething(point.point);
+        }
+        else
+        {
+            BulletHitSomething();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -25,7 +36,8 @@ public class Bullet : MonoBehaviour
         {
             DamagePlayer(other.transform.GetComponent<PlayerAttributes>());
         }
-        BulletManager.ReturnBullet(bulletType, this);
+        
+        BulletHitSomething();
     }
 
     public void Fire(Vector2 direction, float speed, Vector3 facingDirection)
@@ -37,5 +49,17 @@ public class Bullet : MonoBehaviour
     public void DamagePlayer(PlayerAttributes playerAttributes)
     {
         playerAttributes?.TakeDamage(damage);
+    }
+
+    public void BulletHitSomething()
+    {
+        PFXManager.Instance.PlayPFX(hitEffect, head ? head.position : transform.position);
+        BulletManager.ReturnBullet(bulletType, this);
+    }
+    
+    public void BulletHitSomething(Vector3 position)
+    {
+        PFXManager.Instance.PlayPFX(hitEffect, position);
+        BulletManager.ReturnBullet(bulletType, this);
     }
 }
